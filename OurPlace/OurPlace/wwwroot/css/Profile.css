@@ -1,4 +1,9 @@
-﻿.profileLayout {
+﻿#defaultCover {
+    object-fit: none;
+    border: 1px solid;
+}
+
+.profileLayout {
     width: 90%;
     height: 500px;
     margin: auto;

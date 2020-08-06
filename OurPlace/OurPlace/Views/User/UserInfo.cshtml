@@ -1,0 +1,44 @@
+﻿@model OurPlace.Models.User.UserInfoModel
+@using  System.Security.Claims
+@{
+    ViewData["Title"] = "UserInfo";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/Profile.css" />
+    <link rel="stylesheet" href="~/css/UserInfo.css" />
+}
+
+<div class="container">
+
+    <partial name="_profileLayout" for="Photos" />
+
+    <div class="aboutContainer">
+        <div class="headerContainer">
+            <h3>About</h3>
+        </div>
+        <div class="infoContainer">
+            <div class="infoElement">
+                <p>First name: @Model.FirstName</p>
+                @if (Model.Photos.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value)
+                {
+                    <a asp-action="EditFullName" asp-route-userId="@Model.UserId">Edit</a>
+                }
+            </div>
+            <div class="infoElement">
+                <p>Last name: @Model.LastName</p>
+                @if (Model.Photos.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value)
+                {
+                    <a asp-action="EditFullName" asp-route-userId="@Model.UserId">Edit</a>
+                }
+            </div>
+            <div class="infoElement">
+                <p>Email adress: @Model.Email</p>
+                @if (Model.Photos.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value)
+                {
+                    <a asp-action="EditEmail" asp-route-userId="@Model.UserId">Edit</a>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

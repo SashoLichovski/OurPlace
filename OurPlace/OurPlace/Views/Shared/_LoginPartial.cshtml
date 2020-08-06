@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using OurPlace.Data
+@using System.Security.Claims
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 
@@ -7,7 +8,7 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">
-        <a  class="nav-link text-dark" asp-controller="User" asp-action="MyProfile">My Profile</a>
+        <a  class="nav-link text-dark" asp-controller="User" asp-action="Profile" asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier).Value">My Profile</a>
     </li>
     <li class="nav-item">
         <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">

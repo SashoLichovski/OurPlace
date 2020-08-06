@@ -1,0 +1,28 @@
+﻿<div class="profileLayout">
+    <div class="profilePhoto">
+        @if (Model.ProfilePhoto == null)
+        {
+            <img src="~/defaultImage/defaultImage.png"/>
+        }
+        else
+        {
+            <img src="@Model.ProfilePhoto" />
+        }
+    </div>
+    <div class="coverPhoto">
+        @if (Model.CoverPhoto == null)
+        {
+            <img src="~/defaultImage/defaultCover.png" id="defaultCover"/>
+        }
+        else
+        {
+            <img src="@Model.CoverPhoto" />
+        }
+    </div>
+    <div class="profileContainer">
+        <a href="#">Time Line</a>
+        <a asp-action="UserInfo" asp-route-userId="@Model.UserId">About</a>
+        <a asp-action="UserPhotos" asp-route-userId="@Model.UserId">Photos</a>
+        <a asp-action="UserFriends" asp-route-userId="@Model.UserId">Friends</a>
+    </div>
+</div>

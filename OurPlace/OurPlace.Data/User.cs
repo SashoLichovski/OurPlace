@@ -6,5 +6,7 @@ namespace OurPlace.Data
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public byte[] CoverPhoto { get; set; }
+        public byte[] ProfilePhoto { get; set; }
     }
 }

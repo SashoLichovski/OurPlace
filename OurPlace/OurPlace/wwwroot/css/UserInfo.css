@@ -1,0 +1,26 @@
+﻿.aboutContainer{
+    width: 70%;
+    margin: auto;
+}
+.headerContainer {
+    padding: 20px;
+    background-color: whitesmoke;
+    width: 100%;
+}
+    .headerContainer h3 {
+        font-weight: bold;
+    }
+
+.infoContainer {
+    width: 100%;
+    padding: 20px;
+}
+
+.infoElement {
+    display: flex;
+    justify-content: space-between;
+}
+    .infoElement  p {
+        font-size: 1.3em;
+        font-weight: bold;
+    }

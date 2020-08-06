@@ -1,0 +1,29 @@
+﻿using OurPlace.Models.User;
+using OurPlace.Data;
+
+namespace OurPlace.Helpers.User
+{
+    public static class Convert
+    {
+        internal static UserLayoutPhotosModel ToUserLayoutPhotosModel(this Data.User x)
+        {
+            return new UserLayoutPhotosModel
+            {
+                UserId = x.Id,
+                CoverPhoto = x.CoverPhoto,
+                ProfilePhoto = x.ProfilePhoto
+            };
+        }
+
+        internal static UserInfoModel ToUserInfoModel(this Data.User x)
+        {
+            return new UserInfoModel
+            {
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                Email = x.Email,
+                UserId = x.Id
+            };
+        }
+    }
+}
