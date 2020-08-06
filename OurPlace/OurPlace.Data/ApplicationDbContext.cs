@@ -9,5 +9,7 @@ namespace OurPlace.Data
             : base(options)
         {
         }
+
+        public DbSet<UserImage> UserImages { get; set; }
     }
 }

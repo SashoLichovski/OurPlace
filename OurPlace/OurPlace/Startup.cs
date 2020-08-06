@@ -25,7 +25,8 @@ namespace OurPlace
                 options.UseSqlServer(
                     Configuration.GetConnectionString("LocalConnection")));
 
-            services.AddIdentity<User, IdentityRole>()
+            services.AddDefaultIdentity<User>()
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddControllersWithViews();
