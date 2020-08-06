@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using OurPlace.Data;
+using OurPlace.Services.DtoModels;
 using OurPlace.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OurPlace.Services
 {
@@ -19,8 +16,9 @@ namespace OurPlace.Services
             this.context = context;
         }
 
-        public void UpdateFullName(string firstName, string lastName, string userId)
+        public Response UpdateFullName(string firstName, string lastName, string userId)
         {
+            var response = new Response();
             var user = GetById(userId);
             if (user != null)
             {
@@ -29,6 +27,11 @@ namespace OurPlace.Services
                 userManager.UpdateAsync(user);
                 context.SaveChanges();
             }
+            else
+            {
+                response.Error = "Something went wrong. User was not found.";
+            }
+            return response;
         }
 
         public User GetById(string userId)

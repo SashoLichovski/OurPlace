@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using OurPlace.Data;
-using OurPlace.Models.User;
-using System.Security.Claims;
+﻿using Microsoft.AspNetCore.Mvc;
 using OurPlace.Helpers.User;
+using OurPlace.Models.User;
 using OurPlace.Services.Interfaces;
 
 namespace OurPlace.Controllers
@@ -38,7 +35,9 @@ namespace OurPlace.Controllers
         {
             var model = new EditFullNameModel()
             {
-                UserId = userId
+                UserId = userId,
+                FirstName = userService.GetById(userId).FirstName,
+                LastName = userService.GetById(userId).LastName
             };
             return View(model);
         }
@@ -47,8 +46,12 @@ namespace OurPlace.Controllers
         {
             if (ModelState.IsValid)
             {
-                userService.UpdateFullName(model.FirstName, model.LastName, model.UserId);
-                return RedirectToAction("UserInfo", new { model.UserId });
+                var response = userService.UpdateFullName(model.FirstName, model.LastName, model.UserId);
+                if (string.IsNullOrEmpty(response.Error))
+                {
+                    return RedirectToAction("UserInfo", new { model.UserId });
+                }
+                return RedirectToAction("ActionResponse", "Home", response);
             }
             return View(model);
         }
