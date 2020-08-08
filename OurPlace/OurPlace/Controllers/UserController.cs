@@ -2,6 +2,7 @@
 using OurPlace.Helpers.User;
 using OurPlace.Models.User;
 using OurPlace.Services.Interfaces;
+using System.Linq;
 
 namespace OurPlace.Controllers
 {
@@ -54,6 +55,14 @@ namespace OurPlace.Controllers
                 return RedirectToAction("ActionResponse", "Home", response);
             }
             return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Search(string search)
+        {
+            var dbList = userService.SearchUsers(search);
+            var modelList = dbList.Select(x => x.ToSearchUserModel()).ToList();
+            return View(modelList);
         }
     }
 }

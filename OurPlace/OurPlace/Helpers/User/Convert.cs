@@ -25,5 +25,16 @@ namespace OurPlace.Helpers.User
                 UserId = x.Id
             };
         }
+
+        internal static SearchUserModel ToSearchUserModel(this Data.User x)
+        {
+            return new SearchUserModel
+            {
+                Id = x.Id,
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                Email = x.Email
+            };
+        }
     }
 }

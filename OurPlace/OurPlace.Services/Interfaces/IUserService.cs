@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System;
 using OurPlace.Services.DtoModels;
+using System.Collections.Generic;
 
 namespace OurPlace.Services.Interfaces
 {
@@ -9,5 +10,6 @@ namespace OurPlace.Services.Interfaces
     {
         User GetById(string userId);
         Response UpdateFullName(string firstName, string lastName, string userId);
+        List<User> SearchUsers(string search);
     }
 }

@@ -2,6 +2,8 @@
 using OurPlace.Data;
 using OurPlace.Services.DtoModels;
 using OurPlace.Services.Interfaces;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OurPlace.Services
 {
@@ -37,6 +39,14 @@ namespace OurPlace.Services
         public User GetById(string userId)
         {
             return userManager.FindByIdAsync(userId).Result;
+        }
+
+        public List<User> SearchUsers(string search)
+        {
+            var dbList = userManager.Users
+                .Where(x => x.FirstName.Contains(search) || x.LastName.Contains(search) || x.Email.Contains(search))
+                .ToList();
+            return dbList;
         }
     }
 }

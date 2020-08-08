@@ -1,3 +1,7 @@
 ﻿body {
     font-family: 'Comic Sans MS', cursive;
 }
+
+.searchInput {
+    margin-right: 10px;
+}
