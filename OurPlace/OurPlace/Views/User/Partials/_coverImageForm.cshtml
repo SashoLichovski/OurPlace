@@ -1,0 +1,10 @@
+﻿<div class="uploadCoverForm hide" id="coverForm">
+    <form asp-action="UploadCover" method="post" enctype="multipart/form-data">
+        <div id="closeForm" onclick="toggleUploadForm()">
+            <i class="far fa-window-close"></i>
+        </div>
+        <h3>Upload new cover image</h3>
+        <input type="file" id="file" name="coverImage">
+        <input type="submit" class="btn btn-primary btn-sm" value="Upload" />
+    </form>
+</div>

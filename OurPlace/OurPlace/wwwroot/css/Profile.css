@@ -50,3 +50,60 @@
     .profileContainer :first-child {
         border-left: 1px solid rgba(0, 0, 0, 0.3);
     }
+
+#uploadCoverContainer {
+    position: absolute;
+    display: flex;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+    #uploadCoverContainer:hover {
+        background-color: rgba(169, 168, 168, 0.2);
+        cursor: auto;
+    }
+
+#coverIcon {
+    font-size: 1.6em;
+    margin-right: 10px;
+}
+
+#toggleCoverForm:hover {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.hide {
+    display: none;
+}
+
+.flex {
+    display: flex;
+}
+
+.uploadCoverForm {
+    position: absolute;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.80);
+    margin: auto;
+    top: 0; bottom: 0; left: 0; right: 0;
+}
+    .uploadCoverForm form {
+        padding: 25px;
+        background: rgb(191, 207, 0);
+        width: 30%;
+        margin: auto;
+        border-radius: 15px;
+    }
+    .uploadCoverForm form input {
+        margin: 10px;
+    }
+
+#closeForm {
+    text-align: end;
+    cursor: pointer;
+}
+    #closeForm i {
+        font-size: 1.3em;
+    }

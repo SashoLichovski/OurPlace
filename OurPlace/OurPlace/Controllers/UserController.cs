@@ -1,8 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using OurPlace.Helpers.User;
 using OurPlace.Models.User;
 using OurPlace.Services.Interfaces;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace OurPlace.Controllers
 {
@@ -63,6 +68,14 @@ namespace OurPlace.Controllers
             var dbList = userService.SearchUsers(search);
             var modelList = dbList.Select(x => x.ToSearchUserModel()).ToList();
             return View(modelList);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UploadCover(List<IFormFile> coverImage)
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            await userService.UpdateCover(coverImage, userId);
+            return RedirectToAction("Profile", new { UserId = userId });
         }
     }
 }

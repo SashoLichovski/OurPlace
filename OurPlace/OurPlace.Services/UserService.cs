@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using OurPlace.Data;
+using OurPlace.Services.Common;
 using OurPlace.Services.DtoModels;
 using OurPlace.Services.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace OurPlace.Services
 {
@@ -47,6 +50,16 @@ namespace OurPlace.Services
                 .Where(x => x.FirstName.Contains(search) || x.LastName.Contains(search) || x.Email.Contains(search))
                 .ToList();
             return dbList;
+        }
+
+        public async Task UpdateCover(List<IFormFile> image, string userId)
+        {
+            var user = GetById(userId);
+            byte[] convertedImage = ByteConvert.ToImageToByteArray(image);
+            System.Console.WriteLine(convertedImage.Length);
+            user.CoverPhoto = convertedImage;
+            await userManager.UpdateAsync(user);
+            await context.SaveChangesAsync();
         }
     }
 }

@@ -6,17 +6,21 @@
         }
         else
         {
-            <img src="@Model.ProfilePhoto" />
+            <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.ProfilePhoto)"/>
         }
     </div>
     <div class="coverPhoto">
+        <div id="uploadCoverContainer" onmouseover="toggleUploadLink()" onmouseout="dismissUploadLink()">
+            <i class="fas fa-camera-retro" id="coverIcon"></i>
+            <div id="toggleCoverForm" class="hide" onclick="toggleUploadForm()">Upload cover photo</div>
+        </div>
         @if (Model.CoverPhoto == null)
         {
             <img src="~/defaultImage/defaultCover.png" id="defaultCover"/>
         }
         else
         {
-            <img src="@Model.CoverPhoto" />
+            <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.CoverPhoto)" />
         }
     </div>
     <div class="profileContainer">
