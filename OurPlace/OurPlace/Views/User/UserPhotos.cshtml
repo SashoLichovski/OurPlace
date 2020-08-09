@@ -1,0 +1,41 @@
+﻿@model OurPlace.Models.User.UserPhotosModel
+@{
+    ViewData["Title"] = "UserPhotos";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/PhotoGallery.css" />
+    <link rel="stylesheet" href="~/css/UserPhotos.css" />
+    <link rel="stylesheet" href="~/css/Profile.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+}
+
+<div class="container">
+    <partial name="./Partials/_coverImageForm" />
+    <partial name="./Partials/_addImageForm" />
+
+    <partial name="./Partials/_profileLayout" for="LayoutPhotos" />
+
+    <div class="photoContainer">
+        <div class="headerContainer">
+            <h3>My Gallery</h3>
+            @if (Model.LayoutPhotos.UserId == User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value)
+            {
+                <h3 class="addPhoto" onclick="toggleUploadForm('imageForm')">Add Photo</h3>
+            }
+        </div>
+
+        <div class="gallery" id="gallery">
+            @foreach (var image in Model.UserPhotos)
+	        {
+            <div class="gallery-item">
+                <div class="content"><img src="data:image/jpeg;base64,@Convert.ToBase64String(image.Image)"></div>
+            </div>
+	        }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/PhotoGallery.js"></script>
+    <script src="~/js/Profile.js"></script>
+} 

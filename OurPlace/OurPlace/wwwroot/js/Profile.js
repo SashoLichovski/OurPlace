@@ -6,8 +6,8 @@ function dismissUploadLink() {
     document.getElementById("toggleCoverForm").classList.add("hide");
 }
 
-function toggleUploadForm() {
-    var form = document.getElementById("coverForm");
+function toggleUploadForm(id) {
+    var form = document.getElementById(id);
     if (form.classList.contains("hide")) {
         form.classList.remove("hide");
         form.classList.add("flex");

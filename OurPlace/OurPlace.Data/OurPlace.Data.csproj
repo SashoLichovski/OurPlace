@@ -7,6 +7,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200806121852_UserImage.cs" />
     <Compile Remove="Migrations\20200806121852_UserImage.Designer.cs" />
+    <Compile Remove="Migrations\20200809135937_ImageDateRequire.cs" />
+    <Compile Remove="Migrations\20200809135937_ImageDateRequire.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

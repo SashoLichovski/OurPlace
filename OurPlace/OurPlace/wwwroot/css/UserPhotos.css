@@ -1,0 +1,17 @@
+﻿.headerContainer {
+    padding: 20px;
+    width: 70%;
+    margin: auto;
+    margin-bottom: 30px;
+    background-color: whitesmoke;
+    display: flex;
+    justify-content: space-between;
+}
+
+.addPhoto {
+    cursor: pointer;
+}
+    .addPhoto:hover {
+        color: blue;
+        text-decoration: underline;
+    }

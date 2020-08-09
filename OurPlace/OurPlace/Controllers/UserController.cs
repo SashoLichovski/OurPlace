@@ -1,32 +1,38 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using OurPlace.Helpers.Image;
 using OurPlace.Helpers.User;
 using OurPlace.Models.User;
 using OurPlace.Services.Interfaces;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Drawing;
-using System;
 
 namespace OurPlace.Controllers
 {
     public class UserController : Controller
     {
         private readonly IUserService userService;
+        private readonly IImageService imageService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IImageService imageService)
         {
             this.userService = userService;
+            this.imageService = imageService;
         }
 
         public IActionResult Profile(string userId)
         {
-            var model = new UserProfileModel();
-            var user = userService.GetById(userId);
-            model.Photos = user.ToUserLayoutPhotosModel();
+            var model = new UserProfileModel()
+            {
+                Photos = userService.GetById(userId).ToUserLayoutPhotosModel()
+            };
+            return View(model);
+        }
+        public IActionResult UserPhotos(string userId)
+        {
+            var model = new UserPhotosModel()
+            {
+                LayoutPhotos = userService.GetById(userId).ToUserLayoutPhotosModel(),
+                UserPhotos = imageService.GetUserPhotos(userId).Select(x => x.ToUserImageModel()).ToList()
+            };
             return View(model);
         }
 
@@ -71,8 +77,6 @@ namespace OurPlace.Controllers
             var modelList = dbList.Select(x => x.ToSearchUserModel()).ToList();
             return View(modelList);
         }
-
-        
 
     }
 }

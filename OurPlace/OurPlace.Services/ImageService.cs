@@ -1,10 +1,12 @@
 ﻿using LazZiya.ImageResize;
+using Microsoft.AspNetCore.Http;
 using OurPlace.Data;
 using OurPlace.Repositories.Interfaces;
 using OurPlace.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Text;
 
 namespace OurPlace.Services
@@ -30,11 +32,30 @@ namespace OurPlace.Services
             imageRepo.Add(newImage);
         }
 
+        public Image FormFileToImage(IFormFile file)
+        {
+            var memoryStream = new MemoryStream();
+            file.CopyTo(memoryStream);
+            var image = Image.FromStream(memoryStream);
+            return image;
+        }
+
         public byte[] Upload(Image image)
         {
-            var scaleImage = ImageResize.ScaleByWidth(image, 700);
+            var scaleImage = ImageResize.ScaleByWidth(image, 400);
             byte[] convertedImage = (byte[])(new ImageConverter()).ConvertTo(scaleImage, typeof(byte[]));
             return convertedImage;
+        }
+
+        public void AddImage(Image image, string userId)
+        {
+            var convertedImage = Upload(image);
+            Create(convertedImage, userId);
+        }
+
+        public List<UserImage> GetUserPhotos(string userId)
+        {
+            return imageRepo.GetUserPhotos(userId);
         }
     }
 }

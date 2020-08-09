@@ -6,9 +6,11 @@
 @section Styles {
     <link rel="stylesheet" href="~/css/Profile.css" />
     <link rel="stylesheet" href="~/css/UserInfo.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
 }
 
 <div class="container">
+    <partial name="./Partials/_coverImageForm" />
 
     <partial name="./Partials/_profileLayout" for="Photos" />
 
@@ -42,3 +44,6 @@
     </div>
 </div>
 
+@section Scripts {
+    <script src="~/js/Profile.js"></script>
+}
