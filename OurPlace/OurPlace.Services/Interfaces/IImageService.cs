@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using OurPlace.Data;
+using OurPlace.Services.DtoModels;
 using System.Collections.Generic;
 using System.Drawing;
 
@@ -12,5 +13,6 @@ namespace OurPlace.Services.Interfaces
         Image FormFileToImage(IFormFile file);
         void AddImage(Image image, string userId);
         List<UserImage> GetUserPhotos(string userId);
+        Response UploadError();
     }
 }

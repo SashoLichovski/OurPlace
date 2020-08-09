@@ -1,5 +1,5 @@
 ﻿<div class="profileLayout">
-    <div class="profilePhoto">
+    <div class="profilePhoto content">
         @if (Model.ProfilePhoto == null)
         {
             <img src="~/defaultImage/defaultImage.png"/>
@@ -9,7 +9,7 @@
             <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.ProfilePhoto)" />
         }
     </div>
-    <div class="coverPhoto">
+    <div class="coverPhoto content">
         @if (Model.UserId == User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value)
         {
             <div id="uploadCoverContainer" onmouseover="toggleUploadLink()" onmouseout="dismissUploadLink()">

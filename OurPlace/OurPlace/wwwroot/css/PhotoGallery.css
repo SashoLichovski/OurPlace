@@ -20,8 +20,8 @@
         left: 50%;
         transform: translate3d(0, 0, 0);
         animation: zoomin 1s ease;
-/*        max-width: 100%;*/
-        width: 800px;
+        /*        max-width: 100%;*/
+        width: 60%;
         max-height: 100%;
         margin: auto;
     }
@@ -77,91 +77,68 @@
 @-moz-keyframes zoomin {
     0% {
         max-width: 50%;
-/*        transform: rotate(-30deg);*/
-/*        filter: blur(4px);*/
     }
 
     30% {
-/*        filter: blur(4px);*/
-/*        transform: rotate(-80deg);*/
     }
 
     70% {
         max-width: 50%;
-/*        transform: rotate(45deg);*/
     }
 
     100% {
         max-width: 100%;
-/*        transform: rotate(0deg);*/
     }
 }
 
 @-webkit-keyframes zoomin {
     0% {
         max-width: 50%;
-/*        transform: rotate(-30deg);*/
-/*        filter: blur(4px);*/
     }
 
     30% {
-/*        filter: blur(4px);*/
-/*        transform: rotate(-80deg);*/
     }
 
     70% {
         max-width: 50%;
-/*        transform: rotate(45deg);*/
     }
 
     100% {
         max-width: 100%;
-/*        transform: rotate(0deg);*/
     }
 }
 
 @-o-keyframes zoomin {
     0% {
         max-width: 50%;
-/*        transform: rotate(-30deg);*/
-/*        filter: blur(4px);*/
     }
 
     30% {
-/*        filter: blur(4px);*/
-/*        transform: rotate(-80deg);*/
     }
 
     70% {
         max-width: 50%;
-/*        transform: rotate(45deg);*/
     }
 
     100% {
         max-width: 100%;
-/*        transform: rotate(0deg);*/
     }
 }
 
 @keyframes zoomin {
     0% {
         max-width: 50%;
-/*        transform: rotate(-30deg);*/
-/*        filter: blur(4px);*/
     }
 
     30% {
         filter: blur(4px);
-/*        transform: rotate(-80deg);*/
     }
 
     70% {
         max-width: 50%;
-/*        transform: rotate(45deg);*/
     }
 
     100% {
         max-width: 100%;
-/*        transform: rotate(0deg);*/
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using OurPlace.Data;
 using OurPlace.Repositories.Interfaces;
+using OurPlace.Services.DtoModels;
 using OurPlace.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -56,6 +57,14 @@ namespace OurPlace.Services
         public List<UserImage> GetUserPhotos(string userId)
         {
             return imageRepo.GetUserPhotos(userId);
+        }
+
+        public Response UploadError()
+        {
+            return new Response
+            {
+                Error = "Please choose file before submitting"
+            };
         }
     }
 }
