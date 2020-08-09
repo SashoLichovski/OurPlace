@@ -20,4 +20,8 @@
     <ProjectReference Include="..\OurPlace.Services\OurPlace.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Image\" />
+  </ItemGroup>
+
 </Project>

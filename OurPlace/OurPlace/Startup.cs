@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OurPlace.Data;
+using OurPlace.Repositories;
+using OurPlace.Repositories.Interfaces;
 using OurPlace.Services;
 using OurPlace.Services.Interfaces;
 
@@ -32,6 +34,9 @@ namespace OurPlace
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddTransient<IUserService, UserService>();
+
+            services.AddTransient<IImageService, ImageService>();
+            services.AddTransient<IImageRepository, ImageRepository>();
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();

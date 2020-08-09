@@ -72,16 +72,7 @@ namespace OurPlace.Controllers
             return View(modelList);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> UploadCover(IFormFile coverImage)
-        {
-            var memoryStream = new MemoryStream();
-            coverImage.CopyTo(memoryStream);
-            var image = Image.FromStream(memoryStream);
+        
 
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            await userService.UpdateCover(image, userId);
-            return RedirectToAction("Profile", new { UserId = userId });
-        }
     }
 }

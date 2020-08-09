@@ -16,11 +16,13 @@ namespace OurPlace.Services
     {
         private readonly UserManager<User> userManager;
         private readonly ApplicationDbContext context;
+        private readonly IImageService imageService;
 
-        public UserService(UserManager<User> userManager, ApplicationDbContext context)
+        public UserService(UserManager<User> userManager, ApplicationDbContext context, IImageService imageService)
         {
             this.userManager = userManager;
             this.context = context;
+            this.imageService = imageService;
         }
 
         public Response UpdateFullName(string firstName, string lastName, string userId)
@@ -56,12 +58,13 @@ namespace OurPlace.Services
 
         public async Task UpdateCover(Image image, string userId)
         {
-            var scaleImage = ImageResize.ScaleByWidth(image, 700);
-
-            byte[] convertedImage = (byte[])(new ImageConverter()).ConvertTo(scaleImage, typeof(byte[]));
+            var uploadedImage = imageService.Upload(image);
 
             var user = GetById(userId);
-            user.CoverPhoto = convertedImage;
+            user.CoverPhoto = uploadedImage;
+
+            imageService.Create(uploadedImage, userId);
+
             await userManager.UpdateAsync(user);
             await context.SaveChangesAsync();
         }
