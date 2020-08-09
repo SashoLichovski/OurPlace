@@ -4,6 +4,7 @@ using System;
 using OurPlace.Services.DtoModels;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
+using System.Drawing;
 
 namespace OurPlace.Services.Interfaces
 {
@@ -12,6 +13,6 @@ namespace OurPlace.Services.Interfaces
         User GetById(string userId);
         Response UpdateFullName(string firstName, string lastName, string userId);
         List<User> SearchUsers(string search);
-        Task UpdateCover(List<IFormFile> image, string userId);
+        Task UpdateCover(Image image, string userId);
     }
 }

@@ -6,21 +6,24 @@
         }
         else
         {
-            <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.ProfilePhoto)"/>
+            <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.ProfilePhoto)" />
         }
     </div>
     <div class="coverPhoto">
-        <div id="uploadCoverContainer" onmouseover="toggleUploadLink()" onmouseout="dismissUploadLink()">
-            <i class="fas fa-camera-retro" id="coverIcon"></i>
-            <div id="toggleCoverForm" class="hide" onclick="toggleUploadForm()">Upload cover photo</div>
-        </div>
+        @if (Model.UserId == User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value)
+        {
+            <div id="uploadCoverContainer" onmouseover="toggleUploadLink()" onmouseout="dismissUploadLink()">
+                <i class="fas fa-camera-retro" id="coverIcon"></i>
+                <div id="toggleCoverForm" class="hide" onclick="toggleUploadForm()">Upload cover photo</div>
+            </div>
+        }
         @if (Model.CoverPhoto == null)
         {
             <img src="~/defaultImage/defaultCover.png" id="defaultCover"/>
         }
         else
         {
-            <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.CoverPhoto)" />
+            <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.CoverPhoto)" id="coverImage"/>
         }
     </div>
     <div class="profileContainer">

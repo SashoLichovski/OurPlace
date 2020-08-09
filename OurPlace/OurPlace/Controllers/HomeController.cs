@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using LazZiya.ImageResize;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OurPlace.Services.DtoModels;
+using System.Drawing;
 
 namespace OurPlace.Controllers
 {

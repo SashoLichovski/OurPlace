@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using LazZiya.ImageResize;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using OurPlace.Data;
 using OurPlace.Services.Common;
@@ -7,6 +8,7 @@ using OurPlace.Services.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace OurPlace.Services
 {
@@ -52,11 +54,13 @@ namespace OurPlace.Services
             return dbList;
         }
 
-        public async Task UpdateCover(List<IFormFile> image, string userId)
+        public async Task UpdateCover(Image image, string userId)
         {
+            var scaleImage = ImageResize.ScaleByWidth(image, 700);
+
+            byte[] convertedImage = (byte[])(new ImageConverter()).ConvertTo(scaleImage, typeof(byte[]));
+
             var user = GetById(userId);
-            byte[] convertedImage = ByteConvert.ToImageToByteArray(image);
-            System.Console.WriteLine(convertedImage.Length);
             user.CoverPhoto = convertedImage;
             await userManager.UpdateAsync(user);
             await context.SaveChangesAsync();

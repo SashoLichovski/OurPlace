@@ -59,7 +59,7 @@
     border-radius: 5px;
 }
     #uploadCoverContainer:hover {
-        background-color: rgba(169, 168, 168, 0.2);
+        background-color: rgba(169, 168, 168, 0.7);
         cursor: auto;
     }
 

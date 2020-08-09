@@ -8,6 +8,8 @@ using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Drawing;
+using System;
 
 namespace OurPlace.Controllers
 {
@@ -71,10 +73,14 @@ namespace OurPlace.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UploadCover(List<IFormFile> coverImage)
+        public async Task<IActionResult> UploadCover(IFormFile coverImage)
         {
+            var memoryStream = new MemoryStream();
+            coverImage.CopyTo(memoryStream);
+            var image = Image.FromStream(memoryStream);
+
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            await userService.UpdateCover(coverImage, userId);
+            await userService.UpdateCover(image, userId);
             return RedirectToAction("Profile", new { UserId = userId });
         }
     }
