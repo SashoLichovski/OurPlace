@@ -82,21 +82,14 @@
     display: flex;
 }
 
-.uploadCoverForm {
-    position: absolute;
-    z-index: 1;
-    background: rgba(0, 0, 0, 0.80);
+.customForm {
+    padding: 25px;
+    background: rgb(191, 207, 0);
+    width: 30%;
     margin: auto;
-    top: 0; bottom: 0; left: 0; right: 0;
+    border-radius: 15px;
 }
-    .uploadCoverForm form {
-        padding: 25px;
-        background: rgb(191, 207, 0);
-        width: 30%;
-        margin: auto;
-        border-radius: 15px;
-    }
-    .uploadCoverForm form input {
+    .customForm input {
         margin: 10px;
     }
 
@@ -106,5 +99,20 @@
 }
     #closeForm i {
         font-size: 1.3em;
+    }
+
+.full {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+    .full .content {
+        background-color: rgba(0,0,0,0.75) !important;
+        height: 100%;
+        width: 100%;
+        display: grid;
     }
 

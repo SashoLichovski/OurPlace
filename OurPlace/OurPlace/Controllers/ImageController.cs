@@ -19,14 +19,20 @@ namespace OurPlace.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UploadCover(IFormFile coverImage)
+        public async Task<IActionResult> UploadCover(IFormFile coverImage, int imageId, string photoType)
         {
-            if (coverImage != null)
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            if (!string.IsNullOrEmpty(photoType))
+            {
+                byte[] imgByteArr = imageService.GetByteArrById(imageId);
+                await userService.UpdateCoverProfile(imgByteArr, userId, photoType);
+                return RedirectToAction("UserPhotos", "User", new { UserId = userId });
+            }
+            else if (coverImage != null)
             {
                 var image = imageService.FormFileToImage(coverImage);
 
-                var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-                await userService.UpdateCover(image, userId);
+                await userService.UploadCover(image, userId);
                 return RedirectToAction("Profile", "User", new { UserId = userId });
             }
             else
@@ -51,6 +57,14 @@ namespace OurPlace.Controllers
                 return RedirectToAction("ActionResponse", "Home", imageService.UploadError());
             }
 
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int imageId)
+        {
+            imageService.Delete(imageId);
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return RedirectToAction("UserPhotos", "User", new { UserId = userId });
         }
     }
 }

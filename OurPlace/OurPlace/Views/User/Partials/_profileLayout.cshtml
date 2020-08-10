@@ -6,7 +6,7 @@
         }
         else
         {
-            <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.ProfilePhoto)" />
+            <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.ProfilePhoto)" onclick="openPhoto()"/>
         }
     </div>
     <div class="coverPhoto content">
@@ -23,7 +23,7 @@
         }
         else
         {
-            <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.CoverPhoto)" id="coverImage"/>
+            <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.CoverPhoto)" onclick="openPhoto()"/>
         }
     </div>
     <div class="profileContainer">

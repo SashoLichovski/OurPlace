@@ -29,3 +29,14 @@ gallery.querySelectorAll('.gallery-item').forEach(function (item) {
         item.classList.toggle('full');
     });
 });
+
+//function scrollImages(event) {
+//    var galleryItems = document.getElementsByClassName("gallery-item");
+//    var arrowContainer = document.createElement("div");
+//    var item = event.target;
+//    console.log(item);
+//    console.log(item.parentElement.parentElement);
+//    console.log(galleryItems.length);
+//}
+
+

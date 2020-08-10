@@ -7,5 +7,8 @@ namespace OurPlace.Repositories.Interfaces
     {
         void Add(UserImage newImage);
         List<UserImage> GetUserPhotos(string userId);
+        byte[] GetByteArrById(int imageId);
+        UserImage GetById(int imageId);
+        void Delete(UserImage image);
     }
 }

@@ -1,0 +1,24 @@
+﻿<div class="full hide" id="imageSettings">
+    <div class="content">
+        <div class="customForm">
+            <div id="closeForm" onclick="toggleUploadForm('imageSettings')">
+                <i class="far fa-window-close"></i>
+            </div>
+            <h3>Update Cover / Profile Photo</h3>
+            <form class="form-group" asp-controller="Image" asp-action="UploadCover" id="settingsForm">
+                <input hidden name="imageId" id="hiddenInput" />
+                <select class="form-control" name="photoType" id="photoType" onchange="checkSelectInput()">
+                    <option>Select</option>
+                    <option value="cover">Make cover photo</option>
+                    <option value="profile">Make profile photo</option>
+                </select>
+                <input type="submit" class="btn btn-primary" value="Save" id="imageSettingsBtn" />
+            </form>
+            <hr />
+            <form asp-controller="Image" asp-action="Delete">
+                <input hidden name="imageId" id="deleteInput" />
+                <input type="submit" class="btn btn-danger" value="Delete" />
+            </form>
+        </div>
+    </div>
+</div>

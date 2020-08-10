@@ -14,5 +14,8 @@ namespace OurPlace.Services.Interfaces
         void AddImage(Image image, string userId);
         List<UserImage> GetUserPhotos(string userId);
         Response UploadError();
+        byte[] GetByteArrById(int imageId);
+        void Delete(int imageId);
+        UserImage GetById(int imageId);
     }
 }

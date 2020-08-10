@@ -13,6 +13,7 @@ namespace OurPlace.Services.Interfaces
         User GetById(string userId);
         Response UpdateFullName(string firstName, string lastName, string userId);
         List<User> SearchUsers(string search);
-        Task UpdateCover(Image image, string userId);
+        Task UploadCover(Image image, string userId);
+        Task UpdateCoverProfile(byte[] imgByteArr, string userId, string photoType);
     }
 }

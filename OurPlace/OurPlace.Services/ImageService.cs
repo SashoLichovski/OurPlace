@@ -66,5 +66,21 @@ namespace OurPlace.Services
                 Error = "Please choose file before submitting"
             };
         }
+
+        public byte[] GetByteArrById(int imageId)
+        {
+            return imageRepo.GetByteArrById(imageId);
+        }
+
+        public void Delete(int imageId)
+        {
+            var image = GetById(imageId);
+            imageRepo.Delete(image);
+        }
+
+        public UserImage GetById(int imageId)
+        {
+            return imageRepo.GetById(imageId);
+        }
     }
 }

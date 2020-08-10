@@ -56,7 +56,7 @@ namespace OurPlace.Services
             return dbList;
         }
 
-        public async Task UpdateCover(Image image, string userId)
+        public async Task UploadCover(Image image, string userId)
         {
             var uploadedImage = imageService.Upload(image);
 
@@ -65,6 +65,21 @@ namespace OurPlace.Services
 
             imageService.Create(uploadedImage, userId);
 
+            await userManager.UpdateAsync(user);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task UpdateCoverProfile(byte[] imgByteArr, string userId, string photoType)
+        {
+            var user = GetById(userId);
+            if (photoType == "cover")
+            {
+                user.CoverPhoto = imgByteArr;
+            }
+            else
+            {
+                user.ProfilePhoto = imgByteArr;
+            }
             await userManager.UpdateAsync(user);
             await context.SaveChangesAsync();
         }

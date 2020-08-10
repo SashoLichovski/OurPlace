@@ -22,6 +22,22 @@ namespace OurPlace.Repositories
             context.SaveChanges();
         }
 
+        public void Delete(UserImage image)
+        {
+            context.UserImages.Remove(image);
+            context.SaveChanges();
+        }
+
+        public UserImage GetById(int imageId)
+        {
+            return context.UserImages.FirstOrDefault(x => x.Id.Equals(imageId));
+        }
+
+        public byte[] GetByteArrById(int imageId)
+        {
+            return context.UserImages.FirstOrDefault(x => x.Id.Equals(imageId)).Image;
+        }
+
         public List<UserImage> GetUserPhotos(string userId)
         {
             return context.UserImages

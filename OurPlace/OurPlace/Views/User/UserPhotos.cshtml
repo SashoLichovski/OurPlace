@@ -12,6 +12,7 @@
 <div class="container">
     <partial name="./Partials/_coverImageForm" />
     <partial name="./Partials/_addImageForm" />
+    <partial name="./Partials/_imageSettings" />
 
     <partial name="./Partials/_profileLayout" for="LayoutPhotos" />
 
@@ -20,22 +21,28 @@
             <h3>My Gallery</h3>
             @if (Model.LayoutPhotos.UserId == User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value)
             {
-                <h3 class="addPhoto" onclick="toggleUploadForm('imageForm')">Add Photo</h3>
+                <button class="btn btn-warning btn-lg" onclick="toggleUploadForm('imageForm')">Add Photo</button>
             }
         </div>
 
         <div class="gallery" id="gallery">
             @foreach (var image in Model.UserPhotos)
-	        {
-            <div class="gallery-item">
-                <div class="content"><img src="data:image/jpeg;base64,@Convert.ToBase64String(image.Image)"></div>
-            </div>
-	        }
+            {
+                <div class="gallery-item" >
+                    @if (Model.LayoutPhotos.UserId == User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value)
+                    {
+                        <div class="imageSettings" onclick="toggleImageSetting(event)" id="@image.Id">
+                            <i class="fas fa-bars" id="@image.Id"></i>
+                        </div>
+                    }
+                    <div class="content"><img src="data:image/jpeg;base64,@Convert.ToBase64String(image.Image)"></div>
+                </div>
+            }
         </div>
     </div>
 </div>
 
 @section Scripts {
-    <script src="~/js/PhotoGallery.js"></script>
     <script src="~/js/Profile.js"></script>
+    <script src="~/js/PhotoGallery.js"></script>
 } 

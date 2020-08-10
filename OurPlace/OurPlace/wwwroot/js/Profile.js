@@ -7,6 +7,12 @@ function dismissUploadLink() {
 }
 
 function toggleUploadForm(id) {
+    if (id == "imageSettings") {
+        var elems = document.getElementsByClassName("gallery-item full");
+        for (var i = 0; i < elems.length; i++) {
+            elems[i].classList.remove("full");
+        }
+    }
     var form = document.getElementById(id);
     if (form.classList.contains("hide")) {
         form.classList.remove("hide");
@@ -17,8 +23,33 @@ function toggleUploadForm(id) {
     }
 }
 
-var coverImage = document.getElementById("coverImage");
-coverImage.addEventListener('click', function (event) {
+function toggleImageSetting(event) {
+    var btn = document.getElementById("imageSettingsBtn");
+    btn.disabled = true;
+    var imageId = event.target.id
+    var ele = document.getElementById("imageSettings");
+    if (ele.classList.contains("hide")) {
+        ele.classList.remove("hide");
+        ele.classList.add("flex");
+    } else {
+        ele.classList.remove("flex");
+        ele.classList.add("hide");
+    }
+    document.getElementById('hiddenInput').value = imageId;
+    document.getElementById('deleteInput').value = imageId;
+}
+
+function checkSelectInput() {
+    var input = document.getElementById("photoType");
+    var btn = document.getElementById("imageSettingsBtn");
+    if (input.value != "Select") {
+        btn.disabled = false;
+    } else {
+        btn.disabled = true;
+    }
+}
+
+function openPhoto() {
     var body = document.getElementById("body");
     var container = document.createElement("div");
     container.classList.add("full");
@@ -39,4 +70,5 @@ coverImage.addEventListener('click', function (event) {
     container.addEventListener("click", function () {
         container.remove();
     })
-});
+}
+

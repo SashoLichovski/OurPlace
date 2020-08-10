@@ -1,10 +1,12 @@
-﻿<div class="uploadCoverForm hide" id="imageForm">
-    <form asp-controller="Image" asp-action="UploadImage" method="post" enctype="multipart/form-data">
-        <div id="closeForm" onclick="toggleUploadForm('imageForm')">
-            <i class="far fa-window-close"></i>
-        </div>
-        <h3>Upload new cover image</h3>
-        <input type="file" id="file" name="userImage">
-        <input type="submit" class="btn btn-primary btn-sm" value="Upload" />
-    </form>
+﻿<div class="full hide" id="imageForm">
+    <div class="content">
+        <form asp-controller="Image" asp-action="UploadImage" method="post" enctype="multipart/form-data" class="customForm">
+            <div id="closeForm" onclick="toggleUploadForm('imageForm')">
+                <i class="far fa-window-close"></i>
+            </div>
+            <h3>Upload new image</h3>
+            <input type="file" id="file" name="userImage">
+            <input type="submit" class="btn btn-primary btn-sm" value="Upload" />
+        </form>
+    </div>
 </div>

@@ -44,7 +44,7 @@
         max-width: 100%;
         border-radius: 8px;
         box-shadow: 0 0 16px #333;
-        transition: all 1.5s ease;
+        transition: all 0.5s;
     }
     .gallery img:hover {
         box-shadow: 0 0 32px #333;
@@ -62,6 +62,24 @@
         transform: scale(1.025);
     }
 
+#imageSettings {
+    z-index: 3;
+}
+.imageSettings {
+    position: absolute;
+    padding: 5px 10px;
+    margin: 10px;
+    background-color: rgba(210, 210, 210, 0.30);
+    border-radius: 10px;
+}
+    .imageSettings:hover {
+        background-color: rgba(210, 210, 210, 0.80);
+        cursor: pointer;
+    }
+    .imageSettings i {
+        font-size: 1.3em;
+    }
+
 @media (max-width: 600px) {
     .gallery {
         grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
@@ -75,16 +93,17 @@
 }
 
 @-moz-keyframes zoomin {
-    0% {
+    /*0% {
         max-width: 50%;
-    }
+    }*/
 
     30% {
+        filter: blur(4px);
     }
 
-    70% {
+    /*70% {
         max-width: 50%;
-    }
+    }*/
 
     100% {
         max-width: 100%;
@@ -92,16 +111,17 @@
 }
 
 @-webkit-keyframes zoomin {
-    0% {
+    /*0% {
         max-width: 50%;
-    }
+    }*/
 
     30% {
+        filter: blur(4px);
     }
 
-    70% {
+    /*70% {
         max-width: 50%;
-    }
+    }*/
 
     100% {
         max-width: 100%;
@@ -109,16 +129,17 @@
 }
 
 @-o-keyframes zoomin {
-    0% {
+    /*0% {
         max-width: 50%;
-    }
+    }*/
 
     30% {
+        filter: blur(4px);
     }
 
-    70% {
+    /*70% {
         max-width: 50%;
-    }
+    }*/
 
     100% {
         max-width: 100%;
@@ -126,17 +147,17 @@
 }
 
 @keyframes zoomin {
-    0% {
+    /*0% {
         max-width: 50%;
-    }
+    }*/
 
     30% {
         filter: blur(4px);
     }
 
-    70% {
+    /*70% {
         max-width: 50%;
-    }
+    }*/
 
     100% {
         max-width: 100%;
