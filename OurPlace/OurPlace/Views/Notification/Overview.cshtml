@@ -1,10 +1,32 @@
-﻿
+﻿@model List<OurPlace.Models.Notification.NotificationOverviewModel>
 @{
     ViewData["Title"] = "Overview";
 }
+@section Styles {
+    <link rel="stylesheet" href="~/css/Notifications.css" />
+}
 
 <div class="container">
-    <h3>Overview</h3>
-
+    <h3>My notifications</h3>
+    <hr />
+    <br />
+    @if (Model.Count == 0)
+    {
+        <h3>Notification box is empty</h3>
+    }
+    else
+    {
+        @foreach (var not in Model)
+        {
+            <div class="notContainer">
+                <div class="sectionContainer">
+                    <header>@not.SentBy wants to be your friend</header>
+                    <a class="btn btn-success" asp-controller="Friend" asp-action="CreateFriend" asp-route-senderId="@not.SenderId" asp-route-userId="@not.UserId">Accept</a>
+                    <a class="btn btn-danger">Decline</a>
+                </div>
+                <span>Request sent on: @not.DateSent.ToString("MMMM, dd yyyy, hh:mm")</span>
+            </div>
+        }
+    }
 </div>
 

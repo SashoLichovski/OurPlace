@@ -9,6 +9,8 @@
     <Compile Remove="Migrations\20200806121852_UserImage.Designer.cs" />
     <Compile Remove="Migrations\20200809135937_ImageDateRequire.cs" />
     <Compile Remove="Migrations\20200809135937_ImageDateRequire.Designer.cs" />
+    <Compile Remove="Migrations\20200811150113_Notification.cs" />
+    <Compile Remove="Migrations\20200811150113_Notification.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

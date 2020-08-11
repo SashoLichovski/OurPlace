@@ -1,0 +1,14 @@
+﻿.notContainer {
+    padding: 10px;
+    margin: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+}
+.sectionContainer {
+    display: flex;
+}
+    .sectionContainer header, a {
+        margin-right: 20px;
+    }
+    .sectionContainer header {
+        font-size: 1.3em;
+    }

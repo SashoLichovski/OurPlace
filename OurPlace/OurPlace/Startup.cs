@@ -38,6 +38,9 @@ namespace OurPlace
             services.AddTransient<IImageService, ImageService>();
             services.AddTransient<IImageRepository, ImageRepository>();
 
+            services.AddTransient<INotificationService, NotificationService>();
+            services.AddTransient<INotificationRepository, NotificationRepository>();
+
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
         }

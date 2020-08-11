@@ -29,7 +29,7 @@
     <div class="profileContainer">
         @if (Model.UserId != User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value)
         {
-            <a asp-controller="Friend" asp-action="AddFriend">Add friend</a>
+            <a asp-controller="Notification" asp-action="FriendRequest" asp-route-userId="@Model.UserId">Add friend</a>
         }
         <a asp-action="TimeLine">Time Line</a>
         <a asp-action="UserInfo" asp-route-userId="@Model.UserId">About</a>

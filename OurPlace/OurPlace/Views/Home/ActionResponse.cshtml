@@ -4,7 +4,15 @@
 }
 
 <div class="container">
-    <h3>@Model.Error</h3>
+    @if (string.IsNullOrEmpty(Model.SuccessMessage))
+    {
+        <h3>@Model.Error</h3>
+    }
+    else
+    {
+        <h3>@Model.SuccessMessage</h3>
+
+    }
     <hr />
     <p>Back to <a asp-action="HomePage">home page</a></p>
 </div>

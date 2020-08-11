@@ -11,5 +11,6 @@ namespace OurPlace.Data
         }
 
         public DbSet<UserImage> UserImages { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
     }
 }
