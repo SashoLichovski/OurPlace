@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using OurPlace.Services.DtoModels;
 using OurPlace.Services.Interfaces;
 using System.Security.Claims;
 using System.Threading.Tasks;
