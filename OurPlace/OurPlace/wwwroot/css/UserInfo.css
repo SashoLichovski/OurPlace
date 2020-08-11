@@ -24,3 +24,9 @@
         font-size: 1.3em;
         font-weight: bold;
     }
+
+@media only screen and (max-width : 991px) {
+    .aboutContainer {
+        width: 100%;
+    }
+}

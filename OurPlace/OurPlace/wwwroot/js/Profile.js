@@ -61,9 +61,10 @@ function openPhoto() {
 
     var img = document.createElement("img");
     img.src = event.target.src;
-    img.style.width = "60%";
-    img.style.left = "50%";
-    img.style.margin = "auto";
+    img.id = "layoutPhoto";
+    //img.style.width = "60%";
+    //img.style.left = "50%";
+    //img.style.margin = "auto";
     content.appendChild(img);
 
     container.style.cursor = "pointer";

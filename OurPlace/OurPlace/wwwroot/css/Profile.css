@@ -85,7 +85,7 @@
 .customForm {
     padding: 25px;
     background: rgb(191, 207, 0);
-    width: 30%;
+    width: 40%;
     margin: auto;
     border-radius: 15px;
 }
@@ -115,4 +115,62 @@
         width: 100%;
         display: grid;
     }
+
+#layoutPhoto {
+    width: 60%;
+    left: 50%;
+    margin: auto;
+}
+
+@media only screen and (max-width : 991px) {
+
+    .profileLayout {
+        height: 300px;
+    }
+
+    .coverPhoto img {
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .profilePhoto {
+        padding: 5px;
+        border-radius: 100%;
+        margin-top: 150px;
+        margin-left: 20px;
+        cursor: pointer;
+    }
+        .profilePhoto img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 100%;
+        }
+
+    .customForm {
+        width: 60%;
+    }
+
+    #layoutPhoto {
+        width: 95%;
+    }
+}
+
+@media only screen and (max-width : 768px) {
+    .profilePhoto {
+        margin-top: 100px;
+        margin-left: 20px;
+        cursor: pointer;
+    }
+        .profilePhoto img {
+            width: 90px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 100%;
+        }
+
+    .customForm {
+        width: 90%;
+    }
+}
 
