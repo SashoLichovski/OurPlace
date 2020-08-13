@@ -4,6 +4,7 @@ using OurPlace.Repositories.Interfaces;
 using OurPlace.Services.DtoModels;
 using OurPlace.Services.Interfaces;
 using System;
+using System.Collections.Generic;
 
 namespace OurPlace.Services
 {
@@ -19,6 +20,11 @@ namespace OurPlace.Services
             this.userManager = userManager;
             this.notRepo = notRepo;
         }
+
+        public List<Friend> GetAll(string userId)
+        {
+            return friendRepo.GetAll(userId);
+        } 
 
         public Response CreateFriends(string senderId, string userId)
         {

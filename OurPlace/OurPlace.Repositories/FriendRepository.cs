@@ -1,5 +1,6 @@
 ﻿using OurPlace.Data;
 using OurPlace.Repositories.Interfaces;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace OurPlace.Repositories
@@ -17,6 +18,11 @@ namespace OurPlace.Repositories
         {
             context.Friends.Add(friend);
             context.SaveChanges();
+        }
+
+        public List<Friend> GetAll(string userId)
+        {
+            return context.Friends.Where(x => x.UserId.Equals(userId)).ToList();
         }
 
         public Friend GetBySenderUserIds(string senderId, string userId)
