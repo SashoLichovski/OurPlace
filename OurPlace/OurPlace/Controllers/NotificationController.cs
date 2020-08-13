@@ -21,13 +21,18 @@ namespace OurPlace.Controllers
             return View(modelList);
         }
 
-
         public IActionResult FriendRequest(string userId)
         {
             var senderId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var response = notService.CreateFriendRequest(senderId, userId);
             
             return RedirectToAction("ActionResponse", "Home", response);
+        }
+
+        public IActionResult DeclineFriendRequest(string senderId, string userId)
+        {
+            notService.DeclineFriendRequest(senderId, userId);
+            return RedirectToAction("Overview", new { UserId = userId });
         }
     }
 }

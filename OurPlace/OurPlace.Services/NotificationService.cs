@@ -51,6 +51,12 @@ namespace OurPlace.Services
             return response;
         }
 
+        public void DeclineFriendRequest(string senderId, string userId)
+        {
+            var not = notRepo.GetByUserSenderId(senderId, userId);
+            notRepo.Delete(not);
+        }
+
         public List<Notification> GetAllForUser(string userId)
         {
             return notRepo.GetAllForUser(userId);

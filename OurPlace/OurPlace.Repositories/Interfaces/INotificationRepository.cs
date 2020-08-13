@@ -8,5 +8,6 @@ namespace OurPlace.Repositories.Interfaces
         void Add(Notification notification);
         List<Notification> GetAllForUser(string userId);
         Notification GetByUserSenderId(string senderId, string userId);
+        void Delete(Notification not);
     }
 }

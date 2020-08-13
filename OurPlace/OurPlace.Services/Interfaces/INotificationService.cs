@@ -8,5 +8,6 @@ namespace OurPlace.Services.Interfaces
     {
         Response CreateFriendRequest(string senderId, string userId);
         List<Notification> GetAllForUser(string userId);
+        void DeclineFriendRequest(string senderId, string userId);
     }
 }

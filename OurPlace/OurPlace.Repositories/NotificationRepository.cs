@@ -21,6 +21,12 @@ namespace OurPlace.Repositories
             context.SaveChanges();
         }
 
+        public void Delete(Notification not)
+        {
+            context.Notifications.Remove(not);
+            context.SaveChanges();
+        }
+
         public List<Notification> GetAllForUser(string userId)
         {
             return context.Notifications.Where(x => x.UserId.Equals(userId)).ToList();

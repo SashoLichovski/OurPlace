@@ -41,6 +41,9 @@ namespace OurPlace
             services.AddTransient<INotificationService, NotificationService>();
             services.AddTransient<INotificationRepository, NotificationRepository>();
 
+            services.AddTransient<IFriendService, FriendService>();
+            services.AddTransient<IFriendRepository, FriendRepository>();
+
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
         }
