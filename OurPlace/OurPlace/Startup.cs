@@ -44,6 +44,12 @@ namespace OurPlace
             services.AddTransient<IFriendService, FriendService>();
             services.AddTransient<IFriendRepository, FriendRepository>();
 
+            services.AddTransient<IChatService, ChatService>();
+            services.AddTransient<IChatRepository, ChatRepository>();
+
+            services.AddTransient<IMessageService, MessageService>();
+            services.AddTransient<IMessageRepository, MessageRepository>();
+
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
         }

@@ -1,0 +1,61 @@
+﻿@inject OurPlace.Services.Interfaces.IChatService chatService
+@inject OurPlace.Services.Interfaces.IUserService userService
+@{
+    var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value;
+    var chats = chatService.GetAll(userId);
+}
+
+@foreach (var chat in chats)
+{
+    <div class="chatContainer hide" id="@chat.ChatName">
+        <div class="chatHeader">
+            <div class="headerInfo">
+                <img src="~/defaultImage/defaultImage.png" class="userImg" />
+                @if (userService.GetUserForChat(chat.ChatName)[0].FirstName == userService.GetById(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value).FirstName)
+                {
+                    <p>@userService.GetUserForChat(chat.ChatName)[1].FirstName @userService.GetUserForChat(chat.ChatName)[1].LastName</p>
+                }
+                else
+                {
+                    <p>@userService.GetUserForChat(chat.ChatName)[0].FirstName @userService.GetUserForChat(chat.ChatName)[0].LastName</p>
+                }
+            </div>
+            <div>
+                <i class="fas fa-times" onclick="toggleChat('','','@chat.ChatName')"></i>
+            </div>
+        </div>
+        <div class="chatText" id="chat-@chat.ChatName">
+            @foreach (var message in chat.Messages)
+            {
+                @if (message.UserId == userId)
+                {
+                    <div style="margin-bottom: 10px">
+                        <div class="myMessageContainer">
+                            <p class="bg-primary">@message.Text</p>
+                            <img src="data:image/jpeg;base64,@Convert.ToBase64String(message.User.ProfilePhoto)" class="myMessageImg" />
+                        </div>
+                        <div class="myDatePosted">@message.DateCreated.ToString("dd/MM/yyyy hh:mm")</div>
+                    </div>
+                }
+                else
+                {
+                    <div style="margin-bottom: 10px">
+                        <div class="messageContainer">
+                            <img src="data:image/jpeg;base64,@Convert.ToBase64String(message.User.ProfilePhoto)" class="messageImg" />
+                            <p class="bg-success">@message.Text</p>
+                        </div>
+                        <span class="datePosted">@message.DateCreated.ToString("dd/MM/yyyy hh:mm")</span>
+                    </div>
+                }
+            }
+
+        </div>
+        <div class="chatInput">
+            <form asp-controller="Message" asp-action="Create" asp-route-userId="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value" asp-route-chatName="@chat.ChatName" method="post">
+                <input class="input-group" name="message"/>
+                <input class="inputBtn" type="submit" value="Send" />
+            </form>
+        </div>
+    </div>
+}
+

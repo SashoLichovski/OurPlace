@@ -10,12 +10,9 @@
     <div class="sidebardBody">
         @foreach (var friend in allFriends)
         {
-            <a>
+            <div onclick="toggleChat('@userId', '@friend.FriendId')">
                 <div class="friend">@friend.FriendName</div>
-            </a>
+            </div>
         }
-        <div class="friend">Friend 1</div>
-        <div class="friend">Friend 2</div>
-        <div class="friend">Friend 3</div>
     </div>
 </div>

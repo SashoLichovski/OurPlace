@@ -61,7 +61,7 @@ namespace OurPlace.Controllers
             if (ModelState.IsValid)
             {
                 var response = userService.UpdateFullName(model.FirstName, model.LastName, model.UserId);
-                if (string.IsNullOrEmpty(response.Error))
+                if (string.IsNullOrEmpty(response.Result.Error))
                 {
                     return RedirectToAction("UserInfo", new { model.UserId });
                 }

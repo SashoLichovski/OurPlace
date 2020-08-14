@@ -25,7 +25,12 @@ namespace OurPlace.Services
             this.imageService = imageService;
         }
 
-        public Response UpdateFullName(string firstName, string lastName, string userId)
+        public List<User> GetUserForChat(string chatName)
+        {
+            return userManager.Users.Where(x => chatName.Contains(x.Id)).ToList();
+        }
+
+        public async Task<Response> UpdateFullName(string firstName, string lastName, string userId)
         {
             var response = new Response();
             var user = GetById(userId);
@@ -33,7 +38,7 @@ namespace OurPlace.Services
             {
                 user.FirstName = firstName;
                 user.LastName = lastName;
-                userManager.UpdateAsync(user);
+                await userManager.UpdateAsync(user);
                 context.SaveChanges();
             }
             else

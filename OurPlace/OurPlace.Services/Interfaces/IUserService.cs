@@ -11,9 +11,10 @@ namespace OurPlace.Services.Interfaces
     public interface IUserService
     {
         User GetById(string userId);
-        Response UpdateFullName(string firstName, string lastName, string userId);
+        Task<Response> UpdateFullName(string firstName, string lastName, string userId);
         List<User> SearchUsers(string search);
         Task UploadCover(Image image, string userId);
         Task UpdateCoverProfile(byte[] imgByteArr, string userId, string photoType);
+        List<User> GetUserForChat(string chatName);
     }
 }

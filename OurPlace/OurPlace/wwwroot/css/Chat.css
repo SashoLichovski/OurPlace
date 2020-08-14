@@ -1,0 +1,106 @@
+﻿.chatContainer {
+    position: fixed;
+    z-index: 10;
+    width: 300px;
+    bottom: 0;
+    right: 0;
+    margin-right: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.70);
+}
+
+.chatHeader {
+    background-color: #989898;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+    .chatHeader p {
+        margin: 0 !important;
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+.userImg {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.headerInfo {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.chatText {
+    height: 250px;
+    padding: 10px;
+    overflow: auto;
+    background-color: white;
+}
+.messageImg {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.messageContainer {
+    display: flex;
+}
+    .messageContainer p {
+        margin-bottom: 0 !important;
+        padding: 5px 15px;
+        border-radius: 20px;
+        color: white;
+    }
+.datePosted {
+    font-size: 0.8em;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.myMessageContainer {
+    display: flex;
+    justify-content: flex-end;
+}
+    .myMessageContainer p {
+        margin-bottom: 0 !important;
+        padding: 5px 15px;
+        border-radius: 20px;
+        color: white;
+    }
+.myDatePosted {
+    font-size: 0.8em;
+    color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    text-align: end;
+}
+.myMessageImg {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-left: 10px;
+}
+
+.chatInput {
+    padding: 3px;
+    border-top: 1px solid rgba(0, 0, 0, 0.70);
+}
+.chatInput form{
+    display: flex;
+    justify-content: space-between;
+}
+.input {
+    width: 75%;
+    margin-right: 0px !important;
+    border-radius: 5px;
+}
+.inputBtn {
+    width: 20%;
+}
+
+.fa-times {
+    cursor: pointer;
+}
+
+.hide {
+    display: none;
+}

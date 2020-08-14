@@ -13,12 +13,14 @@ namespace OurPlace.Services
         private readonly IFriendRepository friendRepo;
         private readonly UserManager<User> userManager;
         private readonly INotificationRepository notRepo;
+        private readonly IChatService chatService;
 
-        public FriendService(IFriendRepository friendRepo, UserManager<User> userManager, INotificationRepository notRepo)
+        public FriendService(IFriendRepository friendRepo, UserManager<User> userManager, INotificationRepository notRepo, IChatService chatService)
         {
             this.friendRepo = friendRepo;
             this.userManager = userManager;
             this.notRepo = notRepo;
+            this.chatService = chatService;
         }
 
         public List<Friend> GetAll(string userId)
@@ -26,58 +28,46 @@ namespace OurPlace.Services
             return friendRepo.GetAll(userId);
         } 
 
-        public Response CreateFriends(string senderId, string userId)
+        private Friend Create(User user, string senderId, string userId)
         {
-            var response = new Response();
-            var friends = friendRepo.GetBySenderUserIds(senderId, userId);
-            if (friends == null)
+            var friend = new Friend()
             {
-                var notification = notRepo.GetByUserSenderId(senderId, userId);
-                notRepo.Delete(notification);
-
-                var userOne = userManager.FindByIdAsync(userId).Result;
-                var userTwo = userManager.FindByIdAsync(senderId).Result;
-                var friendOne = new Friend()
-                {
-                    DateCreated = DateTime.Now,
-                    UserId = userId,
-                    FriendId = senderId,
-                };
-                if (userTwo.FirstName != null)
-                {
-
-                    friendOne.FriendName = $"{userTwo.FirstName} {userTwo.LastName}";
-                }
-                else
-                {
-                    friendOne.FriendName = userTwo.Email;
-                }
-
-                friendRepo.Add(friendOne);
-
-                var friendTwo = new Friend()
-                {
-                    DateCreated = DateTime.Now,
-                    UserId = senderId,
-                    FriendId = userId
-                };
-                if (userOne.FirstName != null)
-                {
-                    friendTwo.FriendName = $"{userOne.FirstName} {userOne.LastName}";
-                }
-                else
-                {
-                    friendTwo.FriendName = userOne.Email;
-                }
-
-                friendRepo.Add(friendTwo);
-
-                response.SuccessMessage = $"You are now friends with {friendOne.FriendName}";
+                DateCreated = DateTime.Now,
+                UserId = userId,
+                FriendId = senderId
+            };
+            if (!string.IsNullOrEmpty(user.FirstName))
+            {
+                friend.FriendName = $"{user.FirstName} {user.LastName}";
             }
             else
             {
-                response.Error = "You are already friends";
+                friend.FriendName = $"{user.Email}";
             }
+
+            return friend;
+        }
+
+        public Response CreateFriends(string senderId, string userId)
+        {
+            var response = new Response();
+
+            var not = notRepo.GetByUserSenderId(senderId, userId);
+            notRepo.Delete(not);
+
+            var userOne = userManager.FindByIdAsync(userId).Result;
+            var userTwo = userManager.FindByIdAsync(senderId).Result;
+
+            var friendOne = Create(userTwo, senderId, userId);
+            var friendTwo = Create(userOne, userId, senderId);
+
+            friendRepo.Add(friendOne);
+            friendRepo.Add(friendTwo);
+
+            chatService.Create(senderId, userId);
+
+            response.SuccessMessage = $"You are now friends with {friendOne.FriendName}";
+
             return response;
         }
     }

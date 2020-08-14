@@ -12,18 +12,30 @@ namespace OurPlace.Services
     {
         private readonly INotificationRepository notRepo;
         private readonly UserManager<User> userManager;
+        private readonly IFriendRepository friendRepo;
 
-        public NotificationService(INotificationRepository notRepo, UserManager<User> userManager)
+        public NotificationService(INotificationRepository notRepo, UserManager<User> userManager, IFriendRepository friendRepo)
         {
             this.notRepo = notRepo;
             this.userManager = userManager;
+            this.friendRepo = friendRepo;
         }
 
         public Response CreateFriendRequest(string senderId, string userId)
         {
-            var not = notRepo.GetByUserSenderId(senderId, userId);
             var response = new Response();
-            if (not == null)
+            var not = notRepo.GetByUserSenderId(senderId, userId);
+            var friends = friendRepo.GetBySenderUserIds(senderId, userId);
+
+            if (friends != null)
+            {
+                response.Error = "You are already friends";
+            }
+            else if (not != null)
+            {
+                response.Error = "You already have sent or received friend request from this user.";
+            }
+            else
             {
                 var sender = userManager.FindByIdAsync(senderId).Result;
                 var notification = new Notification()
@@ -42,10 +54,6 @@ namespace OurPlace.Services
                 }
                 response.SuccessMessage = "Friend request successfully sent";
                 notRepo.Add(notification);
-            }
-            else
-            {
-                response.Error = "You already have sent or received friend request from this user.";
             }
             
             return response;
