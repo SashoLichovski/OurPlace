@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OurPlace.Data;
+using OurPlace.Hubs;
 using OurPlace.Repositories;
 using OurPlace.Repositories.Interfaces;
 using OurPlace.Services;
@@ -33,6 +34,8 @@ namespace OurPlace
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            services.AddSignalR();
+
             services.AddTransient<IUserService, UserService>();
 
             services.AddTransient<IImageService, ImageService>();
@@ -55,6 +58,7 @@ namespace OurPlace
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        [System.Obsolete]
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -75,6 +79,11 @@ namespace OurPlace
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<ChatHub>("/chatHub");
+            });
 
             app.UseEndpoints(endpoints =>
             {

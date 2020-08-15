@@ -1,5 +1,6 @@
 ﻿@inject OurPlace.Services.Interfaces.IChatService chatService
 @inject OurPlace.Services.Interfaces.IUserService userService
+@inject Microsoft.AspNetCore.Identity.UserManager<OurPlace.Data.User> userManager
 @{
     var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value;
     var chats = chatService.GetAll(userId);
@@ -21,7 +22,7 @@
                 }
             </div>
             <div>
-                <i class="fas fa-times" onclick="toggleChat('','','@chat.ChatName')"></i>
+                <i class="fas fa-times" onclick="toggleChat('@userId', '@userManager.Users.FirstOrDefault(x => chat.ChatName.Contains(x.Id) && userId != x.Id).Id')"></i>
             </div>
         </div>
         <div class="chatText" id="chat-@chat.ChatName">
@@ -51,8 +52,10 @@
 
         </div>
         <div class="chatInput">
-            <form asp-controller="Message" asp-action="Create" asp-route-userId="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value" asp-route-chatName="@chat.ChatName" method="post">
-                <input class="input-group" name="message"/>
+            <form method="post" onsubmit="sendMessage(event, '@chat.ChatName')">
+                <input hidden name="chatroomId" value="@chat.Id"/>
+                <input hidden name="chatroomName" value="@chat.ChatName"/>
+                <input class="input-group" placeholder="Type a message..." name="text" autocomplete="off" id="input-@chat.ChatName"/>
                 <input class="inputBtn" type="submit" value="Send" />
             </form>
         </div>

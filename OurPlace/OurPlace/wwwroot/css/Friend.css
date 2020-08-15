@@ -10,6 +10,7 @@
     width: 270px;
     transition: left 0.6s;
     position: absolute;
+    z-index: 20;
 }
 
 .sidebarHeader {

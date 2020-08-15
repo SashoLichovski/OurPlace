@@ -1,7 +1,10 @@
-﻿namespace OurPlace.Services.Interfaces
+﻿using OurPlace.Services.DtoModels;
+using System.Threading.Tasks;
+
+namespace OurPlace.Services.Interfaces
 {
     public interface IMessageService
     {
-        void Create(string userId, string chatName, string message);
+        Task<MessageDto> Create(string userId, string chatName, string message);
     }
 }
