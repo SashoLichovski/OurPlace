@@ -11,6 +11,8 @@
     <Compile Remove="Migrations\20200809135937_ImageDateRequire.Designer.cs" />
     <Compile Remove="Migrations\20200811150113_Notification.cs" />
     <Compile Remove="Migrations\20200811150113_Notification.Designer.cs" />
+    <Compile Remove="Migrations\20200815125217_ChatNameConnection.cs" />
+    <Compile Remove="Migrations\20200815125217_ChatNameConnection.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

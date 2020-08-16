@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -14,6 +15,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using OurPlace.Data;
+using OurPlace.Services.Common;
 
 namespace OurPlace.Areas.Identity.Pages.Account
 {
@@ -75,7 +77,13 @@ namespace OurPlace.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = Input.Email, Email = Input.Email };
+                var img = Image.FromFile("C:\\Users\\Sasho\\Desktop\\FinalProject\\OurPlace\\OurPlace\\OurPlace\\wwwroot\\defaultImage\\defaultImage.png");
+                var user = new User() 
+                { 
+                    UserName = Input.Email, 
+                    Email = Input.Email,
+                    ProfilePhoto = ImageConvert.ToByteArray(img) 
+                };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

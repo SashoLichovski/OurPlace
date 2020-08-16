@@ -70,5 +70,15 @@ namespace OurPlace.Services
 
             return response;
         }
+
+        public List<Friend> GetUserAsFriend(string userId)
+        {
+            return friendRepo.GetUserAsFriend(userId);
+        }
+
+        public void Update(Friend friend)
+        {
+            friendRepo.Update(friend);
+        }
     }
 }

@@ -24,7 +24,7 @@ namespace OurPlace.Services
         public async Task<MessageDto> Create(string userId, string chatName, string message)
         {
             var chatId = chatService.GetByName(chatName).Id;
-            var user = userManager.FindByIdAsync(userId).Result;
+            var user = await userManager.FindByIdAsync(userId);
             var msg = new Message()
             {
                 UserId = userId,

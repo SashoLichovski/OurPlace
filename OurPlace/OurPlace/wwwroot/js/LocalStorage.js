@@ -4,9 +4,7 @@
         if (items == null) {
             items = []
         }
-        if (!items.includes(item)) {
-            items.push(item);
-        }
+        items.push(item);
         localStorage.setItem(storageKey, JSON.stringify(items));
     },
     existsInLocalStorage: function (item, storageKey) {
@@ -18,10 +16,9 @@
     },
     removeFromLocalStorage: function (item, storageKey) {
         var items = JSON.parse(localStorage.getItem(storageKey));
-        var filtered = items.filter(x => {
-            return x != item;
-        })
-        localStorage.setItem(storageKey, JSON.stringify(filtered));
+        var index = items.indexOf(item);
+        items.splice(index, 1);
+        localStorage.setItem(storageKey, JSON.stringify(items));
     },
     getItems: function (storageKey) {
         var arr = [];

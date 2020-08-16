@@ -1,13 +1,21 @@
-﻿function closeChat(chatName) {
-    var chat = document.getElementById(chatName);
-    chat.classList.add("hide");
-    if (!storageService.existsInLocalStorage(chat.id, "chats")) {
-        storageService.addToLocalStorage(chat.id, "chats");
-        storageService.addToLocalStorage(userId, "userIds");
+﻿function toggleChatBody(id) {
+    var body = document.getElementById(`chat-${id}`)
+    var input = document.getElementById(`form-${id}`)
+    if (!body.classList.contains("hide")) {
+        body.classList.add("hide");
+        input.classList.add("hide");
+        storageService.addToLocalStorage(id, "hiddenChats")
     } else {
-        storageService.removeFromLocalStorage(chat.id, "chats");
-        storageService.removeFromLocalStorage(userId, "userIds");
+        body.classList.remove("hide");
+        input.classList.remove("hide");
+        storageService.removeFromLocalStorage(id, "hiddenChats")
     }
+}
+
+var hiddenChats = storageService.getItems("hiddenChats");
+for (var i = 0; i < hiddenChats.length; i++) {
+    document.getElementById(`chat-${hiddenChats[i]}`).classList.add("hide");
+    document.getElementById(`form-${hiddenChats[i]}`).classList.add("hide");
 }
 
 var chatIds = storageService.getItems("chats");
@@ -15,7 +23,8 @@ var userIds = storageService.getItems("userIds");
 for (var i = 0; i < chatIds.length; i++) {
     var chat = document.getElementById(chatIds[i]);
     chat.classList.remove("hide");
-    startConnection(chat, userIds[i]);
+    chat.style.marginRight += `${(i * 320)}px`;
+    toggleConnection(chat, userIds[i], false);
 }
 
 function toggleChat(userId, friendId) {
@@ -24,31 +33,46 @@ function toggleChat(userId, friendId) {
     if (chat == null) {
         chat = document.getElementById(friendId + userId);
     }
+    //debugger;
+    // Displaying / Hiding chat , updating margin
     if (chat.classList.contains("hide")) {
         chat.classList.remove("hide");
+
+        var textEle = document.getElementById(`chat-${userId + friendId}`);
+        if (textEle == null) {
+            textEle = document.getElementById(`chat-${friendId + userId}`);
+        }
+        textEle.scrollTop = textEle.scrollHeight;
+
+        var openChats = storageService.getItems("chats");
+        if (openChats.length > 0) {
+            chat.style.marginRight = `${(openChats.length * 300) + (openChats.length * 20)}px`;
+        }
     } else {
         chat.classList.add("hide");
+        chat.style.marginRight = "0px";
     }
-    var textEle = document.getElementById(`chat-${userId + friendId}`);
-    if (textEle == null) {
-        textEle = document.getElementById(`chat-${friendId + userId}`);
-    }
-    textEle.scrollTop = textEle.scrollHeight;
+    
     //debugger;
+    // Starting / Closing signalR connection, Updating local storage
     if (!storageService.existsInLocalStorage(chat.id, "chats")) {
         storageService.addToLocalStorage(chat.id, "chats");
         storageService.addToLocalStorage(userId, "userIds");
-        startConnection(chat, userId, false);
+        toggleConnection(chat, userId, false);
     } else {
         storageService.removeFromLocalStorage(chat.id, "chats");
         storageService.removeFromLocalStorage(userId, "userIds");
-        startConnection(chat, userId, true);
+        var openChats = storageService.getItems("chats");
+        for (var i = 0; i < openChats.length; i++) {
+            document.getElementById(openChats[i]).style.marginRight = `${(i * 300)+(i * 20)}px`;
+        }
+        toggleConnection(chat, userId, true);
     }
 
 }
 
 
-function startConnection(chat, userId, isStarted) {
+function toggleConnection(chat, userId, isStarted) {
     //debugger;
     var currentChat = chat;
     var chatText = document.getElementById(`chat-${currentChat.id}`);

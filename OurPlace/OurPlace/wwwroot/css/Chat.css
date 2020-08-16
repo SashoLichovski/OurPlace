@@ -4,7 +4,6 @@
     width: 300px;
     bottom: 0;
     right: 0;
-    margin-right: 20px;
     border: 1px solid rgba(0, 0, 0, 0.70);
 }
 
@@ -13,6 +12,7 @@
     display: flex;
     justify-content: space-between;
     padding: 10px;
+    cursor: pointer;
 }
     .chatHeader p {
         margin: 0 !important;
@@ -83,6 +83,7 @@
 .chatInput {
     padding: 3px;
     border-top: 1px solid rgba(0, 0, 0, 0.70);
+    background-color: white;
 }
 .chatInput form{
     display: flex;

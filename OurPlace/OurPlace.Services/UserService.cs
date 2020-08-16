@@ -17,12 +17,14 @@ namespace OurPlace.Services
         private readonly UserManager<User> userManager;
         private readonly ApplicationDbContext context;
         private readonly IImageService imageService;
+        private readonly IFriendService friendService;
 
-        public UserService(UserManager<User> userManager, ApplicationDbContext context, IImageService imageService)
+        public UserService(UserManager<User> userManager, ApplicationDbContext context, IImageService imageService, IFriendService friendService)
         {
             this.userManager = userManager;
             this.context = context;
             this.imageService = imageService;
+            this.friendService = friendService;
         }
 
         public List<User> GetUserForChat(string chatName)
@@ -40,6 +42,13 @@ namespace OurPlace.Services
                 user.LastName = lastName;
                 await userManager.UpdateAsync(user);
                 context.SaveChanges();
+
+                var userAsFriend = friendService.GetUserAsFriend(userId);
+                foreach (var friend in userAsFriend)
+                {
+                    friend.FriendName = $"{firstName} {lastName}";
+                    friendService.Update(friend);
+                }
             }
             else
             {

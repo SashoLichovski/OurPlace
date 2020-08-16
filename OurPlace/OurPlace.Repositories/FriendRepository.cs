@@ -30,5 +30,16 @@ namespace OurPlace.Repositories
             return context.Friends.FirstOrDefault(x => x.FriendId.Equals(userId) && x.UserId.Equals(senderId) ||
             x.FriendId.Equals(senderId) && x.UserId.Equals(userId));
         }
+
+        public List<Friend> GetUserAsFriend(string userId)
+        {
+            return context.Friends.Where(x => x.FriendId.Equals(userId)).ToList();
+        }
+
+        public void Update(Friend friend)
+        {
+            context.Friends.Update(friend);
+            context.SaveChanges();
+        }
     }
 }

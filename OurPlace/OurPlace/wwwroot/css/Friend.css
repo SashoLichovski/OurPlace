@@ -30,3 +30,7 @@
     border-top: 1px solid rgb(154, 154, 154);
     cursor: pointer;
 }
+    .friend:hover {
+        color: rgb(35, 35, 35);
+        background-color: rgb(191, 207, 0);
+    }

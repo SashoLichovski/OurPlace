@@ -8,5 +8,7 @@ namespace OurPlace.Services.Interfaces
     {
         Response CreateFriends(string senderId, string userId);
         List<Friend> GetAll(string userId);
+        List<Friend> GetUserAsFriend(string userId);
+        void Update(Friend friend);
     }
 }

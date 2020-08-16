@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http.Extensions;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using OurPlace.Data;
 using OurPlace.Hubs;
 using OurPlace.Services.Interfaces;
+using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace OurPlace.Controllers
 {
@@ -18,21 +13,19 @@ namespace OurPlace.Controllers
     {
         private readonly IHubContext<ChatHub> chat;
         private readonly IMessageService messageService;
-        private readonly ApplicationDbContext context;
 
-        public ChatController(IHubContext<ChatHub> chat, IMessageService messageService, ApplicationDbContext context)
+        public ChatController(IHubContext<ChatHub> chat, IMessageService messageService)
         {
             this.chat = chat;
             this.messageService = messageService;
-            this.context = context;
         }
 
         [HttpPost("[action]/{connectionId}/{chatroomName}")]
         public async Task<IActionResult> JoinRoom(string connectionId, string chatroomName)
         {
             await chat.Groups.AddToGroupAsync(connectionId, chatroomName);
-            var currentPage = HttpContext.Request.GetDisplayUrl();
-            return Redirect(currentPage);
+            //var currentPage = HttpContext.Request.GetDisplayUrl();
+            return Ok();
         }
 
         [HttpPost("[action]/{connectionId}/{chatroomName}")]

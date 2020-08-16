@@ -170,24 +170,6 @@ namespace OurPlace.Data.Migrations
                     b.ToTable("Chats");
                 });
 
-            modelBuilder.Entity("OurPlace.Data.ChatNameConnection", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ChatName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ChatNameConnections");
-                });
-
             modelBuilder.Entity("OurPlace.Data.Friend", b =>
                 {
                     b.Property<int>("Id")

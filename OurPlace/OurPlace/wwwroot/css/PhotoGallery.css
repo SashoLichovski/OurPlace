@@ -91,11 +91,11 @@
     width: 100%;
     text-align: end;
     cursor: pointer;
-    transition: all 0.5s;
+    transition: all 0.3s;
     color: whitesmoke;
 }
     .closeCarousel:hover {
-        font-size: 60px;
+        font-size: 45px;
     }
 
 @media (max-width: 991px) {

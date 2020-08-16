@@ -9,10 +9,10 @@
 @foreach (var chat in chats)
 {
     <div class="chatContainer hide" id="@chat.ChatName">
-        <div class="chatHeader">
+        <div class="chatHeader" onclick="toggleChatBody(`@chat.ChatName`)">
             <div class="headerInfo">
                 <img src="~/defaultImage/defaultImage.png" class="userImg" />
-                @if (userService.GetUserForChat(chat.ChatName)[0].FirstName == userService.GetById(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value).FirstName)
+                @if (userService.GetUserForChat(chat.ChatName)[0].FirstName == userService.GetById(userId).FirstName)
                 {
                     <p>@userService.GetUserForChat(chat.ChatName)[1].FirstName @userService.GetUserForChat(chat.ChatName)[1].LastName</p>
                 }
@@ -33,7 +33,14 @@
                     <div style="margin-bottom: 10px">
                         <div class="myMessageContainer">
                             <p class="bg-primary">@message.Text</p>
-                            <img src="data:image/jpeg;base64,@Convert.ToBase64String(message.User.ProfilePhoto)" class="myMessageImg" />
+                            @if (message.User.ProfilePhoto == null)
+                            {
+                                <img src="~/defaultImage/defaultImage.png" class="myMessageImg"/>
+                            }
+                            else
+                            {
+                                <img src="data:image/jpeg;base64,@Convert.ToBase64String(message.User.ProfilePhoto)" class="myMessageImg" />
+                            }
                         </div>
                         <div class="myDatePosted">@message.DateCreated.ToString("dd/MM/yyyy hh:mm")</div>
                     </div>
@@ -42,7 +49,14 @@
                 {
                     <div style="margin-bottom: 10px">
                         <div class="messageContainer">
-                            <img src="data:image/jpeg;base64,@Convert.ToBase64String(message.User.ProfilePhoto)" class="messageImg" />
+                            @if (message.User.ProfilePhoto == null)
+                            {
+                                <img src="~/defaultImage/defaultImage.png" class="messageImg"/>
+                            }
+                            else
+                            {
+                                <img src="data:image/jpeg;base64,@Convert.ToBase64String(message.User.ProfilePhoto)" class="messageImg" />
+                            }
                             <p class="bg-success">@message.Text</p>
                         </div>
                         <span class="datePosted">@message.DateCreated.ToString("dd/MM/yyyy hh:mm")</span>
@@ -51,7 +65,7 @@
             }
 
         </div>
-        <div class="chatInput">
+        <div class="chatInput" id="form-@chat.ChatName">
             <form method="post" onsubmit="sendMessage(event, '@chat.ChatName')">
                 <input hidden name="chatroomId" value="@chat.Id"/>
                 <input hidden name="chatroomName" value="@chat.ChatName"/>
