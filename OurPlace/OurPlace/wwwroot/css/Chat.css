@@ -103,5 +103,6 @@
 }
 
 .hide {
-    display: none;
+/*    display: none;*/
+    visibility: hidden;
 }

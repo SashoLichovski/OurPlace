@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using OurPlace.Data;
 using OurPlace.Services.Common;
@@ -26,17 +27,20 @@ namespace OurPlace.Areas.Identity.Pages.Account
         private readonly UserManager<User> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IConfiguration configuration;
 
         public RegisterModel(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            this.configuration = configuration;
         }
 
         [BindProperty]
@@ -48,6 +52,12 @@ namespace OurPlace.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+            [Required]
+            public string FirstName { get; set; }
+            
+            [Required]
+            public string LastName { get; set; }
+
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -77,9 +87,11 @@ namespace OurPlace.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var img = Image.FromFile("C:\\Users\\Sasho\\Desktop\\FinalProject\\OurPlace\\OurPlace\\OurPlace\\wwwroot\\defaultImage\\defaultImage.png");
+                var img = Image.FromFile(configuration["DefaultImageLocalPath:ProfileImage"]);
                 var user = new User() 
                 { 
+                    FirstName = Input.FirstName,
+                    LastName = Input.LastName,
                     UserName = Input.Email, 
                     Email = Input.Email,
                     ProfilePhoto = ImageConvert.ToByteArray(img) 

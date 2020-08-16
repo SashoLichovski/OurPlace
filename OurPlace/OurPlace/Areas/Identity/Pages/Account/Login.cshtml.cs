@@ -84,6 +84,11 @@ namespace OurPlace.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+                    var user = _userManager.FindByEmailAsync(Input.Email).Result;
+                    if (string.IsNullOrEmpty(user.FirstName))
+                    {
+                        return RedirectToAction("EditFullName", "User", new { UserId = user.Id });
+                    }
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

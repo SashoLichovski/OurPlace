@@ -64,6 +64,10 @@ namespace OurPlace.Services
 
         public List<User> SearchUsers(string search)
         {
+            if (string.IsNullOrEmpty(search))
+            {
+                search = "";
+            }
             var dbList = userManager.Users
                 .Where(x => x.FirstName.Contains(search) || x.LastName.Contains(search) || x.Email.Contains(search))
                 .ToList();
