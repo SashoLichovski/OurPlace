@@ -24,7 +24,7 @@ namespace OurPlace.Controllers
         public async Task<IActionResult> JoinRoom(string connectionId, string chatroomName)
         {
             await chat.Groups.AddToGroupAsync(connectionId, chatroomName);
-            //var currentPage = HttpContext.Request.GetDisplayUrl();
+            //This is test commit
             return Ok();
         }
 
