@@ -1,30 +1,40 @@
-﻿function toggleChatBody(id) {
+﻿// ------------------ Handling Chat window styles ------------------ //
+// ------------------ Handling Chat window styles ------------------ //
+function updateScroll(chatId) {
+    var ele = document.getElementById(`chat-${chatId}`)
+    ele.scrollTop = ele.scrollHeight;
+}
+
+function toggleChatBody(id) {
     var body = document.getElementById(`chat-${id}`)
     var input = document.getElementById(`form-${id}`)
-    if (!body.classList.contains("hide")) {
-        body.classList.add("hide");
-        input.classList.add("hide");
-        storageService.addToLocalStorage(id, "hiddenChats")
-    } else {
-        body.classList.remove("hide");
-        input.classList.remove("hide");
-        storageService.removeFromLocalStorage(id, "hiddenChats")
+    if (storageService.existsInLocalStorage(id, "chats")) {
+        if (!body.classList.contains("hide")) {
+            body.classList.add("hide");
+            input.classList.add("hide");
+            storageService.addToLocalStorage(id, "hiddenChats")
+        } else {
+            body.classList.remove("hide");
+            input.classList.remove("hide");
+            storageService.removeFromLocalStorage(id, "hiddenChats")
+        }
     }
 }
 
 var hiddenChats = storageService.getItems("hiddenChats");
 for (var i = 0; i < hiddenChats.length; i++) {
-    document.getElementById(`chat-${hiddenChats[i]}`).classList.add("hide");
-    document.getElementById(`form-${hiddenChats[i]}`).classList.add("hide");
+    //if (storageService.existsInLocalStorage(hiddenChats[i], "chats")) {
+        document.getElementById(`chat-${hiddenChats[i]}`).classList.add("hide");
+        document.getElementById(`form-${hiddenChats[i]}`).classList.add("hide");
+    //}
 }
 
 var chatIds = storageService.getItems("chats");
-var userIds = storageService.getItems("userIds");
 for (var i = 0; i < chatIds.length; i++) {
     var chat = document.getElementById(chatIds[i]);
     chat.classList.remove("hide");
     chat.style.marginRight += `${(i * 320)}px`;
-    toggleConnection(chat, userIds[i], false);
+    updateScroll(chatIds[i]);
 }
 
 function toggleChat(userId, friendId) {
@@ -33,7 +43,7 @@ function toggleChat(userId, friendId) {
     if (chat == null) {
         chat = document.getElementById(friendId + userId);
     }
-    //debugger;
+
     // Displaying / Hiding chat , updating margin
     if (chat.classList.contains("hide")) {
         chat.classList.remove("hide");
@@ -54,37 +64,70 @@ function toggleChat(userId, friendId) {
     }
     
     //debugger;
-    // Starting / Closing signalR connection, Updating local storage
+    // Updating local storage
     if (!storageService.existsInLocalStorage(chat.id, "chats")) {
         storageService.addToLocalStorage(chat.id, "chats");
-        storageService.addToLocalStorage(userId, "userIds");
-        toggleConnection(chat, userId, false);
     } else {
         storageService.removeFromLocalStorage(chat.id, "chats");
-        storageService.removeFromLocalStorage(userId, "userIds");
+        if (storageService.existsInLocalStorage(chat.id, "hiddenChats")) {
+            storageService.removeFromLocalStorage(chat.id, "hiddenChats");
+            document.getElementById(`chat-${chat.id}`).classList.remove("hide");
+            document.getElementById(`form-${chat.id}`).classList.remove("hide");
+        }
         var openChats = storageService.getItems("chats");
         for (var i = 0; i < openChats.length; i++) {
             document.getElementById(openChats[i]).style.marginRight = `${(i * 300)+(i * 20)}px`;
         }
-        toggleConnection(chat, userId, true);
     }
-
 }
 
 
-function toggleConnection(chat, userId, isStarted) {
+// ------------------ SignalR Connection and Functions ------------------ //
+// ------------------ SignalR Connection and Functions ------------------ //
+var chats = document.getElementsByClassName("chatContainer");
+var userIds = document.getElementsByClassName("hiddenUserId");
+for (var i = 0; i < chats.length; i++) {
     //debugger;
-    var currentChat = chat;
-    var chatText = document.getElementById(`chat-${currentChat.id}`);
-    chatText.scrollTop = chatText.scrollHeight;
+    setTimeout(setConnections(chats[i].id, userIds[0].id), 100)
+}
 
+function setConnections(chatId, userId){
+
+    var currentChatName = chatId;
+
+    var chatText = document.getElementById(`chat-${currentChatName}`);
+    //var startTime = new Date().getMilliseconds();
     var connection = new signalR.HubConnectionBuilder()
         .withUrl("/chatHub")
         .build();
     var _connectionId = "";
-    //debugger;
-    connection.on("ReceiveMessage", function (data) {
 
+    var joinRoom = function () {
+        axios.post(`/Chat/JoinRoom/${_connectionId}/${currentChatName}`)
+            .then(res => {
+                console.log(`JoinRoom works ${currentChatName}`)
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
+    connection.start()
+        .then(function () {
+            connection.invoke("getConnectionId")
+                .then(function (connectionId) {
+                    //debugger;
+                    _connectionId = connectionId
+                    console.log(`This is connected ${_connectionId}`)
+                    joinRoom();
+                })
+        })
+        .catch(function (err) {
+            console.log(err);
+        });
+    //debugger;
+    var userId = userId;
+    connection.on("ReceiveMessage", function (data) {
         if (data.userId == userId) {
             var div = document.createElement("div");
             div.style.marginBottom = "10px";
@@ -135,65 +178,8 @@ function toggleConnection(chat, userId, isStarted) {
 
         chatText.scrollTop = chatText.scrollHeight;
     })
-
-    var joinRoom = function () {
-        axios.post(`/Chat/JoinRoom/${_connectionId}/${currentChat.id}`)
-            .then(res => {
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    }
-
-    var leaveRoom = function () {
-        axios.post(`/Chat/LeaveRoom/${_connectionId}/${currentChat.id}`)
-            .then(res => {
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    }
-
-    connection.start()
-        .then(function () {
-            connection.invoke("getConnectionId")
-                .then(function (connectionId) {
-                    //debugger;
-                    var connectionObject = {
-                        chatId: currentChat.id,
-                        connectionId: connectionId
-                    }
-                    if (storageService.existsInLocalStorage(currentChat.id, "chats")) {
-                        storageService.addToLocalStorage(connectionObject, "connectionIds")
-                        _connectionId = connectionId
-                    }
-                    else
-                    {
-                        var connectionItems = storageService.getItems("connectionIds");
-                        for (var i = 0; i < connectionItems.length; i++) {
-                            if (connectionItems[i].chatId == currentChat.id) {
-                                _connectionId = connectionItems[i].connectionId;
-                                storageService.removeFromLocalStorage(connectionItems[i], "connectionIds");
-                            }
-                        }
-                    }
-
-                    if (isStarted)
-                    {
-                        leaveRoom();
-                    }
-                    else
-                    {
-                        joinRoom();
-                    }
-                })
-        })
-        .catch(function (err) {
-            console.log(err);
-        });
-    
-
-
+    //var endTime = new Date().getMilliseconds();
+    //console.log(endTime - startTime);
 }
 
 function sendMessage(event, chatTextId) {

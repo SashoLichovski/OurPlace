@@ -98,11 +98,15 @@
     width: 20%;
 }
 
+
 .fa-times {
+    font-size: 1.1em;
     cursor: pointer;
 }
+    .fa-times:hover{
+        font-size: 1.3em;
+    }
 
 .hide {
-/*    display: none;*/
-    visibility: hidden;
+    display: none;
 }

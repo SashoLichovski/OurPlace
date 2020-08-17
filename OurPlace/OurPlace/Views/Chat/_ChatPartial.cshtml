@@ -9,6 +9,7 @@
 @foreach (var chat in chats)
 {
     <div class="chatContainer hide" id="@chat.ChatName">
+        <div hidden id="@userId" class="hiddenUserId"></div>
         <div class="chatHeader" onclick="toggleChatBody(`@chat.ChatName`)">
             <div class="headerInfo">
                 <img src="~/defaultImage/defaultImage.png" class="userImg" />
