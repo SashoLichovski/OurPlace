@@ -93,8 +93,14 @@ function setConnections(chatId, userId){
         }
         //debugger;
         var friendEle = document.getElementById(`friend-${currentChatName}`);
-        friendEle.style.backgroundColor = "red";
+        friendEle.style.backgroundColor = "#17a2b8";
         chatText.scrollTop = chatText.scrollHeight;
+
+        document.getElementById(currentChatName).classList.remove("hide");
+        chatText.scrollTop = chatText.scrollHeight;
+        if (!storageService.existsInLocalStorage(currentChatName, "chats")) {
+            storageService.addToLocalStorage(currentChatName, "chats");
+        }
     })
     //var endTime = new Date().getMilliseconds();
     //console.log(endTime - startTime);
