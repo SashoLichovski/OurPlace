@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using OurPlace.Helpers.Image;
 using OurPlace.Helpers.User;
 using OurPlace.Models.User;
 using OurPlace.Services.Interfaces;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace OurPlace.Controllers
@@ -75,8 +77,14 @@ namespace OurPlace.Controllers
         {
             var dbList = userService.SearchUsers(search);
             var modelList = dbList.Select(x => x.ToSearchUserModel()).ToList();
-            return View(modelList);
+            var model = new SearchResult { ModelList = modelList };
+            return View("SearchResult", model);
         }
+
+        //public IActionResult SearchResult(SearchResult model)
+        //{
+        //    return View(model);
+        //}
 
     }
 }

@@ -1,4 +1,4 @@
-﻿@model List<OurPlace.Models.User.SearchUserModel>
+﻿@model OurPlace.Models.User.SearchResult
 @{
     ViewData["Title"] = "Search";
 }
@@ -17,15 +17,14 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var user in Model)
+            @foreach (var user in Model.ModelList)
             {
-                    <tr>
-                        <td>@user.FirstName</td>
-                        <td>@user.LastName</td>
-                        <td>@user.Email</td>
-                        <td><a asp-action="Profile" asp-route-userId="@user.Id">Visit profile</a></td>
-                    </tr>
-                
+                <tr>
+                    <td>@user.FirstName</td>
+                    <td>@user.LastName</td>
+                    <td>@user.Email</td>
+                    <td><a asp-action="Profile" asp-route-userId="@user.Id">Visit profile</a></td>
+                </tr>
             }
         </tbody>
     </table>

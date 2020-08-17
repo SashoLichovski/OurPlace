@@ -1,17 +1,19 @@
 ﻿@inject OurPlace.Services.Interfaces.IFriendService friendService
 @inject Microsoft.AspNetCore.Identity.UserManager<OurPlace.Data.User> userManager
+@inject OurPlace.Services.Interfaces.IChatService chatService
 @{
     var userId = userManager.GetUserId(User);
     var allFriends = friendService.GetAll(userId);
+    var chats = chatService.GetAll(userId);
 }
-<div class="friendSidebard left" id="sidebar" style="left: -270px">
-    <h3 class="sidebarHeader">Friends</h3>
+<div class="friendSidebard left" id="sidebar">
+    <h3 class="sidebarHeader">My friends</h3>
 
     <div class="sidebardBody">
         @foreach (var friend in allFriends)
         {
-            <div onclick="toggleChat('@userId', '@friend.FriendId')">
-                <div class="friend">@friend.FriendName</div>
+            <div onclick="toggleChat('@userId', '@friend.FriendId')" >
+                <div class="friend" id="friend-@chats.First(x => x.ChatName.Contains(friend.FriendId)).ChatName">@friend.FriendName</div>
             </div>
         }
     </div>
