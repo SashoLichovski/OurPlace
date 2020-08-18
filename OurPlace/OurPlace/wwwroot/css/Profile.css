@@ -4,8 +4,8 @@
 }
 
 .profileLayout {
-    width: 90%;
-    height: 500px;
+    width: 70%;
+    height: 400px;
     margin: auto;
 }
 
@@ -15,7 +15,7 @@
 }
     .coverPhoto img {
         width: inherit;
-        height: 400px;
+        height: 300px;
         object-fit: cover;
     }
 
@@ -24,13 +24,13 @@
     padding: 10px;
     background-color: whitesmoke;
     border-radius: 100%;
-    margin-top: 250px;
+    margin-top: 180px;
     margin-left: 30px;
     cursor: pointer;
 }
     .profilePhoto img {
-        width: 200px;
-        height: 200px;
+        width: 175px;
+        height: 175px;
         object-fit: cover;
         border-radius: 100%;
     }
@@ -125,6 +125,7 @@
 
     .profileLayout {
         height: 300px;
+        width: 80%;
     }
 
     .coverPhoto img {
@@ -135,7 +136,7 @@
     .profilePhoto {
         padding: 5px;
         border-radius: 100%;
-        margin-top: 150px;
+        margin-top: 120px;
         margin-left: 20px;
         cursor: pointer;
     }
@@ -156,9 +157,14 @@
 }
 
 @media only screen and (max-width : 768px) {
+    .profileLayout {
+        height: 300px;
+        width: 100%;
+    }
+
     .profilePhoto {
         margin-top: 100px;
-        margin-left: 20px;
+        margin-left: 0px;
         cursor: pointer;
     }
         .profilePhoto img {

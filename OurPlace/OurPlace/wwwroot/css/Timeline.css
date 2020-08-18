@@ -1,0 +1,78 @@
+﻿.timeLine {
+    width: 70%;
+    margin: auto;
+}
+
+.timeLineHeader {
+    padding: 20px;
+    background-color: whitesmoke;
+    margin-bottom: 20px;
+    
+}
+
+.postFormContainer {
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: whitesmoke
+}
+    .postFormContainer input, textarea{
+        margin-bottom: 10px;
+    }
+    .postFormContainer h5 {
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    }
+
+.postIcon {
+    font-size: 35px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+    .postIcon:hover {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+.postHeader {
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.postContainer {
+    padding: 20px;
+    background-color: #b8edff;
+    margin-bottom: 20px;
+}
+
+.postImage {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.postMessage {
+    font-size: 1.2em;
+}
+
+.postDate {
+    margin-top: 10px;
+    font-size: 0.8em;
+}
+
+@media only screen and (max-width : 991px) {
+    .timeLine {
+        width: 100%;
+        margin: auto;
+    }
+
+    .postImage {
+        height: 280px;
+    }
+}
+
+@media only screen and (max-width : 768px) {
+    .postImage {
+        height: 200px;
+    }
+}

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OurPlace.Helpers.Image;
+using OurPlace.Helpers.Post;
 using OurPlace.Helpers.User;
 using OurPlace.Models.User;
 using OurPlace.Services.Interfaces;
@@ -11,18 +12,21 @@ namespace OurPlace.Controllers
     {
         private readonly IUserService userService;
         private readonly IImageService imageService;
+        private readonly IPostService postService;
 
-        public UserController(IUserService userService, IImageService imageService)
+        public UserController(IUserService userService, IImageService imageService, IPostService postService)
         {
             this.userService = userService;
             this.imageService = imageService;
+            this.postService = postService;
         }
 
         public IActionResult Profile(string userId)
         {
             var model = new UserProfileModel()
             {
-                Photos = userService.GetById(userId).ToUserLayoutPhotosModel()
+                Photos = userService.GetById(userId).ToUserLayoutPhotosModel(),
+                Posts = postService.GetAll(userId).Select(x => x.ToPostViewModel()).ToList()
             };
             return View(model);
         }
@@ -78,6 +82,7 @@ namespace OurPlace.Controllers
             var model = new SearchResult { ModelList = modelList };
             return View("SearchResult", model);
         }
+
 
     }
 }

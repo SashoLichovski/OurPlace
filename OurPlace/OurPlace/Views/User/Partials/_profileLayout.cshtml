@@ -31,7 +31,7 @@
         {
             <a asp-controller="Notification" asp-action="FriendRequest" asp-route-userId="@Model.UserId">Add friend</a>
         }
-        <a asp-action="TimeLine">Time Line</a>
+        <a asp-action="Profile" asp-route-userId="@Model.UserId">Time Line</a>
         <a asp-action="UserInfo" asp-route-userId="@Model.UserId">About</a>
         <a asp-action="UserPhotos" asp-route-userId="@Model.UserId">Photos</a>
         <a asp-action="UserFriends" asp-route-userId="@Model.UserId">Friends</a>
