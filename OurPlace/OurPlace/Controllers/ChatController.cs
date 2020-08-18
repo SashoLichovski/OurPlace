@@ -24,16 +24,16 @@ namespace OurPlace.Controllers
         public async Task<IActionResult> JoinRoom(string connectionId, string chatroomName)
         {
             await chat.Groups.AddToGroupAsync(connectionId, chatroomName);
-            //var currentPage = HttpContext.Request.GetDisplayUrl();
+            //This is test commit
             return Ok();
         }
 
-        [HttpPost("[action]/{connectionId}/{chatroomName}")]
-        public async Task<IActionResult> LeaveRoom(string connectionId, string chatroomName)
-        {
-            await chat.Groups.RemoveFromGroupAsync(connectionId, chatroomName);
-            return Ok();
-        }
+        //[HttpPost("[action]/{connectionId}/{chatroomName}")]
+        //public async Task<IActionResult> LeaveRoom(string connectionId, string chatroomName)
+        //{
+        //    await chat.Groups.RemoveFromGroupAsync(connectionId, chatroomName);
+        //    return Ok();
+        //}
 
         [HttpPost("[action]")]
         public async Task<IActionResult> SendMessage(string text, string chatroomName)

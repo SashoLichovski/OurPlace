@@ -5,17 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - OurPlace</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/css/Friend.css" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/Chat.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans&display=swap">
     @RenderSection("Styles", required: false)
 </head>
 <body id="body">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="HomePage">OurPlace</a>
+                <a class="navbar-brand text-light" asp-area="" asp-controller="Home" asp-action="HomePage">OurPlace</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -24,27 +25,27 @@
                     <partial name="_LoginPartial" />
                     @if (User.Identity.IsAuthenticated)
                     {
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="HomePage">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <form class="form-inline" asp-controller="User" asp-action="Search" method="post">
-                                <input placeholder="Search people" class="form-control searchInput" name="search" />
-                                <input type="submit" class="btn btn-success" value="search" />
-                            </form>
-                        </li>
-                    </ul>
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="HomePage">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <form class="form-inline" asp-controller="User" asp-action="Search" method="post">
+                                    <input placeholder="Search people" class="form-control searchInput" name="search" />
+                                    <input type="submit" class="btn btn-success" value="search" />
+                                </form>
+                            </li>
+                        </ul>
                     }
                 </div>
             </div>
         </nav>
     </header>
 
-    <partial name="_Friends" />
     @if (User.Identity.IsAuthenticated)
     {
-        <partial name="../Chat/_ChatPartial"/>
+        <partial name="_Friends" />
+        <partial name="../Chat/_ChatPartial" />
     }
 
     <div>
@@ -55,7 +56,8 @@
 
     <script src="~/js/LocalStorage.js"></script>
     <script src="~/lib/Axios/axios.min.js"></script>
-    <script src="~/lib/SignalR/signalr.min.js"></script>
+    <script src="~/lib/SignalR/signalr.js"></script>
+    <script src="~/js/ChatToggle.js"></script>
     <script src="~/js/Chat.js"></script>
     <script src="~/js/Friend.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

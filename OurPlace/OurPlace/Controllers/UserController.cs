@@ -75,7 +75,8 @@ namespace OurPlace.Controllers
         {
             var dbList = userService.SearchUsers(search);
             var modelList = dbList.Select(x => x.ToSearchUserModel()).ToList();
-            return View(modelList);
+            var model = new SearchResult { ModelList = modelList };
+            return View("SearchResult", model);
         }
 
     }
