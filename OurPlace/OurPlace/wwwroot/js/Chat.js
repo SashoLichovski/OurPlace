@@ -96,10 +96,25 @@ function setConnections(chatId, userId){
         friendEle.style.backgroundColor = "#17a2b8";
         chatText.scrollTop = chatText.scrollHeight;
         friendEle.addEventListener("mouseover", function () {
+            friendEle.style.backgroundColor = "rgb(191, 207, 0)";
+            friendEle.style.color = "rgb(35, 35, 35)";
+        });
+        friendEle.addEventListener("mouseout", function () {
             friendEle.style.backgroundColor = "#343a40";
+            friendEle.style.color = "whitesmoke";
         });
 
-        document.getElementById(currentChatName).classList.remove("hide");
+        if (storageService.existsInLocalStorage(currentChatName, "hiddenChats")) {
+            var chatHeader = document.getElementById(`header-${currentChatName}`);
+            chatHeader.style.backgroundColor = "#17a2b8";
+        }
+
+        var chatEle = document.getElementById(currentChatName);
+        chatEle.classList.remove("hide");
+        //var openChats = storageService.getItems("chats");
+        //if (openChats.length > 0) {
+        //    chatEle.style.marginRight = `${(openChats.length * 300) + (openChats.length * 20)}px`;
+        //}
         chatText.scrollTop = chatText.scrollHeight;
         if (!storageService.existsInLocalStorage(currentChatName, "chats")) {
             storageService.addToLocalStorage(currentChatName, "chats");

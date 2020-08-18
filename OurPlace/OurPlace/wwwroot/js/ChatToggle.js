@@ -8,6 +8,7 @@ function updateScroll(chatId) {
 function toggleChatBody(id) {
     var body = document.getElementById(`chat-${id}`)
     var input = document.getElementById(`form-${id}`)
+    var header = document.getElementById(`header-${id}`)
     if (storageService.existsInLocalStorage(id, "chats")) {
         if (!body.classList.contains("hide")) {
             body.classList.add("hide");
@@ -16,8 +17,12 @@ function toggleChatBody(id) {
         } else {
             body.classList.remove("hide");
             input.classList.remove("hide");
-            storageService.removeFromLocalStorage(id, "hiddenChats")
+            storageService.removeFromLocalStorage(id, "hiddenChats");
+            updateScroll(id);
         }
+    }
+    if (header.style.backgroundColor == "rgb(23, 162, 184)") {
+        header.style.backgroundColor = "#989898";
     }
 }
 

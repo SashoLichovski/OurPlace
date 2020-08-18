@@ -10,7 +10,7 @@
 {
     <div class="chatContainer hide" id="@chat.ChatName">
         <div hidden id="@userId" class="hiddenUserId"></div>
-        <div class="chatHeader" onclick="toggleChatBody(`@chat.ChatName`)">
+        <div class="chatHeader" onclick="toggleChatBody(`@chat.ChatName`)" id="header-@chat.ChatName">
             <div class="headerInfo">
                 <img src="~/defaultImage/defaultImage.png" class="userImg" />
                 @if (userService.GetUserForChat(chat.ChatName)[0].FirstName == userService.GetById(userId).FirstName)
