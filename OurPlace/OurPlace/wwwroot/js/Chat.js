@@ -21,7 +21,7 @@ function setConnections(chatId, userId){
     var joinRoom = function () {
         axios.post(`/Chat/JoinRoom/${_connectionId}/${currentChatName}`)
             .then(res => {
-                console.log(`JoinRoom works ${currentChatName}`)
+                //console.log(`JoinRoom works ${currentChatName}`)
             })
             .catch(err => {
                 console.log(err);
@@ -34,7 +34,7 @@ function setConnections(chatId, userId){
                 .then(function (connectionId) {
                     //debugger;
                     _connectionId = connectionId
-                    console.log(`This is connected ${_connectionId}`)
+                    //console.log(`This is connected ${_connectionId}`)
                     joinRoom();
                 })
         })
@@ -95,6 +95,9 @@ function setConnections(chatId, userId){
         var friendEle = document.getElementById(`friend-${currentChatName}`);
         friendEle.style.backgroundColor = "#17a2b8";
         chatText.scrollTop = chatText.scrollHeight;
+        friendEle.addEventListener("mouseover", function () {
+            friendEle.style.backgroundColor = "#343a40";
+        });
 
         document.getElementById(currentChatName).classList.remove("hide");
         chatText.scrollTop = chatText.scrollHeight;

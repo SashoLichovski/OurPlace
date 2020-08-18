@@ -10,12 +10,13 @@
 
 .friendSidebard {
     margin-top: -1rem;
-    width: 200px;
+    width: 230px;
     height: 90%;
     background-color: #343a40;
     transition: left 0.6s;
     position: absolute;
     z-index: 20;
+    overflow: auto;
 }
 
 .sidebarHeader {
@@ -38,4 +39,13 @@
     .friend:hover {
         color: rgb(35, 35, 35);
         background-color: rgb(191, 207, 0);
+    }
+
+.sidebarSearchInput {
+    position: fixed;
+    bottom: 0;
+}
+    .sidebarSearchInput input {
+        width: 230px;
+        padding: 5px 10px;
     }
