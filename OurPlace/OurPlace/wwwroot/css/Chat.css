@@ -1,9 +1,16 @@
-﻿.chatContainer {
+﻿.mainContainer {
     position: fixed;
     z-index: 10;
-    width: 300px;
     bottom: 0;
     right: 0;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-end;
+}
+
+.chatContainer {
+    width: 300px;
+    margin-right: 10px;
     border: 1px solid rgba(0, 0, 0, 0.70);
 }
 

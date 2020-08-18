@@ -21,7 +21,7 @@ function setConnections(chatId, userId){
     var joinRoom = function () {
         axios.post(`/Chat/JoinRoom/${_connectionId}/${currentChatName}`)
             .then(res => {
-                //console.log(`JoinRoom works ${currentChatName}`)
+                console.log(`JoinRoom works ${currentChatName}`)
             })
             .catch(err => {
                 console.log(err);
@@ -34,7 +34,7 @@ function setConnections(chatId, userId){
                 .then(function (connectionId) {
                     //debugger;
                     _connectionId = connectionId
-                    //console.log(`This is connected ${_connectionId}`)
+                    console.log(`This is connected ${_connectionId}`)
                     joinRoom();
                 })
         })

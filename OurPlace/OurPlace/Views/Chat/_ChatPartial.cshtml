@@ -5,75 +5,75 @@
     var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value;
     var chats = chatService.GetAll(userId);
 }
-
-@foreach (var chat in chats)
-{
-    <div class="chatContainer hide" id="@chat.ChatName">
-        <div hidden id="@userId" class="hiddenUserId"></div>
-        <div class="chatHeader" onclick="toggleChatBody(`@chat.ChatName`)" id="header-@chat.ChatName">
-            <div class="headerInfo">
-                <img src="~/defaultImage/defaultImage.png" class="userImg" />
-                @if (userService.GetUserForChat(chat.ChatName)[0].FirstName == userService.GetById(userId).FirstName)
-                {
-                    <p>@userService.GetUserForChat(chat.ChatName)[1].FirstName @userService.GetUserForChat(chat.ChatName)[1].LastName</p>
-                }
-                else
-                {
-                    <p>@userService.GetUserForChat(chat.ChatName)[0].FirstName @userService.GetUserForChat(chat.ChatName)[0].LastName</p>
-                }
+<div class="mainContainer">
+    @foreach (var chat in chats)
+    {
+        <div class="chatContainer hide" id="@chat.ChatName">
+            <div hidden id="@userId" class="hiddenUserId"></div>
+            <div class="chatHeader" onclick="toggleChatBody(`@chat.ChatName`)" id="header-@chat.ChatName">
+                <div class="headerInfo">
+                    <img src="~/defaultImage/defaultImage.png" class="userImg" />
+                    @if (userService.GetUserForChat(chat.ChatName)[0].FirstName == userService.GetById(userId).FirstName)
+                    {
+                        <p>@userService.GetUserForChat(chat.ChatName)[1].FirstName @userService.GetUserForChat(chat.ChatName)[1].LastName</p>
+                    }
+                    else
+                    {
+                        <p>@userService.GetUserForChat(chat.ChatName)[0].FirstName @userService.GetUserForChat(chat.ChatName)[0].LastName</p>
+                    }
+                </div>
+                <div>
+                    <i class="fas fa-times" onclick="toggleChat('@userId', '@userManager.Users.FirstOrDefault(x => chat.ChatName.Contains(x.Id) && userId != x.Id).Id')"></i>
+                </div>
             </div>
-            <div>
-                <i class="fas fa-times" onclick="toggleChat('@userId', '@userManager.Users.FirstOrDefault(x => chat.ChatName.Contains(x.Id) && userId != x.Id).Id')"></i>
+            <div class="chatText" id="chat-@chat.ChatName">
+                @foreach (var message in chat.Messages)
+                {
+                    @if (message.UserId == userId)
+                    {
+                        <div style="margin-bottom: 10px">
+                            <div class="myMessageContainer">
+                                <p class="bg-primary">@message.Text</p>
+                                @if (message.User.ProfilePhoto == null)
+                                {
+                                    <img src="~/defaultImage/defaultImage.png" class="myMessageImg" />
+                                }
+                                else
+                                {
+                                    <img src="data:image/jpeg;base64,@Convert.ToBase64String(message.User.ProfilePhoto)" class="myMessageImg" />
+                                }
+                            </div>
+                            <div class="myDatePosted">@message.DateCreated.ToString("dd/MM/yyyy hh:mm")</div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div style="margin-bottom: 10px">
+                            <div class="messageContainer">
+                                @if (message.User.ProfilePhoto == null)
+                                {
+                                    <img src="~/defaultImage/defaultImage.png" class="messageImg" />
+                                }
+                                else
+                                {
+                                    <img src="data:image/jpeg;base64,@Convert.ToBase64String(message.User.ProfilePhoto)" class="messageImg" />
+                                }
+                                <p class="bg-success">@message.Text</p>
+                            </div>
+                            <span class="datePosted">@message.DateCreated.ToString("dd/MM/yyyy hh:mm")</span>
+                        </div>
+                    }
+                }
+
+            </div>
+            <div class="chatInput" id="form-@chat.ChatName">
+                <form method="post" onsubmit="sendMessage(event, '@chat.ChatName')">
+                    <input hidden name="chatroomId" value="@chat.Id" />
+                    <input hidden name="chatroomName" value="@chat.ChatName" />
+                    <input class="input-group" placeholder="Type a message..." name="text" autocomplete="off" id="input-@chat.ChatName" />
+                    <input class="inputBtn" type="submit" value="Send" />
+                </form>
             </div>
         </div>
-        <div class="chatText" id="chat-@chat.ChatName">
-            @foreach (var message in chat.Messages)
-            {
-                @if (message.UserId == userId)
-                {
-                    <div style="margin-bottom: 10px">
-                        <div class="myMessageContainer">
-                            <p class="bg-primary">@message.Text</p>
-                            @if (message.User.ProfilePhoto == null)
-                            {
-                                <img src="~/defaultImage/defaultImage.png" class="myMessageImg"/>
-                            }
-                            else
-                            {
-                                <img src="data:image/jpeg;base64,@Convert.ToBase64String(message.User.ProfilePhoto)" class="myMessageImg" />
-                            }
-                        </div>
-                        <div class="myDatePosted">@message.DateCreated.ToString("dd/MM/yyyy hh:mm")</div>
-                    </div>
-                }
-                else
-                {
-                    <div style="margin-bottom: 10px">
-                        <div class="messageContainer">
-                            @if (message.User.ProfilePhoto == null)
-                            {
-                                <img src="~/defaultImage/defaultImage.png" class="messageImg"/>
-                            }
-                            else
-                            {
-                                <img src="data:image/jpeg;base64,@Convert.ToBase64String(message.User.ProfilePhoto)" class="messageImg" />
-                            }
-                            <p class="bg-success">@message.Text</p>
-                        </div>
-                        <span class="datePosted">@message.DateCreated.ToString("dd/MM/yyyy hh:mm")</span>
-                    </div>
-                }
-            }
-
-        </div>
-        <div class="chatInput" id="form-@chat.ChatName">
-            <form method="post" onsubmit="sendMessage(event, '@chat.ChatName')">
-                <input hidden name="chatroomId" value="@chat.Id"/>
-                <input hidden name="chatroomName" value="@chat.ChatName"/>
-                <input class="input-group" placeholder="Type a message..." name="text" autocomplete="off" id="input-@chat.ChatName"/>
-                <input class="inputBtn" type="submit" value="Send" />
-            </form>
-        </div>
-    </div>
-}
-
+    }
+</div>
