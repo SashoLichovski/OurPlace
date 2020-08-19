@@ -9,12 +9,12 @@
 .friendSidebard {
     margin-top: -1rem;
     width: 230px;
-    height: 90%;
+/*    height: 90%;*/
     background-color: #343a40;
     transition: left 0.6s;
     position: absolute;
     z-index: 20;
-    overflow: auto;
+    
 }
 
 .sidebarHeader {
@@ -23,6 +23,11 @@
     text-align: center;
     margin-bottom: 0 !important;
     color: whitesmoke;
+}
+
+.sidebarBody {
+    height: 500px;
+    overflow: auto;
 }
 
 .friend {
@@ -40,8 +45,8 @@
     }
 
 .sidebarSearchInput {
-    position: fixed;
-    bottom: 0;
+   /* position: fixed;
+    bottom: 0;*/
 }
     .sidebarSearchInput input {
         width: 230px;

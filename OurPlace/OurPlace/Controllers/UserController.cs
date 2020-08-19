@@ -26,7 +26,7 @@ namespace OurPlace.Controllers
             var model = new UserProfileModel()
             {
                 Photos = userService.GetById(userId).ToUserLayoutPhotosModel(),
-                Posts = postService.GetAll(userId).Select(x => x.ToPostViewModel()).ToList()
+                Posts = postService.GetAllForTimeline(userId).Select(x => x.ToPostViewModel()).ToList()
             };
             return View(model);
         }

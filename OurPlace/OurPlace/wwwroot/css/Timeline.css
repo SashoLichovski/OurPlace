@@ -55,9 +55,27 @@
     font-size: 1.2em;
 }
 
+.postInfo {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+}
+    .postInfo .far {
+        font-size: 1.2em;
+        margin-right: 10px;
+        cursor: pointer;
+        color: black;
+    }
+    .postInfo .far:hover {
+        text-decoration: none !important;
+    }
+
+.postLikes {
+    display: flex;
+}
+
 .postDate {
-    margin-top: 10px;
-    font-size: 0.8em;
+    font-size: 0.9em;
 }
 
 @media only screen and (max-width : 991px) {

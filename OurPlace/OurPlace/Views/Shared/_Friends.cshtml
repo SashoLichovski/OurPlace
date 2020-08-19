@@ -9,16 +9,15 @@
 <div class="friendSidebard left" id="sidebar">
     <h3 class="sidebarHeader">My friends</h3>
 
-    <div class="sidebardBody">
+    <div class="sidebarBody">
         @foreach (var friend in allFriends)
         {
             <div onclick="toggleChat('@userId', '@friend.FriendId')">
                 <div class="friend" id="friend-@chats.First(x => x.ChatName.Contains(friend.FriendId)).ChatName">@friend.FriendName</div>
             </div>
         }
-
-        <div class="sidebarSearchInput">
-            <input placeholder="Search friends..." onkeyup="searchFriends(event)" />
-        </div>
+    </div>
+    <div class="sidebarSearchInput">
+        <input placeholder="Search friends..." onkeyup="searchFriends(event)" />
     </div>
 </div>

@@ -14,10 +14,14 @@ namespace OurPlace.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(string userId, IFormFile image, string message)
+        public IActionResult Create(string userId, IFormFile image, string message, string page)
         {
             postService.Create(userId, image, message);
-            return RedirectToAction("Profile", "User",new { UserId = userId });
+            if (page == "HomePage")
+            {
+                return RedirectToAction("HomePage", "Home");
+            }
+            return RedirectToAction("Profile", "User", new { UserId = userId });
         }
     }
 }

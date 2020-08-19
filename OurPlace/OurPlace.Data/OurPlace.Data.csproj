@@ -17,6 +17,10 @@
     <Compile Remove="Migrations\20200818155012_Post.Designer.cs" />
     <Compile Remove="Migrations\20200818155109_Post.cs" />
     <Compile Remove="Migrations\20200818155109_Post.Designer.cs" />
+    <Compile Remove="Migrations\20200819150744_LikeIsLiked.cs" />
+    <Compile Remove="Migrations\20200819150744_LikeIsLiked.Designer.cs" />
+    <Compile Remove="Migrations\20200819151811_DateLiked.cs" />
+    <Compile Remove="Migrations\20200819151811_DateLiked.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

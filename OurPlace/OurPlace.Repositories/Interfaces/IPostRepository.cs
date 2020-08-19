@@ -6,6 +6,7 @@ namespace OurPlace.Repositories.Interfaces
     public interface IPostRepository
     {
         void Add(Post post);
-        List<Post> GetAll(string userId);
+        List<Post> GetAllForTimeline(string userId);
+        List<Post> GetAllForHomePage(List<string> usersIds);
     }
 }

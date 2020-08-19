@@ -16,5 +16,6 @@ namespace OurPlace.Data
         public DbSet<Chat> Chats { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Post> Posts { get; set; }
+        public DbSet<PostLike> PostLikes { get; set; }
     }
 }

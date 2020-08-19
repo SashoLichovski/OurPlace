@@ -56,6 +56,9 @@ namespace OurPlace
             services.AddTransient<IPostService, PostService>();
             services.AddTransient<IPostRepository, PostRepository>();
 
+            services.AddTransient<ILikeService, LikeService>();
+            services.AddTransient<ILikeRepository, LikeRepository>();
+
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
         }

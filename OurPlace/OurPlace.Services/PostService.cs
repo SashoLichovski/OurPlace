@@ -7,6 +7,7 @@ using OurPlace.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace OurPlace.Services
 {
@@ -14,11 +15,13 @@ namespace OurPlace.Services
     {
         private readonly IPostRepository postRepo;
         private readonly IImageService imageService;
+        private readonly IFriendService friendService;
 
-        public PostService(IPostRepository postRepo, IImageService imageService)
+        public PostService(IPostRepository postRepo, IImageService imageService, IFriendService friendService)
         {
             this.postRepo = postRepo;
             this.imageService = imageService;
+            this.friendService = friendService;
         }
 
         public void Create(string userId, IFormFile image, string message)
@@ -38,9 +41,22 @@ namespace OurPlace.Services
             postRepo.Add(newPost);
         }
 
-        public List<Post> GetAll(string userId)
+        public List<Post> GetAllForHomePage(string userId)
         {
-            return postRepo.GetAll(userId);
+            List<string> friendIds = friendService.GetAll(userId)
+                .Select(x => x.FriendId)
+                .ToList();
+            friendIds.Add(userId);
+
+            List<Post> dbPosts = postRepo.GetAllForHomePage(friendIds)
+                .ToList();
+
+            return dbPosts;
+        }
+
+        public List<Post> GetAllForTimeline(string userId)
+        {
+            return postRepo.GetAllForTimeline(userId);
         }
     }
 }

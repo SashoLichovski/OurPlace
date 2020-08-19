@@ -111,17 +111,11 @@ function setConnections(chatId, userId){
 
         var chatEle = document.getElementById(currentChatName);
         chatEle.classList.remove("hide");
-        //var openChats = storageService.getItems("chats");
-        //if (openChats.length > 0) {
-        //    chatEle.style.marginRight = `${(openChats.length * 300) + (openChats.length * 20)}px`;
-        //}
         chatText.scrollTop = chatText.scrollHeight;
         if (!storageService.existsInLocalStorage(currentChatName, "chats")) {
             storageService.addToLocalStorage(currentChatName, "chats");
         }
     })
-    //var endTime = new Date().getMilliseconds();
-    //console.log(endTime - startTime);
 }
 
 function sendMessage(event, chatTextId) {
@@ -138,4 +132,8 @@ function sendMessage(event, chatTextId) {
         .catch(err => {
             console.log(err);
         })
+}
+
+function like(userId, ) {
+
 }

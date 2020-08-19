@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace OurPlace.Models.Post
 {
@@ -10,5 +11,6 @@ namespace OurPlace.Models.Post
         public DateTime DatePosted { get; set; }
         public string UserId { get; set; }
         public Data.User User { get; set; }
+        public List<PostLikeViewModel> Likes { get; set; }
     }
 }

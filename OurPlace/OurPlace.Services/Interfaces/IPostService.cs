@@ -7,6 +7,7 @@ namespace OurPlace.Services.Interfaces
     public interface IPostService
     {
         void Create(string userId, IFormFile image, string message);
-        List<Post> GetAll(string userId);
+        List<Post> GetAllForTimeline(string userId);
+        List<Post> GetAllForHomePage(string userId);
     }
 }

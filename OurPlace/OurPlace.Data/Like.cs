@@ -1,21 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 namespace OurPlace.Data
 {
-    public class Post
+    public abstract class Like
     {
         public int Id { get; set; }
-        [Required]
-        public string Message { get; set; }
-        public byte[] Image { get; set; }
-        [Required]
-        public DateTime DatePosted { get; set; }
-
         public string UserId { get; set; }
         public User User { get; set; }
-
-        public List<PostLike> Likes { get; set; }
+        [Required]
+        public DateTime DateLiked { get; set; }
     }
 }

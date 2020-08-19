@@ -1,8 +1,71 @@
-﻿@{
+﻿@model OurPlace.Models.Home.HomePageViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
+@section Styles {
+    <link rel="stylesheet" href="~/css/Timeline.css" />
+}
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container">
+    <div class="timeLine">
+
+        <div class="postFormContainer">
+            <h5>Create new post</h5>
+            <form asp-controller="Post" asp-action="Create" asp-route-page="HomePage" method="post" enctype="multipart/form-data">
+                <input hidden name="userId" value="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value" />
+                <div>
+                    <i class="fas fa-camera-retro postIcon" onclick="togglePostFileInput()"></i>
+                </div>
+                <input type="file" id="postFileInput" class="hide" name="image" />
+                <textarea class="form-control" placeholder="Write something..." name="message"></textarea>
+                <input type="submit" value="Post" class="btn btn-success" />
+            </form>
+        </div>
+
+        @*<partial name="../User/Partials/_printingPosts" for="Posts" />*@
+        @foreach (var post in Model.Posts)
+        {
+            <div class="postContainer">
+                <div class="postHeader">
+                    <h5>@post.User.FirstName @post.User.LastName</h5>
+                </div>
+
+                <div class="postContent">
+                    <div class="postMessage">
+                        <p>@post.Message</p>
+                    </div>
+
+                    @if (post.Image != null)
+                    {
+                        <div>
+                            <img class="postImage" onclick="openPhoto()" src="data:image/jpeg;base64,@Convert.ToBase64String(post.Image)" />
+                        </div>
+                    }
+
+                    <div class="postInfo">
+                        <div class="postLikes">
+                            @if (post.Likes.Select(x => x.UserId).ToList().Contains(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value))
+                            {
+                                <a asp-controller="Like" asp-action="PostLike" asp-route-postId="@post.Id" class="far fa-heart" style="color: red"></a>
+                            }
+                            else
+                            {
+                                <a asp-controller="Like" asp-action="PostLike" asp-route-postId="@post.Id" class="far fa-heart"></a>
+                            }
+                            <div>@post.Likes.Count likes</div>
+                        </div>
+                        <div class="postDate">@post.DatePosted.ToString("MMMM dd yyyy HH:mm")</div>
+                    </div>
+                </div>
+
+                <div class="postComments">
+
+                </div>
+            </div>
+        }
+
+    </div>
 </div>
+@section Scripts {
+    <script src="~/js/Post.js"></script>
+}

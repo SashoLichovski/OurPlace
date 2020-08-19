@@ -3,6 +3,7 @@ using OurPlace.Data;
 using OurPlace.Repositories.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace OurPlace.Repositories
 {
@@ -21,9 +22,25 @@ namespace OurPlace.Repositories
             context.SaveChanges();
         }
 
-        public List<Post> GetAll(string userId)
+        public List<Post> GetAllForHomePage(List<string> userIds)
+        {
+            var posts = context.Posts
+                .Include(x => x.Likes)
+                    .ThenInclude(x => x.User)
+                .Include(x => x.User)
+                .Where(x => userIds.Contains(x.UserId))
+                .OrderByDescending(x => x.DatePosted)
+                .Take(20)
+                .ToList();
+
+            return posts;
+        }
+
+        public List<Post> GetAllForTimeline(string userId)
         {
             return context.Posts
+                .Include(x => x.Likes)
+                    .ThenInclude(x => x.User)
                 .Include(x => x.User)
                 .Where(x => x.UserId.Equals(userId))
                 .OrderByDescending(x => x.DatePosted)
