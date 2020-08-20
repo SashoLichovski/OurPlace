@@ -20,11 +20,14 @@
         {
             <div class="notContainer">
                 <div class="sectionContainer">
-                    <header>@not.SentBy wants to be your friend</header>
-                    <a class="btn btn-success" asp-controller="Friend" asp-action="CreateFriends" asp-route-senderId="@not.SenderId" asp-route-userId="@not.UserId">Accept</a>
-                    <a class="btn btn-danger" asp-controller="Notification" asp-action="DeclineFriendRequest" asp-route-senderId="@not.SenderId" asp-route-userId="@not.UserId">Decline</a>
+                    <header>@not.Message</header>
+                    @if (not.Type == OurPlace.Data.NotificationType.FriendRequest)
+                    {
+                        <a class="btn btn-success" asp-controller="Friend" asp-action="CreateFriends" asp-route-senderId="@not.SenderId" asp-route-userId="@not.UserId">Accept</a>
+                        <a class="btn btn-danger" asp-controller="Notification" asp-action="DeclineFriendRequest" asp-route-senderId="@not.SenderId" asp-route-userId="@not.UserId">Decline</a>
+                    }
                 </div>
-                <span>Request sent on: @not.DateSent.ToString("MMMM, dd yyyy, hh:mm")</span>
+                <span>Notification sent on: @not.DateSent.ToString("MMMM, dd yyyy, HH:mm")</span>
             </div>
         }
     }

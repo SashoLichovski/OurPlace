@@ -11,7 +11,12 @@ namespace OurPlace.Data
         [Required]
         public string SenderId { get; set; }
         [Required]
+        public string Message { get; set; }
+        [Required]
         public DateTime DateSent { get; set; }
+
+        public NotificationType Type { get; set; }
+
         public string UserId { get; set; }
         public User User { get; set; }
     }

@@ -14,8 +14,9 @@ namespace OurPlace.Services
             this.likeRepo = likeRepo;
         }
 
-        public void EditPostLike(int postId, string userId)
+        public bool EditPostLike(int postId, string userId)
         {
+            var didLike = false;
             var like = likeRepo.GetByUserPostId(userId, postId);
             if (like == null)
             {
@@ -26,11 +27,13 @@ namespace OurPlace.Services
                     DateLiked = DateTime.Now
                 };
                 likeRepo.AddPostLike(postLike);
+                didLike = true;
             }
             else
             {
                 likeRepo.RemovePostLike(like);
             }
+            return didLike;
         }
     }
 }

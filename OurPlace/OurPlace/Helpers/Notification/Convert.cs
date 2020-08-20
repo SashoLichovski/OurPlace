@@ -17,7 +17,9 @@ namespace OurPlace.Helpers.Notification
                 SentBy = x.SentBy,
                 UserId = x.UserId,
                 User = x.User,
-                DateSent = x.DateSent
+                Message = x.Message,
+                DateSent = x.DateSent,
+                Type = x.Type
             };
         }
     }

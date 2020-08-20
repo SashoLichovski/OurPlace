@@ -46,5 +46,10 @@ namespace OurPlace.Repositories
                 .OrderByDescending(x => x.DatePosted)
                 .ToList();
         }
+
+        public Post GetById(int postId)
+        {
+            return context.Posts.FirstOrDefault(x => x.Id.Equals(postId));
+        }
     }
 }

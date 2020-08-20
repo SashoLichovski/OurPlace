@@ -28,3 +28,9 @@
         return arr;
     }
 }
+
+// Refreshing connections
+var connections = storageService.getItems("connectionNames");
+for (var i = 0; i < connections.length; i++) {
+    storageService.removeFromLocalStorage(connections[i], "connectionNames");
+}

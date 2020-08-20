@@ -1,9 +1,11 @@
 ﻿using OurPlace.Data;
 using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace OurPlace.Models.Notification
+namespace OurPlace.Services.DtoModels
 {
-    public class NotificationOverviewModel
+    public class NotificationDto
     {
         public int Id { get; set; }
         public string SentBy { get; set; }

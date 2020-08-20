@@ -46,7 +46,13 @@
     {
         <partial name="_Friends" />
         <partial name="../Chat/_ChatPartial" />
+
+        <div id="notContainer-@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value">
+
+        </div>
     }
+
+    
 
     <div>
         <main role="main" class="pb-3">

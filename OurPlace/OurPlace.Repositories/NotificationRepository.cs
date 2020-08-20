@@ -29,7 +29,10 @@ namespace OurPlace.Repositories
 
         public List<Notification> GetAllForUser(string userId)
         {
-            return context.Notifications.Where(x => x.UserId.Equals(userId)).ToList();
+            return context.Notifications
+                .Where(x => x.UserId.Equals(userId))
+                .OrderByDescending(x => x.DateSent)
+                .ToList();
         }
 
         public Notification GetByUserSenderId(string senderId, string userId)

@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using OurPlace.Data;
 using OurPlace.Repositories.Interfaces;
+using OurPlace.Services.Common;
 using OurPlace.Services.DtoModels;
 using OurPlace.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace OurPlace.Services
 {
@@ -13,12 +15,14 @@ namespace OurPlace.Services
         private readonly INotificationRepository notRepo;
         private readonly UserManager<User> userManager;
         private readonly IFriendRepository friendRepo;
+        private readonly IPostService postService;
 
-        public NotificationService(INotificationRepository notRepo, UserManager<User> userManager, IFriendRepository friendRepo)
+        public NotificationService(INotificationRepository notRepo, UserManager<User> userManager, IFriendRepository friendRepo, IPostService postService)
         {
             this.notRepo = notRepo;
             this.userManager = userManager;
             this.friendRepo = friendRepo;
+            this.postService = postService;
         }
 
         public Response CreateFriendRequest(string senderId, string userId)
@@ -42,17 +46,13 @@ namespace OurPlace.Services
                 {
                     DateSent = DateTime.Now,
                     UserId = userId,
-                    SenderId = senderId
+                    SenderId = senderId,
+                    SentBy = $"{sender.FirstName} {sender.LastName}",
+                    Message = $"{sender.FirstName} {sender.LastName} wants to be you friend",
+                    Type = NotificationType.FriendRequest
                 };
-                if (!string.IsNullOrEmpty(sender.FirstName))
-                {
-                    notification.SentBy = $"{sender.FirstName} {sender.LastName}";
-                }
-                else
-                {
-                    notification.SentBy = sender.Email;
-                }
-                response.SuccessMessage = "Friend request successfully sent";
+                
+                response.SuccessMessage = $"Friend request successfully sent to {sender.FirstName} {sender.LastName}";
                 notRepo.Add(notification);
             }
             
@@ -68,6 +68,41 @@ namespace OurPlace.Services
         public List<Notification> GetAllForUser(string userId)
         {
             return notRepo.GetAllForUser(userId);
+        }
+
+        public NotificationDto LikeNotification(string userId, string friendId, int postId, bool didLike)
+        {
+            var sender = userManager.FindByIdAsync(userId).Result;
+            var newNot = new Notification()
+            {
+                UserId = friendId,
+                SenderId = sender.Id,
+                SentBy = $"{sender.FirstName} {sender.LastName}",
+                DateSent = DateTime.Now,
+                Type = NotificationType.Other,
+            };
+            var post = postService.GetById(postId);
+            var shortPostMessage = "";
+            if (post.Message.Count() < 10)
+            {
+                shortPostMessage = post.Message.Substring(0, post.Message.Count());
+            }
+            else
+            {
+                shortPostMessage = post.Message.Substring(0, 10);
+            }
+
+            if (didLike)
+            {
+                newNot.Message = $"{newNot.SentBy} likes your post ``{shortPostMessage}...``";
+            }
+            else
+            {
+                newNot.Message = $"{newNot.SentBy} dislikes your post ``{shortPostMessage}...``";
+            }
+            notRepo.Add(newNot);
+
+            return newNot.ToNotificationDto();
         }
     }
 }

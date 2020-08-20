@@ -2,6 +2,6 @@
 {
     public interface ILikeService
     {
-        void EditPostLike(int postId, string userId);
+        bool EditPostLike(int postId, string userId);
     }
 }

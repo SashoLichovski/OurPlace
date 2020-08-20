@@ -22,6 +22,7 @@ function setConnections(chatId, userId){
         axios.post(`/Chat/JoinRoom/${_connectionId}/${currentChatName}`)
             .then(res => {
                 console.log(`JoinRoom works ${currentChatName}`)
+                storageService.addToLocalStorage(currentChatName, "connectionNames");
             })
             .catch(err => {
                 console.log(err);
@@ -116,6 +117,41 @@ function setConnections(chatId, userId){
             storageService.addToLocalStorage(currentChatName, "chats");
         }
     })
+
+    connection.on("ReceiveLike", function (data) {
+        console.log(data)
+        var navEle = document.getElementById(`not-${data.friendId}`);
+        navEle.classList.add("bg-info");
+        navEle.addEventListener("mouseover", function () {
+            navEle.classList.remove("bg-info");
+        });
+
+        var container = document.getElementById(`notContainer-${data.friendId}`);
+
+        var msgContainer = document.createElement("div");
+        msgContainer.style.position = "fixed";
+        msgContainer.style.bottom = "0";
+        msgContainer.style.padding = "15px";
+        msgContainer.style.margin = "15px";
+        msgContainer.style.borderRadius = "10px";
+        msgContainer.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+        msgContainer.style.zIndex = "50";
+        container.appendChild(msgContainer);
+
+        var close = document.createElement("i");
+        close.className = "far fa-window-close";
+        close.style.color = "white";
+        close.style.cursor = "pointer";
+        close.addEventListener("click", function () {
+            msgContainer.remove();
+        });
+        msgContainer.appendChild(close);
+
+        var message = document.createElement("div");
+        message.innerText = data.notification.message;
+        message.style.color = "white";
+        msgContainer.appendChild(message);
+    })
 }
 
 function sendMessage(event, chatTextId) {
@@ -134,6 +170,34 @@ function sendMessage(event, chatTextId) {
         })
 }
 
-function like(userId, ) {
+function like(postId, friendId, senderId) {
 
+    var connections = storageService.getItems("connectionNames");
+    var connectionName = "";
+    for (var i = 0; i < connections.length; i++) {
+        if (connections[i].includes(friendId) && connections[i].includes(senderId)) {
+            connectionName = connections[i];
+            break;
+        }
+    }
+    axios.post(`/Like/PostLike/${postId}/${connectionName}/${friendId}`)
+        .then(res => {
+            
+        })
+        .catch(err => {
+            console.log(err);
+        })
+
+    var heart = document.getElementById(postId);
+    var count = document.getElementById(`count-${postId}`);
+    var number = parseInt(count.innerText[0]);
+    if (heart.style.color == "red") {
+        heart.style.color = "black";
+        number--;
+        count.innerText = `${number} likes`;
+    } else {
+        heart.style.color = "red";
+        number++;
+        count.innerText = `${number} likes`;
+    }
 }

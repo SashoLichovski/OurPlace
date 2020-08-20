@@ -8,5 +8,6 @@ namespace OurPlace.Repositories.Interfaces
         void Add(Post post);
         List<Post> GetAllForTimeline(string userId);
         List<Post> GetAllForHomePage(List<string> usersIds);
+        Post GetById(int postId);
     }
 }

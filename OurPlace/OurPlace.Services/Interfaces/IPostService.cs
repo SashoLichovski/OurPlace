@@ -9,5 +9,6 @@ namespace OurPlace.Services.Interfaces
         void Create(string userId, IFormFile image, string message);
         List<Post> GetAllForTimeline(string userId);
         List<Post> GetAllForHomePage(string userId);
+        Post GetById(int postId);
     }
 }

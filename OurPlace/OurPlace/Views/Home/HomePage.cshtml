@@ -46,13 +46,13 @@
                         <div class="postLikes">
                             @if (post.Likes.Select(x => x.UserId).ToList().Contains(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value))
                             {
-                                <a asp-controller="Like" asp-action="PostLike" asp-route-postId="@post.Id" class="far fa-heart" style="color: red"></a>
+                                <a id="@post.Id" class="far fa-heart" style="color: red" onclick="like(`@post.Id`, `@post.UserId`, `@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value`)"></a>
                             }
                             else
                             {
-                                <a asp-controller="Like" asp-action="PostLike" asp-route-postId="@post.Id" class="far fa-heart"></a>
+                                <a id="@post.Id" class="far fa-heart" onclick="like(`@post.Id`, `@post.UserId`, `@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value`)"></a>
                             }
-                            <div>@post.Likes.Count likes</div>
+                            <div id="count-@post.Id">@post.Likes.Count likes</div>
                         </div>
                         <div class="postDate">@post.DatePosted.ToString("MMMM dd yyyy HH:mm")</div>
                     </div>

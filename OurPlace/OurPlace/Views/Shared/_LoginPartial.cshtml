@@ -4,6 +4,7 @@
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 
+
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
@@ -14,7 +15,7 @@
             <a class="nav-link text-light" id="friendBtn" onclick="Toggle()">Friends</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-light" asp-controller="Notification" asp-action="Overview" asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier).Value">Notifications</a>
+            <a id="not-@User.FindFirst(ClaimTypes.NameIdentifier).Value" class="nav-link text-light" asp-controller="Notification" asp-action="Overview" asp-route-userId="@User.FindFirst(ClaimTypes.NameIdentifier).Value">Notifications</a>
         </li>
         <li class="nav-item">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("HomePage", "Home", new { area = "" })">

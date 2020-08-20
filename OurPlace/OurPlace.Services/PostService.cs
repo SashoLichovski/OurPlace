@@ -58,5 +58,10 @@ namespace OurPlace.Services
         {
             return postRepo.GetAllForTimeline(userId);
         }
+
+        public Post GetById(int postId)
+        {
+            return postRepo.GetById(postId);
+        }
     }
 }
