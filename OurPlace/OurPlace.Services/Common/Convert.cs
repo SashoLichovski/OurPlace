@@ -27,6 +27,7 @@ namespace OurPlace.Services.Common
                 Id = x.Id,
                 Message = x.Message,
                 DateSent = x.DateSent,
+                UserId = x.UserId
             };
         }
     }

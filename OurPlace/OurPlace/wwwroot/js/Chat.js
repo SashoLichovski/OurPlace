@@ -119,7 +119,6 @@ function setConnections(chatId, userId){
     })
 
     connection.on("ReceiveLike", function (data) {
-
         sendNotification(data);
     })
 
@@ -128,7 +127,7 @@ function setConnections(chatId, userId){
         var container = document.getElementById(`commentContainer-${data.postId}`);
 
         var commentContainer = document.createElement("div");
-        commentContainer.classList.add("commentContainer");
+        commentContainer.classList.add("commentContent");
         container.appendChild(commentContainer);
 
         var userName = document.createElement("span");
@@ -144,23 +143,26 @@ function setConnections(chatId, userId){
         dateSent.innerText = data.dateSent;
         commentContainer.appendChild(dateSent);
 
-        if (data.userId == data.friendId) {
-            var br = document.createElement("br");
-            commentContainer.appendChild(br);
+        var count = document.getElementById(`commentNo-${data.postId}`);
+        var number = parseInt(count.innerText[0] + count.innerText[1]);
+        number++;
+        count.innerText = `${number} Comments`;
+        document.getElementById(`commentContainer-${data.postId}`).classList.remove("hide");
 
-            var deleteBtn = document.createElement("a");
-            deleteBtn.href = "#";
-            deleteBtn.innerText = "Delete";
-            commentContainer.appendChild(deleteBtn);
-        }
-        // Da se zgolemi brojka na komentari !!!!!1
+        // Try to add delete btn for the user who posts the comment !
+
         sendNotification(data);
+
+
+        
+
     })
 }
 
 function sendNotification(data) {
     if (data.userId != data.friendId) {
         var container = document.getElementById(`notContainer-${data.friendId}`);
+        
 
         var msgContainer = document.createElement("div");
         msgContainer.style.padding = "15px";

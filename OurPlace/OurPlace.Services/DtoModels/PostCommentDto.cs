@@ -9,5 +9,6 @@ namespace OurPlace.Services.DtoModels
         public string Message { get; set; }
         public DateTime DateSent { get; set; }
         public string SentBy { get; set; }
+        public string UserId { get; set; }
     }
 }

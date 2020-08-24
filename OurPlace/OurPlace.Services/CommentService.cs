@@ -35,5 +35,14 @@ namespace OurPlace.Services
 
             return model;
         }
+
+        public void Delete(int commentId)
+        {
+            var comment = commentRepo.GetById(commentId);
+            if (comment != null)
+            {
+                commentRepo.Delete(comment);
+            }
+        }
     }
 }

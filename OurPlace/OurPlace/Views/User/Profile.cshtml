@@ -72,15 +72,20 @@
                 </div>
 
                 <div class="postComments">
-                    <p>Comments</p>
+                    <p class="commentBtn" id="commentNo-@post.Id" onclick="toggleComments(`@post.Id`)">@post.Comments.Count Comments</p>
 
-                    <div id="commentContainer-@post.Id">
+                    <div class="hide" id="commentContainer-@post.Id">
                         @foreach (var comment in post.Comments)
                         {
-                            <div class="commentContainer">
+                            <div class="commentContent" id="commentContent-@comment.Id">
                                 <span>@comment.SentBy</span>
                                 <p>@comment.Message</p>
                                 <span class="postDate">@comment.DateSent.ToString("MMMM dd yyyy HH:mm")</span>
+                                @if (comment.UserId == User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value)
+                                {
+                                    <br />
+                                    <div class="deleteCommentBtn" onclick="deleteComment(`@comment.Id`, `@post.Id`)">Delete</div>
+                                }
                             </div>
                         }
                     </div>

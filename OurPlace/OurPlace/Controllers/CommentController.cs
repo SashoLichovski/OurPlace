@@ -41,16 +41,19 @@ namespace OurPlace.Controllers
                 PostId = postId,
                 Notification = notification,
                 FriendId = friendId,
-                UserId = userId
+                UserId = userId,
+                CommentUserId = model.UserId,
+                CommentId = model.Id
             });
 
             return Ok();
         }
 
-        //[HttpPost("[action]/{id}")]
-        //public IActionResult Delete(int id)
-        //{
-
-        //}
+        [HttpPost("[action]/{commentId}")]
+        public IActionResult DeleteComment(int commentId)
+        {
+            commentService.Delete(commentId);
+            return Ok();
+        }
     }
 }

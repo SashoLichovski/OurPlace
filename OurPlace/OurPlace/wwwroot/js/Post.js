@@ -15,3 +15,20 @@ function toggleComments(id) {
         ele.classList.add("hide");
     }
 }
+
+function deleteComment(commentId, postId) {
+    document.getElementById(`commentContent-${commentId}`).remove();
+    var count = document.getElementById(`commentNo-${postId}`);
+    var number = parseInt(count.innerText[0] + count.innerText[1]);
+    number--;
+    console.log(number);
+    count.innerText = `${number} Comments`;
+
+    axios.post(`/Comment/DeleteComment/${commentId}`)
+        .then(res => {
+
+        })
+        .catch(err => {
+            console.log(err);
+        })
+}
