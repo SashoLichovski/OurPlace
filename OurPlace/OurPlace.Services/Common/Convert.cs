@@ -1,8 +1,5 @@
 ﻿using OurPlace.Data;
 using OurPlace.Services.DtoModels;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace OurPlace.Services.Common
 {
@@ -20,6 +17,16 @@ namespace OurPlace.Services.Common
                 UserId = x.UserId,
                 SentBy = x.SentBy,
                 SenderId = x.SenderId
+            };
+        }
+
+        internal static PostCommentDto ToPostCommentDto(this PostComment x)
+        {
+            return new PostCommentDto
+            {
+                Id = x.Id,
+                Message = x.Message,
+                DateSent = x.DateSent,
             };
         }
     }

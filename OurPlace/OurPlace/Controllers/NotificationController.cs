@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OurPlace.Helpers.Notification;
 using OurPlace.Services.Interfaces;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Security.Claims;
 
 namespace OurPlace.Controllers
 {
+    [Authorize]
     public class NotificationController : Controller
     {
         private readonly INotificationService notService;
@@ -33,6 +35,13 @@ namespace OurPlace.Controllers
         {
             notService.DeclineFriendRequest(senderId, userId);
             return RedirectToAction("Overview", new { UserId = userId });
+        }
+
+        [HttpPost("[controller]/[action]/{id}")]
+        public IActionResult Delete(int id)
+        {
+            notService.Delete(id);
+            return Ok();
         }
     }
 }

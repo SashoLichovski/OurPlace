@@ -12,3 +12,9 @@
     .sectionContainer header {
         font-size: 1.3em;
     }
+
+.deleteNot {
+    margin-left: auto;
+    color: white !important;
+    cursor: pointer;
+}

@@ -35,6 +35,11 @@ namespace OurPlace.Repositories
                 .ToList();
         }
 
+        public Notification GetById(int id)
+        {
+            return context.Notifications.FirstOrDefault(x => x.Id.Equals(id));
+        }
+
         public Notification GetByUserSenderId(string senderId, string userId)
         {
             return context.Notifications.FirstOrDefault(x => x.UserId.Equals(userId) && x.SenderId.Equals(senderId) ||

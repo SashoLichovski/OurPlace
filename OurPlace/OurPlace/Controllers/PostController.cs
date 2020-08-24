@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OurPlace.Services.Interfaces;
 
 namespace OurPlace.Controllers
 {
+    [Authorize]
     public class PostController : Controller
     {
         private readonly IPostService postService;

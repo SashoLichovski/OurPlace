@@ -15,14 +15,15 @@ namespace OurPlace.Helpers.Post
                 User = x.User,
                 Message = x.Message,
                 DatePosted = x.DatePosted,
-                
             };
-
-            if (x.Likes.Count == 0)
+            model.Comments = new List<PostCommentViewModel>();
+            if (x.Comments != null)
             {
-                model.Likes = new List<PostLikeViewModel>();
+                model.Comments = x.Comments.Select(x => x.ToPostCommentViewModel()).ToList();
             }
-            else
+
+            model.Likes = new List<PostLikeViewModel>();
+            if (x.Likes != null)
             {
                 model.Likes = x.Likes.Select(x => x.ToPostLikeViewModel()).ToList();
             }
@@ -32,6 +33,18 @@ namespace OurPlace.Helpers.Post
                 model.Image = x.Image;
             }
             return model;
+        }
+
+        internal static PostCommentViewModel ToPostCommentViewModel(this Data.PostComment x)
+        {
+            return new PostCommentViewModel
+            {
+                Id = x.Id,
+                Message = x.Message,
+                DateSent = x.DateSent,
+                SentBy = $"{x.User.FirstName} {x.User.LastName}",
+                UserId = x.UserId
+            };
         }
 
         internal static PostLikeViewModel ToPostLikeViewModel(this Data.PostLike x)

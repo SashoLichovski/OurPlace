@@ -119,22 +119,54 @@ function setConnections(chatId, userId){
     })
 
     connection.on("ReceiveLike", function (data) {
-        console.log(data)
-        var navEle = document.getElementById(`not-${data.friendId}`);
-        navEle.classList.add("bg-info");
-        navEle.addEventListener("mouseover", function () {
-            navEle.classList.remove("bg-info");
-        });
 
+        sendNotification(data);
+    })
+
+    connection.on("ReceivePostComment", function (data) {
+
+        var container = document.getElementById(`commentContainer-${data.postId}`);
+
+        var commentContainer = document.createElement("div");
+        commentContainer.classList.add("commentContainer");
+        container.appendChild(commentContainer);
+
+        var userName = document.createElement("span");
+        userName.innerText = data.sentBy;
+        commentContainer.appendChild(userName);
+
+        var message = document.createElement("p");
+        message.innerText = data.message;
+        commentContainer.appendChild(message);
+
+        var dateSent = document.createElement("span");
+        dateSent.classList.add("postDate");
+        dateSent.innerText = data.dateSent;
+        commentContainer.appendChild(dateSent);
+
+        if (data.userId == data.friendId) {
+            var br = document.createElement("br");
+            commentContainer.appendChild(br);
+
+            var deleteBtn = document.createElement("a");
+            deleteBtn.href = "#";
+            deleteBtn.innerText = "Delete";
+            commentContainer.appendChild(deleteBtn);
+        }
+        // Da se zgolemi brojka na komentari !!!!!1
+        sendNotification(data);
+    })
+}
+
+function sendNotification(data) {
+    if (data.userId != data.friendId) {
         var container = document.getElementById(`notContainer-${data.friendId}`);
 
         var msgContainer = document.createElement("div");
-        msgContainer.style.position = "fixed";
-        msgContainer.style.bottom = "0";
         msgContainer.style.padding = "15px";
         msgContainer.style.margin = "15px";
         msgContainer.style.borderRadius = "10px";
-        msgContainer.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+        msgContainer.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
         msgContainer.style.zIndex = "50";
         container.appendChild(msgContainer);
 
@@ -151,12 +183,11 @@ function setConnections(chatId, userId){
         message.innerText = data.notification.message;
         message.style.color = "white";
         msgContainer.appendChild(message);
-    })
+    }
 }
 
 function sendMessage(event, chatTextId) {
     event.preventDefault();
-    console.log()
     var data = new FormData(event.target);
 
     axios.post("/Chat/SendMessage", data)
@@ -200,4 +231,33 @@ function like(postId, friendId, senderId) {
         number++;
         count.innerText = `${number} likes`;
     }
+}
+
+function comment(event, postId, friendId, senderId) {
+    event.preventDefault();
+    var connections = storageService.getItems("connectionNames");
+    var connectionName = "";
+    for (var i = 0; i < connections.length; i++) {
+        if (connections[i].includes(friendId) && connections[i].includes(senderId)) {
+            connectionName = connections[i];
+            break;
+        }
+    }
+    var message = document.getElementById(`commentInput-${postId}`).value;
+
+    if (message.trim() == "")
+    {
+        alert("You can't send empty comment");
+    }
+    else
+    {
+        axios.post(`/Comment/PostComment/${postId}/${connectionName}/${friendId}/${message}`)
+            .then(res => {
+
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+    document.getElementById(`commentInput-${postId}`).value = "";
 }

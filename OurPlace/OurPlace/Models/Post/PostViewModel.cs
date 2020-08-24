@@ -12,5 +12,6 @@ namespace OurPlace.Models.Post
         public string UserId { get; set; }
         public Data.User User { get; set; }
         public List<PostLikeViewModel> Likes { get; set; }
+        public List<PostCommentViewModel> Comments { get; set; }
     }
 }

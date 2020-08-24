@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OurPlace.Helpers.Image;
 using OurPlace.Helpers.Post;
 using OurPlace.Helpers.User;
@@ -8,6 +9,7 @@ using System.Linq;
 
 namespace OurPlace.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         private readonly IUserService userService;

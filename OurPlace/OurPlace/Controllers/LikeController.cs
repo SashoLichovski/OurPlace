@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using OurPlace.Data;
 using OurPlace.Hubs;
 using OurPlace.Services.Interfaces;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace OurPlace.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     public class LikeController : Controller
     {
@@ -36,9 +35,15 @@ namespace OurPlace.Controllers
             await chat.Clients.Group(connectionName).SendAsync("ReceiveLike", new
             {
                 FriendId = friendId,
+                UserId = userId,
                 PostId = postId,
                 Notification = notification
             });
+
+            if (userId == friendId)
+            {
+                notService.Delete(notification.Id);
+            }
 
             return Ok();
         }

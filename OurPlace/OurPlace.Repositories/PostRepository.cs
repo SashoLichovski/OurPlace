@@ -25,6 +25,8 @@ namespace OurPlace.Repositories
         public List<Post> GetAllForHomePage(List<string> userIds)
         {
             var posts = context.Posts
+                .Include(x => x.Comments)
+                    .ThenInclude(x => x.User)
                 .Include(x => x.Likes)
                     .ThenInclude(x => x.User)
                 .Include(x => x.User)
@@ -39,6 +41,8 @@ namespace OurPlace.Repositories
         public List<Post> GetAllForTimeline(string userId)
         {
             return context.Posts
+                .Include(x => x.Comments)
+                    .ThenInclude(x => x.User)
                 .Include(x => x.Likes)
                     .ThenInclude(x => x.User)
                 .Include(x => x.User)

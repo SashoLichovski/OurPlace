@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Http.Extensions;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using OurPlace.Services.Interfaces;
 
 namespace OurPlace.Controllers
 {
+    [Authorize]
     public class MessageController : Controller
     {
         private readonly IMessageService messageService;

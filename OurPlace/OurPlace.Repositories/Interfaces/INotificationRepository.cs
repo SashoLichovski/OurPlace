@@ -9,5 +9,6 @@ namespace OurPlace.Repositories.Interfaces
         List<Notification> GetAllForUser(string userId);
         Notification GetByUserSenderId(string senderId, string userId);
         void Delete(Notification not);
+        Notification GetById(int id);
     }
 }

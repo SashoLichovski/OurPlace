@@ -65,6 +65,12 @@ namespace OurPlace.Services
             notRepo.Delete(not);
         }
 
+        public void Delete(int id)
+        {
+            var not = notRepo.GetById(id);
+            notRepo.Delete(not);
+        }
+
         public List<Notification> GetAllForUser(string userId)
         {
             return notRepo.GetAllForUser(userId);
@@ -94,12 +100,39 @@ namespace OurPlace.Services
 
             if (didLike)
             {
-                newNot.Message = $"{newNot.SentBy} likes your post ``{shortPostMessage}...``";
+                newNot.Message = $"{newNot.SentBy} likes your post  ``{shortPostMessage}...``";
             }
             else
             {
-                newNot.Message = $"{newNot.SentBy} dislikes your post ``{shortPostMessage}...``";
+                newNot.Message = $"{newNot.SentBy} dislikes your post  ``{shortPostMessage}...``";
             }
+            notRepo.Add(newNot);
+
+            return newNot.ToNotificationDto();
+        }
+
+        public NotificationDto PostNotification(string userId, string friendId, int postId)
+        {
+            var sender = userManager.FindByIdAsync(userId).Result;
+            var newNot = new Notification()
+            {
+                UserId = friendId,
+                SenderId = sender.Id,
+                SentBy = $"{sender.FirstName} {sender.LastName}",
+                DateSent = DateTime.Now,
+                Type = NotificationType.Other,
+            };
+            var post = postService.GetById(postId);
+            var shortPostMessage = "";
+            if (post.Message.Count() < 10)
+            {
+                shortPostMessage = post.Message.Substring(0, post.Message.Count());
+            }
+            else
+            {
+                shortPostMessage = post.Message.Substring(0, 10);
+            }
+            newNot.Message = $"{newNot.SentBy} commented on your post  ``{shortPostMessage}...``";
             notRepo.Add(newNot);
 
             return newNot.ToNotificationDto();

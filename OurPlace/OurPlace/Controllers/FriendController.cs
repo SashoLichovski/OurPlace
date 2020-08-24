@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OurPlace.Services.DtoModels;
 using OurPlace.Services.Interfaces;
 
 namespace OurPlace.Controllers
 {
+    [Authorize]
     public class FriendController : Controller
     {
         private readonly IFriendService friendService;
