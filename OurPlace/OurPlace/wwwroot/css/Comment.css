@@ -24,10 +24,7 @@
         font-size: 1.1em;
     }
 
-.deleteCommentBtn {
-    color: blue;
+.deleteBtn:hover {
+    text-decoration: underline;
+    cursor: pointer !important;
 }
-    .deleteCommentBtn:hover {
-        text-decoration: underline;
-        cursor: pointer !important;
-    }

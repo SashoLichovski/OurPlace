@@ -10,5 +10,7 @@ namespace OurPlace.Services.Interfaces
         List<Post> GetAllForTimeline(string userId);
         List<Post> GetAllForHomePage(string userId);
         Post GetById(int postId);
+        void Delete(int postId);
+        void Update(int postId, string message);
     }
 }

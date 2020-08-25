@@ -41,6 +41,15 @@ namespace OurPlace.Services
             postRepo.Add(newPost);
         }
 
+        public void Delete(int postId)
+        {
+            var post = postRepo.GetById(postId);
+            if (post != null)
+            {
+                postRepo.Delete(post);
+            }
+        }
+
         public List<Post> GetAllForHomePage(string userId)
         {
             List<string> friendIds = friendService.GetAll(userId)
@@ -62,6 +71,16 @@ namespace OurPlace.Services
         public Post GetById(int postId)
         {
             return postRepo.GetById(postId);
+        }
+
+        public void Update(int postId, string message)
+        {
+            var dbPost = postRepo.GetById(postId);
+            if (dbPost != null)
+            {
+                dbPost.Message = message;
+                postRepo.Update(dbPost);
+            }
         }
     }
 }

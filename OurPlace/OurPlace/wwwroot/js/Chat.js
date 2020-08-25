@@ -128,6 +128,7 @@ function setConnections(chatId, userId){
 
         var commentContainer = document.createElement("div");
         commentContainer.classList.add("commentContent");
+        commentContainer.id = `commentContent-${data.commentId}`;
         container.appendChild(commentContainer);
 
         var userName = document.createElement("span");
@@ -149,12 +150,19 @@ function setConnections(chatId, userId){
         count.innerText = `${number} Comments`;
         document.getElementById(`commentContainer-${data.postId}`).classList.remove("hide");
 
-        // Try to add delete btn for the user who posts the comment !
+        var br = document.createElement("br");
+        commentContainer.appendChild(br);
+
+        var deleteBtn = document.createElement("div");
+        deleteBtn.classList.add("deleteBtn");
+        deleteBtn.innerText = "Delete";
+        deleteBtn.addEventListener("click", function () {
+            //commentContainer.remove();
+            deleteComment(data.commentId, data.postId);
+        });
+        commentContainer.appendChild(deleteBtn);
 
         sendNotification(data);
-
-
-        
 
     })
 }

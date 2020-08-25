@@ -22,6 +22,12 @@ namespace OurPlace.Repositories
             context.SaveChanges();
         }
 
+        public void Delete(Post post)
+        {
+            context.Posts.Remove(post);
+            context.SaveChanges();
+        }
+
         public List<Post> GetAllForHomePage(List<string> userIds)
         {
             var posts = context.Posts
@@ -54,6 +60,12 @@ namespace OurPlace.Repositories
         public Post GetById(int postId)
         {
             return context.Posts.FirstOrDefault(x => x.Id.Equals(postId));
+        }
+
+        public void Update(Post dbPost)
+        {
+            context.Posts.Update(dbPost);
+            context.SaveChanges();
         }
     }
 }

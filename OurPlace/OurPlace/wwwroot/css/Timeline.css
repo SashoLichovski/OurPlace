@@ -7,7 +7,6 @@
     padding: 20px;
     background-color: whitesmoke;
     margin-bottom: 20px;
-    
 }
 
 .postFormContainer {
@@ -23,6 +22,16 @@
         border-bottom: 1px solid rgba(0, 0, 0, 0.3);
     }
 
+.editPostForm {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 5px;
+}
+    .editPostForm .btn-success {
+        margin-left: 10px;
+        width: 15%;
+    }
+
 .postIcon {
     font-size: 35px;
     cursor: pointer;
@@ -35,7 +44,16 @@
 .postHeader {
     margin-bottom: 10px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: space-between;
 }
+
+.actionContainer {
+    display: flex;
+}
+    .actionContainer div {
+        margin-right: 5px;
+    }
 
 .postContainer {
     padding: 20px;
