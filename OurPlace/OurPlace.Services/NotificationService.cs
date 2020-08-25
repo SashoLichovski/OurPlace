@@ -16,14 +16,18 @@ namespace OurPlace.Services
         private readonly UserManager<User> userManager;
         private readonly IFriendRepository friendRepo;
         private readonly IPostService postService;
+        private readonly ICommentService commentService;
 
-        public NotificationService(INotificationRepository notRepo, UserManager<User> userManager, IFriendRepository friendRepo, IPostService postService)
+        public NotificationService(INotificationRepository notRepo, UserManager<User> userManager, IFriendRepository friendRepo, IPostService postService, ICommentService commentService)
         {
             this.notRepo = notRepo;
             this.userManager = userManager;
             this.friendRepo = friendRepo;
             this.postService = postService;
+            this.commentService = commentService;
         }
+
+        
 
         public Response CreateFriendRequest(string senderId, string userId)
         {
@@ -76,6 +80,41 @@ namespace OurPlace.Services
             return notRepo.GetAllForUser(userId);
         }
 
+        public NotificationDto CommentLikeNotification(string userId, string friendId, int commentId, bool didLike)
+        {
+            var sender = userManager.FindByIdAsync(userId).Result;
+            var newNot = new Notification()
+            {
+                UserId = friendId,
+                SenderId = sender.Id,
+                SentBy = $"{sender.FirstName} {sender.LastName}",
+                DateSent = DateTime.Now,
+                Type = NotificationType.Other,
+            };
+            var comment = commentService.GetById(commentId);
+            var shortPostMessage = "";
+            if (comment.Message.Count() < 10)
+            {
+                shortPostMessage = comment.Message.Substring(0, comment.Message.Count());
+            }
+            else
+            {
+                shortPostMessage = comment.Message.Substring(0, 10);
+            }
+
+            if (didLike)
+            {
+                newNot.Message = $"{newNot.SentBy} likes your comment  ``{shortPostMessage}...``";
+            }
+            else
+            {
+                newNot.Message = $"{newNot.SentBy} dislikes your comment  ``{shortPostMessage}...``";
+            }
+            notRepo.Add(newNot);
+
+            return newNot.ToNotificationDto();
+        }
+
         public NotificationDto LikeNotification(string userId, string friendId, int postId, bool didLike)
         {
             var sender = userManager.FindByIdAsync(userId).Result;
@@ -124,13 +163,16 @@ namespace OurPlace.Services
             };
             var post = postService.GetById(postId);
             var shortPostMessage = "";
-            if (post.Message.Count() < 10)
+            if (!string.IsNullOrEmpty(post.Message))
             {
-                shortPostMessage = post.Message.Substring(0, post.Message.Count());
-            }
-            else
-            {
-                shortPostMessage = post.Message.Substring(0, 10);
+                if (post.Message.Count() < 10)
+                {
+                    shortPostMessage = post.Message.Substring(0, post.Message.Count());
+                }
+                else
+                {
+                    shortPostMessage = post.Message.Substring(0, 10);
+                }
             }
             newNot.Message = $"{newNot.SentBy} commented on your post  ``{shortPostMessage}...``";
             notRepo.Add(newNot);

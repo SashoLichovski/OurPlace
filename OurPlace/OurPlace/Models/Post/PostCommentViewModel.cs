@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace OurPlace.Models.Post
 {
@@ -12,5 +10,6 @@ namespace OurPlace.Models.Post
         public DateTime DateSent { get; set; }
         public string SentBy { get; set; }
         public string UserId { get; set; }
+        public List<CommentLikeViewModel> CommentLikes { get; set; }
     }
 }

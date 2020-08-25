@@ -44,5 +44,10 @@ namespace OurPlace.Services
                 commentRepo.Delete(comment);
             }
         }
+
+        public PostComment GetById(int commentId)
+        {
+            return commentRepo.GetById(commentId);
+        }
     }
 }

@@ -35,5 +35,27 @@ namespace OurPlace.Services
             }
             return didLike;
         }
+
+        public bool EditCommentLike(int commentId, string userId)
+        {
+            var didLike = false;
+            var like = likeRepo.GetByUserCommentId(userId, commentId);
+            if (like == null)
+            {
+                var postLike = new CommentLike()
+                {
+                    UserId = userId,
+                    CommentId = commentId,
+                    DateLiked = DateTime.Now
+                };
+                likeRepo.AddCommentLike(postLike);
+                didLike = true;
+            }
+            else
+            {
+                likeRepo.RemoveCommentLike(like);
+            }
+            return didLike;
+        }
     }
 }

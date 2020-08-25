@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using OurPlace.Data;
 using OurPlace.Hubs;
+using OurPlace.Services.DtoModels;
 using OurPlace.Services.Interfaces;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -24,19 +25,28 @@ namespace OurPlace.Controllers
             this.notService = notService;
         }
 
-        [HttpPost("[action]/{postId}/{connectionName}/{friendId}")]
-        public async Task<IActionResult> PostLike(int postId, string connectionName, string friendId)
+        [HttpPost("[action]/{entityId}/{connectionName}/{friendId}/{likeType}")]
+        public async Task<IActionResult> EntityLike(int entityId, string connectionName, string friendId, string likeType)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var didLike = likeService.EditPostLike(postId, userId);
+            
 
-            var notification = notService.LikeNotification(userId, friendId, postId, didLike);
+            var notification = new NotificationDto();
+            if (likeType == "post")
+            {
+                var didLike = likeService.EditPostLike(entityId, userId);
+                notification = notService.LikeNotification(userId, friendId, entityId, didLike);
+            }
+            else if (likeType == "comment")
+            {
+                var didLike = likeService.EditCommentLike(entityId, userId);
+                notification = notService.CommentLikeNotification(userId, friendId, entityId, didLike);
+            }
 
             await chat.Clients.Group(connectionName).SendAsync("ReceiveLike", new
             {
                 FriendId = friendId,
                 UserId = userId,
-                PostId = postId,
                 Notification = notification
             });
 

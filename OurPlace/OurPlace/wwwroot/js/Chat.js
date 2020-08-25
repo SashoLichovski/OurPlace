@@ -1,5 +1,4 @@
-﻿// ------------------ SignalR Connection and Functions ------------------ //
-// ------------------ SignalR Connection and Functions ------------------ //
+﻿// ------------------ SignalR Connections------------------ //
 var chats = document.getElementsByClassName("chatContainer");
 var userIds = document.getElementsByClassName("hiddenUserId");
 for (var i = 0; i < chats.length; i++) {
@@ -139,10 +138,33 @@ function setConnections(chatId, userId){
         message.innerText = data.message;
         commentContainer.appendChild(message);
 
+        // test start
+        var commentInfo = document.createElement("div");
+        commentInfo.classList.add("postInfo");
+        commentContainer.appendChild(commentInfo);
+
+        var commentLikes = document.createElement("div");
+        commentLikes.classList.add("postLikes");
+        commentInfo.appendChild(commentLikes);
+
+        var likeIcon = document.createElement("a");
+        likeIcon.id = `commentLike-${data.postId}`;
+        likeIcon.className = "far fa-heart";
+        likeIcon.addEventListener("click", function () {
+            like(data.postId, data.friendId, data.userId, "comment");
+        });
+        commentLikes.appendChild(likeIcon);
+
+        var likeCount = document.createElement("div");
+        likeCount.id = `commentCount-${data.postId}`;
+        likeCount.innerText = "0 likes";
+        commentLikes.append(likeCount);
+        // test end
+
         var dateSent = document.createElement("span");
         dateSent.classList.add("postDate");
         dateSent.innerText = data.dateSent;
-        commentContainer.appendChild(dateSent);
+        commentInfo.appendChild(dateSent);
 
         var count = document.getElementById(`commentNo-${data.postId}`);
         var number = parseInt(count.innerText[0] + count.innerText[1]);
@@ -150,14 +172,12 @@ function setConnections(chatId, userId){
         count.innerText = `${number} Comments`;
         document.getElementById(`commentContainer-${data.postId}`).classList.remove("hide");
 
-        var br = document.createElement("br");
-        commentContainer.appendChild(br);
 
         var deleteBtn = document.createElement("div");
         deleteBtn.classList.add("deleteBtn");
+        deleteBtn.classList.add("text-danger");
         deleteBtn.innerText = "Delete";
         deleteBtn.addEventListener("click", function () {
-            //commentContainer.remove();
             deleteComment(data.commentId, data.postId);
         });
         commentContainer.appendChild(deleteBtn);
@@ -167,10 +187,12 @@ function setConnections(chatId, userId){
     })
 }
 
+
+// ------------------ Functions ------------------ //
+
 function sendNotification(data) {
     if (data.userId != data.friendId) {
         var container = document.getElementById(`notContainer-${data.friendId}`);
-        
 
         var msgContainer = document.createElement("div");
         msgContainer.style.padding = "15px";
@@ -211,8 +233,8 @@ function sendMessage(event, chatTextId) {
         })
 }
 
-function like(postId, friendId, senderId) {
-
+function like(postId, friendId, senderId, likeType) {
+    //debugger;
     var connections = storageService.getItems("connectionNames");
     var connectionName = "";
     for (var i = 0; i < connections.length; i++) {
@@ -221,17 +243,17 @@ function like(postId, friendId, senderId) {
             break;
         }
     }
-    axios.post(`/Like/PostLike/${postId}/${connectionName}/${friendId}`)
+    axios.post(`/Like/EntityLike/${postId}/${connectionName}/${friendId}/${likeType}`)
         .then(res => {
-            
+
         })
         .catch(err => {
             console.log(err);
         })
 
-    var heart = document.getElementById(postId);
-    var count = document.getElementById(`count-${postId}`);
-    var number = parseInt(count.innerText[0]);
+    var heart = document.getElementById(`${likeType}Like-${postId}`);
+    var count = document.getElementById(`${likeType}Count-${postId}`);
+    var number = parseInt(count.innerText[0] + count.innerText[1]); // TUKA NE RABOTI NA COMMENT LIKE !!!
     if (heart.style.color == "red") {
         heart.style.color = "black";
         number--;
@@ -255,18 +277,16 @@ function comment(event, postId, friendId, senderId) {
     }
     var message = document.getElementById(`commentInput-${postId}`).value;
 
-    if (message.trim() == "")
-    {
+    if (message.trim() == "") {
         alert("You can't send empty comment");
     }
-    else
-    {
+    else {
         axios.post(`/Comment/PostComment/${postId}/${connectionName}/${friendId}/${message}`)
             .then(res => {
 
             })
             .catch(err => {
-                console.log(err);
+                //console.log(err);
             })
     }
     document.getElementById(`commentInput-${postId}`).value = "";

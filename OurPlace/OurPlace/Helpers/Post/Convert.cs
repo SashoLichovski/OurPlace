@@ -1,4 +1,5 @@
-﻿using OurPlace.Models.Post;
+﻿using OurPlace.Data;
+using OurPlace.Models.Post;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -20,6 +21,14 @@ namespace OurPlace.Helpers.Post
             if (x.Comments != null)
             {
                 model.Comments = x.Comments.Select(x => x.ToPostCommentViewModel()).ToList();
+                for (int i = 0; i < x.Comments.Count; i++)
+                {
+                    if (x.Comments[i].Likes == null)
+                    {
+                        x.Comments[i].Likes = new List<CommentLike>();
+                    }
+                    model.Comments[i].CommentLikes = x.Comments[i].Likes.Select(x => x.ToCommentLikeViewModel()).ToList();
+                }
             }
 
             model.Likes = new List<PostLikeViewModel>();
@@ -27,6 +36,8 @@ namespace OurPlace.Helpers.Post
             {
                 model.Likes = x.Likes.Select(x => x.ToPostLikeViewModel()).ToList();
             }
+
+            
 
             if (x.Image != null)
             {
@@ -44,6 +55,16 @@ namespace OurPlace.Helpers.Post
                 DateSent = x.DateSent,
                 SentBy = $"{x.User.FirstName} {x.User.LastName}",
                 UserId = x.UserId
+            };
+        }
+
+        internal static CommentLikeViewModel ToCommentLikeViewModel(this CommentLike x)
+        {
+            return new CommentLikeViewModel
+            {
+                Id = x.Id,
+                CommentId = x.CommentId,
+                UserId = x.UserId,
             };
         }
 

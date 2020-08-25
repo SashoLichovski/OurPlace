@@ -96,6 +96,27 @@
     font-size: 0.9em;
 }
 
+.full {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+    .full .content {
+        background-color: rgba(0,0,0,0.75) !important;
+        height: 100%;
+        width: 100%;
+        display: grid;
+    }
+
+#layoutPhoto {
+    width: 60%;
+    left: 50%;
+    margin: auto;
+}
+
 @media only screen and (max-width : 991px) {
     .timeLine {
         width: 100%;
@@ -104,6 +125,10 @@
 
     .postImage {
         height: 280px;
+    }
+
+    #layoutPhoto {
+        width: 95%;
     }
 }
 

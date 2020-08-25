@@ -1,4 +1,5 @@
-﻿using OurPlace.Services.DtoModels;
+﻿using OurPlace.Data;
+using OurPlace.Services.DtoModels;
 
 namespace OurPlace.Services.Interfaces
 {
@@ -6,5 +7,6 @@ namespace OurPlace.Services.Interfaces
     {
         PostCommentDto CreatePostComment(int postId, string userId, string message);
         void Delete(int commentId);
+        PostComment GetById(int commentId);
     }
 }

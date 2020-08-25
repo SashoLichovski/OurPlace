@@ -32,9 +32,10 @@ namespace OurPlace.Repositories
         {
             var posts = context.Posts
                 .Include(x => x.Comments)
-                    .ThenInclude(x => x.User)
+                    .ThenInclude(x => x.Likes)
+                    //.ThenInclude(x => x.User)
                 .Include(x => x.Likes)
-                    .ThenInclude(x => x.User)
+                    //.ThenInclude(x => x.User)
                 .Include(x => x.User)
                 .Where(x => userIds.Contains(x.UserId))
                 .OrderByDescending(x => x.DatePosted)

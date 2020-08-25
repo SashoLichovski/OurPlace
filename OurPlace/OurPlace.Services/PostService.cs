@@ -29,8 +29,8 @@ namespace OurPlace.Services
             var newPost = new Post()
             {
                 UserId = userId,
-                Message = message,
-                DatePosted = DateTime.Now
+                DatePosted = DateTime.Now,
+                Message = message
             };
             if (image != null)
             {
