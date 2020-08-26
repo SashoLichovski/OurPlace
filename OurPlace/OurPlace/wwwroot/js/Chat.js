@@ -151,8 +151,14 @@ function setConnections(chatId, userId){
         likeIcon.id = `commentLike-${data.commentId}`;
         likeIcon.className = "far fa-heart";
         likeIcon.addEventListener("click", function () {
-            like(data.commentId, data.friendId, data.userId, "comment");
-            sendNotification(data);
+            like(data.commentId, data.userId, data.friendId, "comment");
+            if (likeIcon.style.color == "red") {
+                likeIcon.style.color = "black";
+                likeCount.innerText = "0 likes";
+            } else {
+                likeIcon.style.color = "red";
+                likeCount.innerText = "1 likes";
+            }
         });
         commentLikes.appendChild(likeIcon);
 
@@ -160,7 +166,6 @@ function setConnections(chatId, userId){
         likeCount.id = `commentCount-${data.postId}`;
         likeCount.innerText = "0 likes";
         commentLikes.append(likeCount);
-        // test end
 
         var dateSent = document.createElement("span");
         dateSent.classList.add("postDate");
@@ -172,7 +177,6 @@ function setConnections(chatId, userId){
         number++;
         count.innerText = `${number} Comments`;
         document.getElementById(`commentContainer-${data.postId}`).classList.remove("hide");
-
 
         var deleteBtn = document.createElement("div");
         deleteBtn.classList.add("deleteBtn");
@@ -194,28 +198,29 @@ function setConnections(chatId, userId){
 function sendNotification(data) {
     if (data.userId != data.friendId) {
         var container = document.getElementById(`notContainer-${data.friendId}`);
+        if (container != undefined) {
+            var msgContainer = document.createElement("div");
+            msgContainer.style.padding = "15px";
+            msgContainer.style.margin = "15px";
+            msgContainer.style.borderRadius = "10px";
+            msgContainer.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+            msgContainer.style.zIndex = "50";
+            container.appendChild(msgContainer);
 
-        var msgContainer = document.createElement("div");
-        msgContainer.style.padding = "15px";
-        msgContainer.style.margin = "15px";
-        msgContainer.style.borderRadius = "10px";
-        msgContainer.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
-        msgContainer.style.zIndex = "50";
-        container.appendChild(msgContainer);
+            var close = document.createElement("i");
+            close.className = "far fa-window-close";
+            close.style.color = "white";
+            close.style.cursor = "pointer";
+            close.addEventListener("click", function () {
+                msgContainer.remove();
+            });
+            msgContainer.appendChild(close);
 
-        var close = document.createElement("i");
-        close.className = "far fa-window-close";
-        close.style.color = "white";
-        close.style.cursor = "pointer";
-        close.addEventListener("click", function () {
-            msgContainer.remove();
-        });
-        msgContainer.appendChild(close);
-
-        var message = document.createElement("div");
-        message.innerText = data.notification.message;
-        message.style.color = "white";
-        msgContainer.appendChild(message);
+            var message = document.createElement("div");
+            message.innerText = data.notification.message;
+            message.style.color = "white";
+            msgContainer.appendChild(message);
+        }
     }
 }
 
@@ -246,24 +251,25 @@ function like(entityId, friendId, senderId, likeType) {
     }
     axios.post(`/Like/EntityLike/${entityId}/${connectionName}/${friendId}/${likeType}`)
         .then(res => {
-
+            var heart = document.getElementById(`${likeType}Like-${entityId}`);
+            var count = document.getElementById(`${likeType}Count-${entityId}`);
+            var number = parseInt(count.innerText[0] + count.innerText[1]);
+            if (heart.style.color == "red") {
+                heart.style.color = "black";
+                number--;
+                count.innerText = `${number} likes`;
+            } else {
+                heart.style.color = "red";
+                number++;
+                count.innerText = `${number} likes`;
+            }
+            console.log("First Time !!!!");
         })
         .catch(err => {
             console.log(err);
-        })
+        });
 
-    var heart = document.getElementById(`${likeType}Like-${entityId}`);
-    var count = document.getElementById(`${likeType}Count-${entityId}`);
-    var number = parseInt(count.innerText[0]); // TUKA NE RABOTI NA COMMENT LIKE !!!
-    if (heart.style.color == "red") {
-        heart.style.color = "black";
-        number--;
-        count.innerText = `${number} likes`;
-    } else {
-        heart.style.color = "red";
-        number++;
-        count.innerText = `${number} likes`;
-    }
+    
 }
 
 function comment(event, postId, friendId, senderId) {

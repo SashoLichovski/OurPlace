@@ -79,7 +79,7 @@
                         @foreach (var comment in post.Comments)
                         {
                             <div class="commentContent" id="commentContent-@comment.Id">
-                                <span>@comment.SentBy</span>
+                                <a asp-controller="User" asp-action="Profile" asp-route-userId="@comment.UserId" ><span>@comment.SentBy</span></a>
                                 <p>@comment.Message</p>
 
                                 <div class="postInfo">

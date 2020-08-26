@@ -5,7 +5,9 @@ using OurPlace.Data;
 using OurPlace.Hubs;
 using OurPlace.Services.DtoModels;
 using OurPlace.Services.Interfaces;
+using System.Net.NetworkInformation;
 using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace OurPlace.Controllers
@@ -29,7 +31,6 @@ namespace OurPlace.Controllers
         public async Task<IActionResult> EntityLike(int entityId, string connectionName, string friendId, string likeType)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            
 
             var notification = new NotificationDto();
             if (likeType == "post")

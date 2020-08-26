@@ -7,6 +7,7 @@ using OurPlace.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace OurPlace.Services
@@ -83,7 +84,8 @@ namespace OurPlace.Services
 
         public async Task<NotificationDto> CommentLikeNotification(string userId, string friendId, int commentId, bool didLike)
         {
-            var sender = await userManager.FindByIdAsync(userId);
+            Thread.Sleep(100);
+            var sender = userManager.Users.FirstOrDefault(x => x.Id.Equals(userId));
             var newNot = new Notification()
             {
                 UserId = friendId,
@@ -118,7 +120,8 @@ namespace OurPlace.Services
 
         public NotificationDto LikeNotification(string userId, string friendId, int postId, bool didLike)
         {
-            var sender = userManager.FindByIdAsync(userId).Result;
+            Thread.Sleep(50);
+            var sender = userManager.Users.FirstOrDefault(x => x.Id.Equals(userId));
             var newNot = new Notification()
             {
                 UserId = friendId,
