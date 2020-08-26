@@ -7,6 +7,7 @@ using OurPlace.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace OurPlace.Services
 {
@@ -80,9 +81,9 @@ namespace OurPlace.Services
             return notRepo.GetAllForUser(userId);
         }
 
-        public NotificationDto CommentLikeNotification(string userId, string friendId, int commentId, bool didLike)
+        public async Task<NotificationDto> CommentLikeNotification(string userId, string friendId, int commentId, bool didLike)
         {
-            var sender = userManager.FindByIdAsync(userId).Result;
+            var sender = await userManager.FindByIdAsync(userId);
             var newNot = new Notification()
             {
                 UserId = friendId,
@@ -128,13 +129,16 @@ namespace OurPlace.Services
             };
             var post = postService.GetById(postId);
             var shortPostMessage = "";
-            if (post.Message.Count() < 10)
+            if (!string.IsNullOrEmpty(post.Message))
             {
-                shortPostMessage = post.Message.Substring(0, post.Message.Count());
-            }
-            else
-            {
-                shortPostMessage = post.Message.Substring(0, 10);
+                if (post.Message.Count() < 10)
+                {
+                    shortPostMessage = post.Message.Substring(0, post.Message.Count());
+                }
+                else
+                {
+                    shortPostMessage = post.Message.Substring(0, 10);
+                }
             }
 
             if (didLike)

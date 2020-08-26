@@ -148,10 +148,11 @@ function setConnections(chatId, userId){
         commentInfo.appendChild(commentLikes);
 
         var likeIcon = document.createElement("a");
-        likeIcon.id = `commentLike-${data.postId}`;
+        likeIcon.id = `commentLike-${data.commentId}`;
         likeIcon.className = "far fa-heart";
         likeIcon.addEventListener("click", function () {
-            like(data.postId, data.friendId, data.userId, "comment");
+            like(data.commentId, data.friendId, data.userId, "comment");
+            sendNotification(data);
         });
         commentLikes.appendChild(likeIcon);
 
@@ -233,7 +234,7 @@ function sendMessage(event, chatTextId) {
         })
 }
 
-function like(postId, friendId, senderId, likeType) {
+function like(entityId, friendId, senderId, likeType) {
     //debugger;
     var connections = storageService.getItems("connectionNames");
     var connectionName = "";
@@ -243,7 +244,7 @@ function like(postId, friendId, senderId, likeType) {
             break;
         }
     }
-    axios.post(`/Like/EntityLike/${postId}/${connectionName}/${friendId}/${likeType}`)
+    axios.post(`/Like/EntityLike/${entityId}/${connectionName}/${friendId}/${likeType}`)
         .then(res => {
 
         })
@@ -251,9 +252,9 @@ function like(postId, friendId, senderId, likeType) {
             console.log(err);
         })
 
-    var heart = document.getElementById(`${likeType}Like-${postId}`);
-    var count = document.getElementById(`${likeType}Count-${postId}`);
-    var number = parseInt(count.innerText[0] + count.innerText[1]); // TUKA NE RABOTI NA COMMENT LIKE !!!
+    var heart = document.getElementById(`${likeType}Like-${entityId}`);
+    var count = document.getElementById(`${likeType}Count-${entityId}`);
+    var number = parseInt(count.innerText[0]); // TUKA NE RABOTI NA COMMENT LIKE !!!
     if (heart.style.color == "red") {
         heart.style.color = "black";
         number--;

@@ -14,10 +14,10 @@ namespace OurPlace.Repositories
             this.context = context;
         }
 
-        public void AddPostLike(PostLike postLike)
+        public async Task AddPostLike(PostLike postLike)
         {
             context.PostLikes.Add(postLike);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         public void RemovePostLike(PostLike like)

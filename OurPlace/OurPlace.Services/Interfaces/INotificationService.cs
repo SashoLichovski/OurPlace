@@ -1,6 +1,7 @@
 ﻿using OurPlace.Data;
 using OurPlace.Services.DtoModels;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OurPlace.Services.Interfaces
 {
@@ -12,6 +13,6 @@ namespace OurPlace.Services.Interfaces
         NotificationDto LikeNotification(string userId, string friendId, int postId, bool didLike);
         void Delete(int id);
         NotificationDto PostNotification(string userId, string friendId, int postId);
-        NotificationDto CommentLikeNotification(string userId, string friendId, int entityId, bool didLike);
+        Task<NotificationDto> CommentLikeNotification(string userId, string friendId, int entityId, bool didLike);
     }
 }

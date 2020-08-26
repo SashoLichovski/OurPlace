@@ -86,13 +86,13 @@
                                     <div class="postLikes">
                                         @if (comment.CommentLikes.Select(x => x.UserId).ToList().Contains(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value))
                                         {
-                                            <a id="commentLike-@post.Id" class="far fa-heart" style="color: red" onclick="like(`@comment.Id`, `@comment.UserId`, `@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value`, `comment`)"></a>
+                                            <a id="commentLike-@comment.Id" class="far fa-heart" style="color: red" onclick="like(`@comment.Id`, `@comment.UserId`, `@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value`, `comment`)"></a>
                                         }
                                         else
                                         {
-                                            <a id="commentLike-@post.Id" class="far fa-heart" onclick="like(`@comment.Id`, `@comment.UserId`, `@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value`, `comment`)"></a>
+                                            <a id="commentLike-@comment.Id" class="far fa-heart" onclick="like(`@comment.Id`, `@comment.UserId`, `@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value`, `comment`)"></a>
                                         }
-                                        <div id="commentCount-@post.Id">@comment.CommentLikes.Count likes</div>
+                                        <div id="commentCount-@comment.Id">@comment.CommentLikes.Count likes</div>
                                     </div>
                                     <div class="postDate">@comment.DateSent.ToString("MMMM dd yyyy HH:mm")</div>
                                 </div>
