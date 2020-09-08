@@ -220,6 +220,14 @@ function sendNotification(data) {
             message.innerText = data.notification.message;
             message.style.color = "white";
             msgContainer.appendChild(message);
+            if (data.notification.image != undefined) {
+                var image = document.createElement("img");
+                image.src = `data:image/png;base64,${data.notification.image}`;
+                image.style.width = "100px";
+                image.style.height = "auto";
+                //msgContainer.style.display = "flex";
+                msgContainer.appendChild(image);
+            }
         }
     }
 }

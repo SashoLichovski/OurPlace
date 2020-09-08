@@ -5,6 +5,7 @@ using OurPlace.Helpers.Post;
 using OurPlace.Helpers.User;
 using OurPlace.Models.User;
 using OurPlace.Services.Interfaces;
+using System.Diagnostics;
 using System.Linq;
 
 namespace OurPlace.Controllers
@@ -25,20 +26,26 @@ namespace OurPlace.Controllers
 
         public IActionResult Profile(string userId)
         {
+            var secs = Stopwatch.StartNew();
             var model = new UserProfileModel()
             {
                 Photos = userService.GetById(userId).ToUserLayoutPhotosModel(),
                 Posts = postService.GetAllForTimeline(userId).Select(x => x.ToPostViewModel()).ToList()
             };
+            secs.Stop();
+            System.Console.WriteLine(secs);
             return View(model);
         }
         public IActionResult UserPhotos(string userId)
         {
+            var secs = Stopwatch.StartNew();
             var model = new UserPhotosModel()
             {
                 LayoutPhotos = userService.GetById(userId).ToUserLayoutPhotosModel(),
                 UserPhotos = imageService.GetUserPhotos(userId).Select(x => x.ToUserImageModel()).ToList()
             };
+            secs.Stop();
+            System.Console.WriteLine(secs);
             return View(model);
         }
 

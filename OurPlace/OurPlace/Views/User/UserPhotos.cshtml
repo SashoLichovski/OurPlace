@@ -1,4 +1,6 @@
-﻿@model OurPlace.Models.User.UserPhotosModel
+﻿@using System.Text.Json;
+@using System.Text.Json.Serialization;
+@model OurPlace.Models.User.UserPhotosModel
 @{
     ViewData["Title"] = "UserPhotos";
 }
@@ -9,6 +11,45 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
     <link rel="stylesheet" href="~/lib/slick-1.8.1/slick/slick.css" />
 }
+
+<div class="hide" id="carousel">
+    <div class="single-item carouselContainer">
+        @foreach (var image in Model.UserPhotos)
+        {
+            <div class="imgContainer">
+                <img src="data:image/jpeg;base64,@Convert.ToBase64String(image.Image)" />
+                <div class="commentLikeContainer">
+                    <div class="likeContainer">
+                        @if (image.Likes.Select(x => x.UserId).ToList().Contains(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value))
+                        {
+                            <i style="color: red" class="far fa-heart likeIcon" id="imageLike-@image.Id" onclick="like(`@image.Id`, `@image.UserId`, `@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value`, `image`)"></i>
+                        }
+                        else
+                        {
+                            <i class="far fa-heart likeIcon" id="imageLike-@image.Id" onclick="like(`@image.Id`, `@image.UserId`, `@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value`, `image`)"></i>
+                        }
+
+                        <div class="likeCount" id="imageCount-@image.Id">@image.Likes.Count likes</div>
+                    </div>
+                    <div class="commentContainer">
+                        <div>image.Comments.Count</div>
+                        @for (int i = 0; i < 10; i++)
+                        {
+                            <div class="comment">
+                                <div>image.Comment[i].CommentBy</div>
+                                <div class="commentText">This is comment no. @i</div>
+                            </div>
+                        }
+                    </div>
+                    <form class="commentForm">
+                        <input type="text" placeholder="Write something..." class="form-control" />
+                    </form>
+                </div>
+            </div>
+        }
+    </div>
+    <i class="far fa-window-close closeCarousel" id="closeCarousel" onclick="hideCarousel()"></i>
+</div>
 
 <div class="container">
     <partial name="./Partials/_coverImageForm" />
@@ -27,16 +68,16 @@
         </div>
 
         <div class="gallery" id="gallery">
-            @foreach (var image in Model.UserPhotos)
+            @for (int i = 0; i < Model.UserPhotos.Count; i++)
             {
                 <div class="gallery-item">
                     @if (Model.LayoutPhotos.UserId == User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value)
                     {
-                        <div class="imageSettings" onclick="toggleImageSetting(event)" id="@image.Id">
-                            <i class="fas fa-bars" id="@image.Id"></i>
+                        <div class="imageSettings" onclick="toggleImageSetting(event)" id="@Model.UserPhotos[i].Id">
+                            <i class="fas fa-bars" id="@Model.UserPhotos[i].Id"></i>
                         </div>
                     }
-                    <div class="content"><img src="data:image/jpeg;base64,@Convert.ToBase64String(image.Image)" class="galleryImages" onclick="scrollImages(event)"></div>
+                    <div class="content" id="likeCount-@Model.UserPhotos[i].Likes.Count"><img id="@Model.UserPhotos[i].Id" src="data:image/jpeg;base64,@Convert.ToBase64String(Model.UserPhotos[i].Image)" class="galleryImages" onclick="toggleCarousel(`@i`)"></div>
                 </div>
             }
         </div>

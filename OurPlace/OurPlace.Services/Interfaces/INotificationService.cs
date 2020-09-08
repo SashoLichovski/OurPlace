@@ -14,5 +14,6 @@ namespace OurPlace.Services.Interfaces
         void Delete(int id);
         NotificationDto PostNotification(string userId, string friendId, int postId);
         Task<NotificationDto> CommentLikeNotification(string userId, string friendId, int entityId, bool didLike);
+        Task<NotificationDto> ImageLikeNotification(string userId, string friendId, int entityId, bool didLike);
     }
 }

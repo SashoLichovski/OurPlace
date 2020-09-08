@@ -41,8 +41,10 @@ namespace OurPlace.Repositories
         public List<UserImage> GetUserPhotos(string userId)
         {
             return context.UserImages
-                .Include(x => x.User)
                 .Where(x => x.UserId.Equals(userId))
+                .Include(x => x.User)
+                .Include(x => x.Likes)
+                    .ThenInclude(x => x.User)
                 .OrderByDescending(x => x.DateUploaded)
                 .ToList();
         }

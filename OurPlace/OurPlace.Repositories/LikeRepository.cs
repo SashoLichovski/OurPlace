@@ -36,6 +36,11 @@ namespace OurPlace.Repositories
             return context.CommentLikes.FirstOrDefault(x => x.UserId.Equals(userId) && x.CommentId.Equals(commentId));
         }
 
+        public ImageLike GetByUserImageId(string userId, int imageId)
+        {
+            return context.ImageLikes.FirstOrDefault(x => x.UserId.Equals(userId) && x.ImageId.Equals(imageId));
+        }
+
         public void RemoveCommentLike(CommentLike like)
         {
             context.CommentLikes.Remove(like);
@@ -46,6 +51,18 @@ namespace OurPlace.Repositories
         {
             context.CommentLikes.Add(commentLike);
             await context.SaveChangesAsync();
+        }
+
+        public async Task AddImageLike(ImageLike imageLike)
+        {
+            context.ImageLikes.Add(imageLike);
+            await context.SaveChangesAsync();
+        }
+
+        public void RemoveImageLike(ImageLike like)
+        {
+            context.ImageLikes.Remove(like);
+            context.SaveChanges();
         }
     }
 }

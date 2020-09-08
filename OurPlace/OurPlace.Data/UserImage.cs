@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace OurPlace.Data
@@ -10,6 +11,7 @@ namespace OurPlace.Data
         public DateTime DateUploaded { get; set; }
         public string UserId { get; set; }
         public User User { get; set; }
+        public List<ImageLike> Likes { get; set; }
 
     }
 }

@@ -5,11 +5,14 @@ namespace OurPlace.Repositories.Interfaces
 {
     public interface ILikeRepository
     {
-        Task AddPostLike(PostLike postLike);
         PostLike GetByUserPostId(string userId, int postId);
-        CommentLike GetByUserCommentId(string userId, int commentId);
+        Task AddPostLike(PostLike postLike);
         void RemovePostLike(PostLike like);
-        void RemoveCommentLike(CommentLike like);
+        CommentLike GetByUserCommentId(string userId, int commentId);
         Task AddCommentLike(CommentLike commentLike);
+        void RemoveCommentLike(CommentLike like);
+        ImageLike GetByUserImageId(string userId, int imageId);
+        Task AddImageLike(ImageLike imageLike);
+        void RemoveImageLike(ImageLike like);
     }
 }

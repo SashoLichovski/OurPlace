@@ -57,5 +57,27 @@ namespace OurPlace.Services
             }
             return didLike;
         }
+
+        public bool EditImageLike(int imageId, string userId)
+        {
+            var didLike = false;
+            var like = likeRepo.GetByUserImageId(userId, imageId);
+            if (like == null)
+            {
+                var imageLike = new ImageLike()
+                {
+                    UserId = userId,
+                    ImageId = imageId,
+                    DateLiked = DateTime.Now
+                };
+                likeRepo.AddImageLike(imageLike);
+                didLike = true;
+            }
+            else
+            {
+                likeRepo.RemoveImageLike(like);
+            }
+            return didLike;
+        }
     }
 }

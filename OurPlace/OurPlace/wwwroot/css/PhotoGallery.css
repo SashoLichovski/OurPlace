@@ -1,4 +1,67 @@
-﻿.hello {
+﻿/*Carousel Styles start*/
+.carouselContainer {
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    height: 100%;
+}
+
+.imgContainer {
+    display: flex !important;
+    justify-content: center;
+}
+    .imgContainer img {
+        height: 100%;
+    }
+
+.commentLikeContainer {
+    width: 300px;
+    height: 100%;
+    background-color: whitesmoke;
+    overflow: auto;
+}
+
+.likeContainer {
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.likeIcon {
+    margin-right: 10px;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.likeCount {
+    font-size: 20px;
+    margin-left: 10px;
+}
+
+.commentContainer {
+    padding: 15px;
+}
+
+.comment {
+    margin-top: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.commentText {
+    padding: 5px;
+}
+
+.commentForm {
+    position: sticky;
+    bottom: 0;
+    padding: 5px;
+}
+    .commentForm input {
+        background-color: black;
+        color: white;
+    }
+/*Carousel Styles end*/
+.hello {
     opacity: 1 !important;
 }
 
@@ -82,6 +145,10 @@
     .imageSettings i {
         font-size: 1.3em;
     }
+
+.imageCommentContainer {
+    width: 300px;
+}
 
 .closeCarousel {
     position: absolute;

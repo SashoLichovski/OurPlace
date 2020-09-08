@@ -43,6 +43,11 @@ namespace OurPlace.Controllers
                 var didLike = likeService.EditCommentLike(entityId, userId);
                 notification = await notService.CommentLikeNotification(userId, friendId, entityId, didLike);
             }
+            else if (likeType == "image")
+            {
+                var didLike = likeService.EditImageLike(entityId, userId);
+                notification = await notService.ImageLikeNotification(userId, friendId, entityId, didLike);
+            }
 
             await chat.Clients.Group(connectionName).SendAsync("ReceiveLike", new
             {

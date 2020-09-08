@@ -5,13 +5,11 @@ using System.Threading.Tasks;
 
 namespace OurPlace.Models.Image
 {
-    public class UserImageModel
+    public class ImageLikeModel
     {
         public int Id { get; set; }
-        public byte[] Image { get; set; }
-        public DateTime DateUploaded { get; set; }
+        public int ImageId { get; set; }
         public string UserId { get; set; }
         public Data.User User { get; set; }
-        public List<ImageLikeModel> Likes { get; set; }
     }
 }

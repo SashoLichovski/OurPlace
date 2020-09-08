@@ -19,14 +19,18 @@ namespace OurPlace.Services
         private readonly IFriendRepository friendRepo;
         private readonly IPostService postService;
         private readonly ICommentService commentService;
+        private readonly IImageService imageService;
 
-        public NotificationService(INotificationRepository notRepo, UserManager<User> userManager, IFriendRepository friendRepo, IPostService postService, ICommentService commentService)
+        public NotificationService(INotificationRepository notRepo, UserManager<User> userManager, 
+            IFriendRepository friendRepo, IPostService postService, 
+            ICommentService commentService, IImageService imageService)
         {
             this.notRepo = notRepo;
             this.userManager = userManager;
             this.friendRepo = friendRepo;
             this.postService = postService;
             this.commentService = commentService;
+            this.imageService = imageService;
         }
 
         
@@ -84,7 +88,7 @@ namespace OurPlace.Services
 
         public async Task<NotificationDto> CommentLikeNotification(string userId, string friendId, int commentId, bool didLike)
         {
-            Thread.Sleep(100);
+            Thread.Sleep(50);
             var sender = userManager.Users.FirstOrDefault(x => x.Id.Equals(userId));
             var newNot = new Notification()
             {
@@ -105,14 +109,9 @@ namespace OurPlace.Services
                 shortPostMessage = comment.Message.Substring(0, 10);
             }
 
-            if (didLike)
-            {
-                newNot.Message = $"{newNot.SentBy} likes your comment  ``{shortPostMessage}...``";
-            }
-            else
-            {
-                newNot.Message = $"{newNot.SentBy} dislikes your comment  ``{shortPostMessage}...``";
-            }
+            newNot.Message = didLike ? $"{newNot.SentBy} likes your comment  ``{shortPostMessage}...``" : 
+                $"{newNot.SentBy} dislikes your comment  ``{shortPostMessage}...``";
+            
             notRepo.Add(newNot);
 
             return newNot.ToNotificationDto();
@@ -144,14 +143,9 @@ namespace OurPlace.Services
                 }
             }
 
-            if (didLike)
-            {
-                newNot.Message = $"{newNot.SentBy} likes your post  ``{shortPostMessage}...``";
-            }
-            else
-            {
-                newNot.Message = $"{newNot.SentBy} dislikes your post  ``{shortPostMessage}...``";
-            }
+            newNot.Message = didLike ? $"{newNot.SentBy} likes your post  ``{shortPostMessage}...``" :
+                $"{newNot.SentBy} dislikes your post  ``{shortPostMessage}...``";
+            
             notRepo.Add(newNot);
 
             return newNot.ToNotificationDto();
@@ -159,6 +153,7 @@ namespace OurPlace.Services
 
         public NotificationDto PostNotification(string userId, string friendId, int postId)
         {
+            Thread.Sleep(50);
             var sender = userManager.FindByIdAsync(userId).Result;
             var newNot = new Notification()
             {
@@ -185,6 +180,31 @@ namespace OurPlace.Services
             notRepo.Add(newNot);
 
             return newNot.ToNotificationDto();
+        }
+
+        public async Task<NotificationDto> ImageLikeNotification(string userId, string friendId, int imageId, bool didLike)
+        {
+            Thread.Sleep(50);
+            var sender = userManager.FindByIdAsync(userId).Result;
+            var newNot = new Notification()
+            {
+                UserId = friendId,
+                SenderId = sender.Id,
+                SentBy = $"{sender.FirstName} {sender.LastName}",
+                DateSent = DateTime.Now,
+                Type = NotificationType.Other,
+            };
+
+            newNot.Message = didLike ? $"{newNot.SentBy} likes your photo" :
+                $"{newNot.SentBy} dislikes your photo";
+
+            notRepo.Add(newNot);
+
+            var model = new NotificationDto();
+            model = newNot.ToNotificationDto();
+            model.Image = imageService.GetById(imageId).Image;
+
+            return model;
         }
     }
 }
