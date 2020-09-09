@@ -66,6 +66,19 @@ namespace OurPlace.Controllers
             return View(model);
         }
 
+        public IActionResult UserFriends(string userId)
+        {
+            var model = new UserFriendModel()
+            {
+                FriendList = userService.GetUserFriends(userId).Select(x => x.ToUserFriendModel()).ToList(),
+                VisitorId = User.FindFirst(ClaimTypes.NameIdentifier).Value,
+                FriendIds = friendService.GetFriendIds(userId),
+                ProfileOwnerId = userId,
+                Photos = userService.GetById(userId).ToUserLayoutPhotosModel()
+            };
+            return View(model);
+        }
+
         public IActionResult EditFullName(string userId)
         {
             var model = new EditFullNameModel()

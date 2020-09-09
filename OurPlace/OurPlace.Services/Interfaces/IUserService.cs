@@ -16,5 +16,6 @@ namespace OurPlace.Services.Interfaces
         Task UploadCover(Image image, string userId);
         Task UpdateCoverProfile(byte[] imgByteArr, string userId, string photoType);
         List<User> GetUserForChat(string chatName);
+        List<User> GetUserFriends(string userId);
     }
 }

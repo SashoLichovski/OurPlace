@@ -102,5 +102,10 @@ namespace OurPlace.Services
             await userManager.UpdateAsync(user);
             await context.SaveChangesAsync();
         }
+
+        public List<User> GetUserFriends(string userId)
+        {
+            return friendService.GetAll(userId).Select(x => GetById(x.FriendId)).ToList();
+        }
     }
 }

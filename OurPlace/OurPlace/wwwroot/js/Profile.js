@@ -63,10 +63,19 @@ function openPhoto() {
     img.src = event.target.src;
     img.id = "layoutPhoto";
     content.appendChild(img);
+    if (img.clientHeight > img.clientWidth) {
+        img.style.height = "80%";
+        img.style.width = "auto";
+    }
 
     container.style.cursor = "pointer";
     container.addEventListener("click", function () {
         container.remove();
     })
+    document.addEventListener("keyup", function (e) {
+        if (e.keyCode === 27) {
+            container.remove();
+        }
+    });
 }
 

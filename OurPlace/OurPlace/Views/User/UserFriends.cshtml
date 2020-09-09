@@ -1,0 +1,53 @@
+﻿@model OurPlace.Models.User.UserFriendModel
+@{
+    ViewData["Title"] = "UserFriends";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/Profile.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+}
+
+<style>
+    .userFriendsContainer {
+        width: 70%;
+        margin: auto;
+    }
+</style>
+
+<div class="container">
+    <partial name="./Partials/_coverImageForm" />
+
+    <partial name="./Partials/_profileLayout" for="Photos" />
+    @if ((Model.FriendIds.Contains(Model.VisitorId) ||
+    Model.ProfileOwnerId == Model.VisitorId))
+    {
+        <div class="userFriendsContainer">
+            <h3>Friends</h3>
+            <hr />
+            <br />
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email adress</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model.FriendList)
+                    {
+                        <tr>
+                            <td>@user.FullName</td>
+                            <td>@user.Email</td>
+                            <td><a asp-action="Profile" asp-route-userId="@user.Id">Visit profile</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script src="~/js/Profile.js"></script>
+}

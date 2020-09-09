@@ -36,5 +36,15 @@ namespace OurPlace.Helpers.User
                 Email = x.Email
             };
         }
+
+        internal static ListOfUserFriendModel ToUserFriendModel(this Data.User x)
+        {
+            return new ListOfUserFriendModel
+            {
+                Id = x.Id,
+                FullName = x.UserName,
+                Email = x.Email
+            };
+        }
     }
 }
