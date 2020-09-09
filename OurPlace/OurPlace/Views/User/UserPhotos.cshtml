@@ -20,13 +20,13 @@
                 <img src="data:image/jpeg;base64,@Convert.ToBase64String(image.Image)" />
                 <div class="commentLikeContainer">
                     <div class="likeContainer">
-                        @if (image.Likes.Select(x => x.UserId).ToList().Contains(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value))
+                        @if (image.Likes.Select(x => x.UserId).ToList().Contains(Model.VisitorId))
                         {
-                            <i style="color: red" class="far fa-heart likeIcon" id="imageLike-@image.Id" onclick="like(`@image.Id`, `@image.UserId`, `@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value`, `image`)"></i>
+                            <i style="color: red" class="far fa-heart likeIcon" id="imageLike-@image.Id" onclick="like(`@image.Id`, `@image.UserId`, `@Model.VisitorId`, `image`)"></i>
                         }
                         else
                         {
-                            <i class="far fa-heart likeIcon" id="imageLike-@image.Id" onclick="like(`@image.Id`, `@image.UserId`, `@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value`, `image`)"></i>
+                            <i class="far fa-heart likeIcon" id="imageLike-@image.Id" onclick="like(`@image.Id`, `@image.UserId`, `@Model.VisitorId`, `image`)"></i>
                         }
 
                         <div class="likeCount" id="imageCount-@image.Id">@image.Likes.Count likes</div>
@@ -38,6 +38,7 @@
                             <div class="comment">
                                 <div>image.Comment[i].CommentBy</div>
                                 <div class="commentText">This is comment no. @i</div>
+                                <div class="commentDate text-muted">@DateTime.Now.ToString("MMMM dd yyyy HH:mm")</div>
                             </div>
                         }
                     </div>
@@ -57,32 +58,35 @@
     <partial name="./Partials/_imageSettings" />
 
     <partial name="./Partials/_profileLayout" for="LayoutPhotos" />
+    @if ((Model.FriendIds.Contains(Model.VisitorId) ||
+     Model.ProfileOwnerId == Model.VisitorId))
+    { 
+        <div class="photoContainer">
+            <div class="headerContainer">
+                <h3>My Gallery</h3>
+                @if (Model.LayoutPhotos.UserId == Model.VisitorId)
+                {
+                    <button class="btn btn-warning btn-lg" onclick="toggleUploadForm('imageForm')">Add Photo</button>
+                }
+            </div>
 
-    <div class="photoContainer">
-        <div class="headerContainer">
-            <h3>My Gallery</h3>
-            @if (Model.LayoutPhotos.UserId == User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value)
-            {
-                <button class="btn btn-warning btn-lg" onclick="toggleUploadForm('imageForm')">Add Photo</button>
-            }
+            <div class="gallery" id="gallery">
+                @for (int i = 0; i < Model.UserPhotos.Count; i++)
+                {
+                    <div class="gallery-item">
+                        @if (Model.LayoutPhotos.UserId == Model.VisitorId)
+                        {
+                            <div class="imageSettings" onclick="toggleImageSetting(event)" id="@Model.UserPhotos[i].Id">
+                                <i class="fas fa-bars" id="@Model.UserPhotos[i].Id"></i>
+                            </div>
+                        }
+                        <div class="content" id="likeCount-@Model.UserPhotos[i].Likes.Count"><img id="@Model.UserPhotos[i].Id" src="data:image/jpeg;base64,@Convert.ToBase64String(Model.UserPhotos[i].Image)" class="galleryImages" onclick="toggleCarousel(`@i`)"></div>
+                    </div>
+                }
+            </div>
         </div>
-
-        <div class="gallery" id="gallery">
-            @for (int i = 0; i < Model.UserPhotos.Count; i++)
-            {
-                <div class="gallery-item">
-                    @if (Model.LayoutPhotos.UserId == User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value)
-                    {
-                        <div class="imageSettings" onclick="toggleImageSetting(event)" id="@Model.UserPhotos[i].Id">
-                            <i class="fas fa-bars" id="@Model.UserPhotos[i].Id"></i>
-                        </div>
-                    }
-                    <div class="content" id="likeCount-@Model.UserPhotos[i].Likes.Count"><img id="@Model.UserPhotos[i].Id" src="data:image/jpeg;base64,@Convert.ToBase64String(Model.UserPhotos[i].Image)" class="galleryImages" onclick="toggleCarousel(`@i`)"></div>
-                </div>
-            }
-        </div>
+    }
     </div>
-</div>
 
 @section Scripts {
     <script src="~/lib/slick-1.8.1/slick/slick.min.js"></script>

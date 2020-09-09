@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OurPlace.Models.User
 {
-    public class UserProfileModel
+    public class UserProfileModel : BaseUserProfileModel
     {
         public UserLayoutPhotosModel Photos { get; set; }
         public List<PostViewModel> Posts { get; set; }

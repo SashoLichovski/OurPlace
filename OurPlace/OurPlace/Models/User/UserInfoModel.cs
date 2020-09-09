@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OurPlace.Models.User
 {
-    public class UserInfoModel
+    public class UserInfoModel : BaseUserProfileModel
     {
         public string UserId { get; set; }
         public string FirstName { get; set; }

@@ -7,6 +7,7 @@ using OurPlace.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -40,7 +41,7 @@ namespace OurPlace.Services
             var response = new Response();
             var not = notRepo.GetByUserSenderId(senderId, userId);
             var friends = friendRepo.GetBySenderUserIds(senderId, userId);
-
+            
             if (friends != null)
             {
                 response.Error = "You are already friends";
@@ -61,8 +62,10 @@ namespace OurPlace.Services
                     Message = $"{sender.FirstName} {sender.LastName} wants to be you friend",
                     Type = NotificationType.FriendRequest
                 };
-                
-                response.SuccessMessage = $"Friend request successfully sent to {sender.FirstName} {sender.LastName}";
+
+                var friend = userManager.FindByIdAsync(userId).Result;
+
+                response.SuccessMessage = $"Friend request successfully sent to {friend.FirstName} {friend.LastName}";
                 notRepo.Add(notification);
             }
             

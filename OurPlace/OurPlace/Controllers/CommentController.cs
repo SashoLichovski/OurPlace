@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using OurPlace.Data;
 using OurPlace.Hubs;
+using OurPlace.Services.DtoModels;
 using OurPlace.Services.Interfaces;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -31,7 +32,11 @@ namespace OurPlace.Controllers
 
             var model = commentService.CreatePostComment(postId, userId, message);
 
-            var notification = notificationService.PostNotification(userId, friendId, postId);
+            var notification = new NotificationDto();
+            if (userId != friendId)
+            {
+                notification = notificationService.PostNotification(userId, friendId, postId);
+            }
 
             await chat.Clients.Group(connectionName).SendAsync("ReceivePostComment", new
             {

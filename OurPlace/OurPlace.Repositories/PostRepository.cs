@@ -33,7 +33,8 @@ namespace OurPlace.Repositories
             var posts = context.Posts
                 .Include(x => x.Comments)
                     .ThenInclude(x => x.Likes)
-                    //.ThenInclude(x => x.User)
+                .Include(x => x.Comments)
+                    .ThenInclude(x => x.User)
                 .Include(x => x.Likes)
                     //.ThenInclude(x => x.User)
                 .Include(x => x.User)

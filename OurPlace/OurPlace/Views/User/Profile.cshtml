@@ -12,103 +12,109 @@
     <partial name="./Partials/_coverImageForm" />
 
     <partial name="./Partials/_profileLayout" for="Photos" />
+    @if ((Model.FriendIds.Contains(Model.VisitorId) || 
+        Model.ProfileOwnerId == Model.VisitorId))
+	{
+        <div class="timeLine">
 
-    <div class="timeLine">
+            <div class="timeLineHeader">
+                <h3>Timeline</h3>
+            </div>
 
-        <div class="timeLineHeader">
-            <h3>Timeline</h3>
-        </div>
+            <partial name="_newPostForm" />
 
-        @foreach (var post in Model.Posts)
-        {
-            <div class="postContainer" id="postContainer-@post.Id">
-                <div class="postHeader">
-                    <a asp-controller="User" asp-action="Profile" asp-route-userId="@post.UserId"><h5>@post.User.FirstName @post.User.LastName</h5></a>
-                    @if (post.UserId == User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value)
-                    {
-                        <div class="actionContainer">
-                            <div class="deleteBtn text-primary" onclick="toggleEditPost(`@post.Id`)">Edit</div>
-                            <div> | </div>
-                            <div class="deleteBtn text-danger" onclick="deletePost(`@post.Id`)">Delete</div>
-                        </div>
-                    }
-                </div>
 
-                <form method="post" class="hide" onsubmit="editPost(event, `@post.Id`)" id="editForm-@post.Id">
-                    <input class="form-control" placeholder="Write something..." id="editCommentInput-@post.Id" />
-                    <input type="submit" class="btn btn-success" value="Save" />
-                </form>
-
-                <div class="postContent">
-                    <div class="postMessage">
-                        <p id="postMessage-@post.Id">@post.Message</p>
-                    </div>
-
-                    @if (post.Image != null)
-                    {
-                        <div>
-                            <img class="postImage" onclick="openPhoto()" src="data:image/jpeg;base64,@Convert.ToBase64String(post.Image)" />
-                        </div>
-                    }
-
-                    <div class="postInfo">
-                        <div class="postLikes">
-                            @if (post.Likes.Select(x => x.UserId).ToList().Contains(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value))
-                            {
-                                <a id="postLike-@post.Id" class="far fa-heart" style="color: red" onclick="like(`@post.Id`, `@post.UserId`, `@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value`, `post`)"></a>
-                            }
-                            else
-                            {
-                                <a id="postLike-@post.Id" class="far fa-heart" onclick="like(`@post.Id`, `@post.UserId`, `@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value`, `post`)"></a>
-                            }
-                            <div id="postCount-@post.Id">@post.Likes.Count likes</div>
-                        </div>
-                        <div class="postDate">@post.DatePosted.ToString("MMMM dd yyyy HH:mm")</div>
-                    </div>
-                </div>
-
-                <div class="postComments">
-                    <p class="commentBtn" id="commentNo-@post.Id" onclick="toggleComments(`@post.Id`)">@post.Comments.Count Comments</p>
-
-                    <div class="hide" id="commentContainer-@post.Id">
-                        @foreach (var comment in post.Comments)
+            @foreach (var post in Model.Posts)
+            {
+                <div class="postContainer" id="postContainer-@post.Id">
+                    <div class="postHeader">
+                        <a asp-controller="User" asp-action="Profile" asp-route-userId="@post.UserId"><h5>@post.User.FirstName @post.User.LastName</h5></a>
+                        @if (post.UserId == Model.VisitorId)
                         {
-                            <div class="commentContent" id="commentContent-@comment.Id">
-                                <span>@comment.SentBy</span>
-                                <p>@comment.Message</p>
-
-                                <div class="postInfo">
-                                    <div class="postLikes">
-                                        @if (comment.CommentLikes.Select(x => x.UserId).ToList().Contains(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value))
-                                        {
-                                            <a id="commentLike-@post.Id" class="far fa-heart" style="color: red" onclick="like(`@comment.Id`, `@comment.UserId`, `@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value`, `comment`)"></a>
-                                        }
-                                        else
-                                        {
-                                            <a id="commentLike-@post.Id" class="far fa-heart" onclick="like(`@comment.Id`, `@comment.UserId`, `@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value`, `comment`)"></a>
-                                        }
-                                        <div id="commentCount-@post.Id">@comment.CommentLikes.Count likes</div>
-                                    </div>
-                                    <div class="postDate">@comment.DateSent.ToString("MMMM dd yyyy HH:mm")</div>
-                                </div>
-
-                                @if (comment.UserId == User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value || post.UserId == User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value)
-                                {
-                                    <div class="deleteBtn text-danger" onclick="deleteComment(`@comment.Id`, `@post.Id`)">Delete</div>
-                                }
+                            <div class="actionContainer">
+                                <div class="deleteBtn text-primary" onclick="toggleEditPost(`@post.Id`)">Edit</div>
+                                <div> | </div>
+                                <div class="deleteBtn text-danger" onclick="deletePost(`@post.Id`)">Delete</div>
                             </div>
                         }
                     </div>
 
-                    <form method="post" onsubmit="comment(event, `@post.Id`, `@post.UserId`, `@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value`)">
-                        <input class="form-control" placeholder="Leave a comment..." id="commentInput-@post.Id" />
-                        <input type="submit" class="btn btn-success" value="Comment" />
+                    <form method="post" class="hide" onsubmit="editPost(event, `@post.Id`)" id="editForm-@post.Id">
+                        <input class="form-control" placeholder="Write something..." id="editCommentInput-@post.Id" />
+                        <input type="submit" class="btn btn-success" value="Save" />
                     </form>
 
+                    <div class="postContent">
+                        <div class="postMessage">
+                            <p id="postMessage-@post.Id">@post.Message</p>
+                        </div>
+
+                        @if (post.Image != null)
+                        {
+                            <div>
+                                <img class="postImage" onclick="openPhoto()" src="data:image/jpeg;base64,@Convert.ToBase64String(post.Image)" />
+                            </div>
+                        }
+
+                        <div class="postInfo">
+                            <div class="postLikes">
+                                @if (post.Likes.Select(x => x.UserId).ToList().Contains(Model.VisitorId))
+                                {
+                                    <a id="postLike-@post.Id" class="far fa-heart" style="color: red" onclick="like(`@post.Id`, `@post.UserId`, `@Model.VisitorId`, `post`)"></a>
+                                }
+                                else
+                                {
+                                    <a id="postLike-@post.Id" class="far fa-heart" onclick="like(`@post.Id`, `@post.UserId`, `@Model.VisitorId`, `post`)"></a>
+                                }
+                                <div id="postCount-@post.Id">@post.Likes.Count likes</div>
+                            </div>
+                            <div class="postDate">@post.DatePosted.ToString("MMMM dd yyyy HH:mm")</div>
+                        </div>
+                    </div>
+
+                    <div class="postComments">
+                        <p class="commentBtn" id="commentNo-@post.Id" onclick="toggleComments(`@post.Id`)">@post.Comments.Count Comments</p>
+
+                        <div class="hide" id="commentContainer-@post.Id">
+                            @foreach (var comment in post.Comments)
+                            {
+                                <div class="commentContent" id="commentContent-@comment.Id">
+                                    <span>@comment.SentBy</span>
+                                    <p>@comment.Message</p>
+
+                                    <div class="postInfo">
+                                        <div class="postLikes">
+                                            @if (comment.CommentLikes.Select(x => x.UserId).ToList().Contains(Model.VisitorId))
+                                            {
+                                                <a id="commentLike-@post.Id" class="far fa-heart" style="color: red" onclick="like(`@comment.Id`, `@comment.UserId`, `@Model.VisitorId`, `comment`)"></a>
+                                            }
+                                            else
+                                            {
+                                                <a id="commentLike-@post.Id" class="far fa-heart" onclick="like(`@comment.Id`, `@comment.UserId`, `@Model.VisitorId`, `comment`)"></a>
+                                            }
+                                            <div id="commentCount-@post.Id">@comment.CommentLikes.Count likes</div>
+                                        </div>
+                                        <div class="postDate">@comment.DateSent.ToString("MMMM dd yyyy HH:mm")</div>
+                                    </div>
+
+                                    @if (comment.UserId == Model.VisitorId || post.UserId == Model.VisitorId)
+                                    {
+                                        <div class="deleteBtn text-danger" onclick="deleteComment(`@comment.Id`, `@post.Id`)">Delete</div>
+                                    }
+                                </div>
+                            }
+                        </div>
+
+                        <form method="post" onsubmit="comment(event, `@post.Id`, `@post.UserId`, `@Model.VisitorId`)">
+                            <input class="form-control" placeholder="Leave a comment..." id="commentInput-@post.Id" />
+                            <input type="submit" class="btn btn-success" value="Comment" />
+                        </form>
+
+                    </div>
                 </div>
-            </div>
-        }
-    </div>
+            }
+        </div>
+	}
 
 </div>
 

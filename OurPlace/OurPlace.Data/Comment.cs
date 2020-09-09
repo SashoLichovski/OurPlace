@@ -16,6 +16,5 @@ namespace OurPlace.Data
         public User User { get; set; }
 
         public List<CommentLike> Likes { get; set; }
-
     }
 }

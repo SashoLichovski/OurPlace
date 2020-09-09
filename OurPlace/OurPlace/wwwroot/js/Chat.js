@@ -257,6 +257,9 @@ function like(entityId, friendId, senderId, likeType) {
             break;
         }
     }
+    //if (connectionName == "") {
+    //    connectionName = "notConnected";
+    //}
     axios.post(`/Like/EntityLike/${entityId}/${connectionName}/${friendId}/${likeType}`)
         .then(res => {
             var heart = document.getElementById(`${likeType}Like-${entityId}`);
@@ -282,6 +285,7 @@ function like(entityId, friendId, senderId, likeType) {
 
 function comment(event, postId, friendId, senderId) {
     event.preventDefault();
+    debugger;
     var connections = storageService.getItems("connectionNames");
     var connectionName = "";
     for (var i = 0; i < connections.length; i++) {
@@ -291,6 +295,12 @@ function comment(event, postId, friendId, senderId) {
         }
     }
     var message = document.getElementById(`commentInput-${postId}`).value;
+
+    //if (friendId == senderId) {
+    //    connectionName = "selfComment";
+    //     Append the message here, since it is a self commenting process and 
+    //     this will not reach signalR connection.On(method) to append the message afterwards
+    //}
 
     if (message.trim() == "") {
         alert("You can't send empty comment");

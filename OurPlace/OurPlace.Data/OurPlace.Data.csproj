@@ -29,6 +29,10 @@
     <Compile Remove="Migrations\20200825134228_CommentLike.Designer.cs" />
     <Compile Remove="Migrations\20200825134619_CommentLike.cs" />
     <Compile Remove="Migrations\20200825134619_CommentLike.Designer.cs" />
+    <Compile Remove="Migrations\20200908132553_ImageComment.cs" />
+    <Compile Remove="Migrations\20200908132553_ImageComment.Designer.cs" />
+    <Compile Remove="Migrations\20200908133352_ImageComment.cs" />
+    <Compile Remove="Migrations\20200908133352_ImageComment.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

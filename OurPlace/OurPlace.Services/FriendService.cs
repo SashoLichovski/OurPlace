@@ -5,6 +5,7 @@ using OurPlace.Services.DtoModels;
 using OurPlace.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace OurPlace.Services
 {
@@ -79,6 +80,11 @@ namespace OurPlace.Services
         public void Update(Friend friend)
         {
             friendRepo.Update(friend);
+        }
+
+        public List<string> GetFriendIds(string userId)
+        {
+            return friendRepo.GetAll(userId).Select(x => x.FriendId).ToList();
         }
     }
 }

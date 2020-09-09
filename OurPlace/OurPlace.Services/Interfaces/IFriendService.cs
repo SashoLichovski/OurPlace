@@ -10,5 +10,6 @@ namespace OurPlace.Services.Interfaces
         List<Friend> GetAll(string userId);
         List<Friend> GetUserAsFriend(string userId);
         void Update(Friend friend);
+        List<string> GetFriendIds(string userId);
     }
 }

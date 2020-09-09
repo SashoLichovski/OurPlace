@@ -20,6 +20,7 @@ namespace OurPlace.Data
         public DbSet<PostComment> PostComments { get; set; }
         public DbSet<CommentLike> CommentLikes { get; set; }
         public DbSet<ImageLike> ImageLikes { get; set; }
+        public DbSet<ImageComment> ImageComments { get; set; }
 
     }
 }

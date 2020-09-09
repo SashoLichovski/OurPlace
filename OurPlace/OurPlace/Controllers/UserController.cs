@@ -7,6 +7,7 @@ using OurPlace.Models.User;
 using OurPlace.Services.Interfaces;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 
 namespace OurPlace.Controllers
 {
@@ -16,24 +17,26 @@ namespace OurPlace.Controllers
         private readonly IUserService userService;
         private readonly IImageService imageService;
         private readonly IPostService postService;
+        private readonly IFriendService friendService;
 
-        public UserController(IUserService userService, IImageService imageService, IPostService postService)
+        public UserController(IUserService userService, IImageService imageService, IPostService postService, IFriendService friendService)
         {
             this.userService = userService;
             this.imageService = imageService;
             this.postService = postService;
+            this.friendService = friendService;
         }
 
         public IActionResult Profile(string userId)
         {
-            var secs = Stopwatch.StartNew();
             var model = new UserProfileModel()
             {
                 Photos = userService.GetById(userId).ToUserLayoutPhotosModel(),
-                Posts = postService.GetAllForTimeline(userId).Select(x => x.ToPostViewModel()).ToList()
+                Posts = postService.GetAllForTimeline(userId).Select(x => x.ToPostViewModel()).ToList(),
+                FriendIds = friendService.GetFriendIds(userId),
+                VisitorId = User.FindFirst(ClaimTypes.NameIdentifier).Value,
+                ProfileOwnerId = userId
             };
-            secs.Stop();
-            System.Console.WriteLine(secs);
             return View(model);
         }
         public IActionResult UserPhotos(string userId)
@@ -42,7 +45,10 @@ namespace OurPlace.Controllers
             var model = new UserPhotosModel()
             {
                 LayoutPhotos = userService.GetById(userId).ToUserLayoutPhotosModel(),
-                UserPhotos = imageService.GetUserPhotos(userId).Select(x => x.ToUserImageModel()).ToList()
+                UserPhotos = imageService.GetUserPhotos(userId).Select(x => x.ToUserImageModel()).ToList(),
+                FriendIds = friendService.GetFriendIds(userId),
+                VisitorId = User.FindFirst(ClaimTypes.NameIdentifier).Value,
+                ProfileOwnerId = userId
             };
             secs.Stop();
             System.Console.WriteLine(secs);
@@ -55,6 +61,8 @@ namespace OurPlace.Controllers
             var user = userService.GetById(userId);
             model = user.ToUserInfoModel();
             model.Photos = user.ToUserLayoutPhotosModel();
+            model.VisitorId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            model.FriendIds = friendService.GetFriendIds(userId);
             return View(model);
         }
 

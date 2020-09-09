@@ -1,0 +1,12 @@
+﻿<div class="postFormContainer">
+    <h5>Create new post</h5>
+    <form asp-controller="Post" asp-action="Create" asp-route-page="HomePage" method="post" enctype="multipart/form-data">
+        <input hidden name="userId" value="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value" />
+        <div>
+            <i class="fas fa-camera-retro postIcon" onclick="togglePostFileInput()"></i>
+        </div>
+        <input type="file" id="postFileInput" class="hide" name="image" />
+        <textarea class="form-control" placeholder="Write something..." name="message"></textarea>
+        <input type="submit" value="Post" class="btn btn-success" />
+    </form>
+</div>

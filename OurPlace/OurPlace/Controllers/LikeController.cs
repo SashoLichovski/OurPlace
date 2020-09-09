@@ -49,6 +49,12 @@ namespace OurPlace.Controllers
                 notification = await notService.ImageLikeNotification(userId, friendId, entityId, didLike);
             }
 
+            //if (connectionName == "notConnected")
+            //{
+            //    notService.Delete(notification.Id);
+            //    return Ok();
+            //}
+
             await chat.Clients.Group(connectionName).SendAsync("ReceiveLike", new
             {
                 FriendId = friendId,
