@@ -16,6 +16,7 @@
     }
     else
     {
+        <a asp-action="DeleteAll" asp-route-userId="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value" class="text-danger h4">Delete all</a>
         @foreach (var not in Model)
         {
             <div class="notContainer" id="not-@not.Id">
@@ -28,7 +29,7 @@
                     }
                     else
                     {
-                        <a class="btn btn-danger deleteNot" onclick="removeNot(`@not.Id`)">Delete</a>
+                        <a class="btn btn-danger deleteNot" onclick="removeNot(`@not.Id`, false)">Delete</a>
                     }
                 </div>
                 <span>Notification sent on: @not.DateSent.ToString("MMMM, dd yyyy, HH:mm")</span>

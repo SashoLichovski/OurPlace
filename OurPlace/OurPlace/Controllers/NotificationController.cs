@@ -43,5 +43,11 @@ namespace OurPlace.Controllers
             notService.Delete(id);
             return Ok();
         }
+
+        public IActionResult DeleteAll(string userId)
+        {
+            notService.DeleteAll(userId);
+            return RedirectToAction(nameof(Overview), new { UserId = userId });
+        }
     }
 }

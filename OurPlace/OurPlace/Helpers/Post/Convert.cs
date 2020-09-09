@@ -53,7 +53,7 @@ namespace OurPlace.Helpers.Post
                 Id = x.Id,
                 Message = x.Message,
                 DateSent = x.DateSent,
-                SentBy = $"{x.User.FirstName} {x.User.LastName}",
+                SentBy = $"{x.User.UserName}",
                 UserId = x.UserId
             };
         }

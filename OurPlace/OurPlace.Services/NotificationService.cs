@@ -209,5 +209,14 @@ namespace OurPlace.Services
 
             return model;
         }
+
+        public void DeleteAll(string userId)
+        {
+            var allNots = notRepo.GetAllForUser(userId);
+            foreach (var not in allNots)
+            {
+                notRepo.Delete(not);
+            }
+        }
     }
 }

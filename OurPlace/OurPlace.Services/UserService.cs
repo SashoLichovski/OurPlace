@@ -40,6 +40,7 @@ namespace OurPlace.Services
             {
                 user.FirstName = firstName;
                 user.LastName = lastName;
+                user.UserName = $"{firstName} {lastName}";
                 await userManager.UpdateAsync(user);
                 context.SaveChanges();
 

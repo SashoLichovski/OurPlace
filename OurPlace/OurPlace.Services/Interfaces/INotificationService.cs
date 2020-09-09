@@ -15,5 +15,6 @@ namespace OurPlace.Services.Interfaces
         NotificationDto PostNotification(string userId, string friendId, int postId);
         Task<NotificationDto> CommentLikeNotification(string userId, string friendId, int entityId, bool didLike);
         Task<NotificationDto> ImageLikeNotification(string userId, string friendId, int entityId, bool didLike);
+        void DeleteAll(string userId);
     }
 }

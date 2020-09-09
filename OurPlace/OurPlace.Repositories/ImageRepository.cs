@@ -45,6 +45,8 @@ namespace OurPlace.Repositories
                 .Include(x => x.User)
                 .Include(x => x.Likes)
                     .ThenInclude(x => x.User)
+                .Include(x => x.Comments)
+                    .ThenInclude(x => x.User)
                 .OrderByDescending(x => x.DateUploaded)
                 .ToList();
         }

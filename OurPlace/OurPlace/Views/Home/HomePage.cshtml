@@ -17,7 +17,7 @@
         {
             <div class="postContainer" id="postContainer-@post.Id">
                 <div class="postHeader">
-                    <a asp-controller="User" asp-action="Profile" asp-route-userId="@post.UserId"><h5>@post.User.FirstName @post.User.LastName</h5></a>
+                    <a asp-controller="User" asp-action="Profile" asp-route-userId="@post.UserId"><h5>@post.User.UserName</h5></a>
                     @if (post.UserId == User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value)
                     {
                         <div class="actionContainer">

@@ -15,11 +15,11 @@
                     <img src="~/defaultImage/defaultImage.png" class="userImg" />
                     @if (userService.GetUserForChat(chat.ChatName)[0].FirstName == userService.GetById(userId).FirstName)
                     {
-                        <p>@userService.GetUserForChat(chat.ChatName)[1].FirstName @userService.GetUserForChat(chat.ChatName)[1].LastName</p>
+                        <p>@userService.GetUserForChat(chat.ChatName)[1].UserName</p>
                     }
                     else
                     {
-                        <p>@userService.GetUserForChat(chat.ChatName)[0].FirstName @userService.GetUserForChat(chat.ChatName)[0].LastName</p>
+                        <p>@userService.GetUserForChat(chat.ChatName)[0].UserName</p>
                     }
                 </div>
                 <div>
