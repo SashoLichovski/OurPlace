@@ -196,6 +196,7 @@ namespace OurPlace.Services
                 SentBy = $"{sender.UserName}",
                 DateSent = DateTime.Now,
                 Type = NotificationType.Other,
+                Image = imageService.GetById(imageId).Image
             };
 
             if (notType == "comment")

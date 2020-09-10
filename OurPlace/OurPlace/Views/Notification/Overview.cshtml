@@ -19,21 +19,25 @@
         <a asp-action="DeleteAll" asp-route-userId="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value" class="text-danger h4">Delete all</a>
         @foreach (var not in Model)
         {
-            <div class="notContainer" id="not-@not.Id">
-                <div class="sectionContainer">
-                    <header>@not.Message</header>
-                    @if (not.Type == OurPlace.Data.NotificationType.FriendRequest)
-                    {
-                        <a class="btn btn-success" asp-controller="Friend" asp-action="CreateFriends" asp-route-senderId="@not.SenderId" asp-route-userId="@not.UserId">Accept</a>
-                        <a class="btn btn-danger" asp-controller="Notification" asp-action="DeclineFriendRequest" asp-route-senderId="@not.SenderId" asp-route-userId="@not.UserId">Decline</a>
-                    }
-                    else
-                    {
-                        <a class="btn btn-danger deleteNot" onclick="removeNot(`@not.Id`, false)">Delete</a>
-                    }
-                </div>
-                <span>Notification sent on: @not.DateSent.ToString("MMMM, dd yyyy, HH:mm")</span>
-            </div>
+<div class="notContainer" id="not-@not.Id">
+    <div class="sectionContainer">
+        <header>@not.Message</header>
+        @if (not.Image != null)
+        {
+            <img src="data:image/jpeg;base64,@Convert.ToBase64String(not.Image)" style="width: 100px; height: auto;"/>
+        }
+        @if (not.Type == OurPlace.Data.NotificationType.FriendRequest)
+        {
+            <a class="btn btn-success" asp-controller="Friend" asp-action="CreateFriends" asp-route-senderId="@not.SenderId" asp-route-userId="@not.UserId">Accept</a>
+            <a class="btn btn-danger" asp-controller="Notification" asp-action="DeclineFriendRequest" asp-route-senderId="@not.SenderId" asp-route-userId="@not.UserId">Decline</a>
+        }
+        else
+        {
+            <a class="btn btn-danger deleteNot" onclick="removeNot(`@not.Id`, false)">Delete</a>
+        }
+    </div>
+    <span>Notification sent on: @not.DateSent.ToString("MMMM, dd yyyy, HH:mm")</span>
+</div>
         }
     }
 </div>

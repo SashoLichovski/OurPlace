@@ -5,6 +5,7 @@
 }
 .sectionContainer {
     display: flex;
+    justify-content: space-between;
 }
     .sectionContainer header, a {
         margin-right: 20px;
@@ -14,7 +15,7 @@
     }
 
 .deleteNot {
-    margin-left: auto;
+    /*margin-left: auto;*/
     color: white !important;
     cursor: pointer;
 }

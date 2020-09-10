@@ -13,5 +13,6 @@ namespace OurPlace.Models.Notification
         public NotificationType Type { get; set; }
         public string UserId { get; set; }
         public Data.User User { get; set; }
+        public byte[] Image { get; set; }
     }
 }

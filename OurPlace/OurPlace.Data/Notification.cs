@@ -15,6 +15,8 @@ namespace OurPlace.Data
         [Required]
         public DateTime DateSent { get; set; }
 
+        public byte[] Image { get; set; }
+
         public NotificationType Type { get; set; }
 
         public string UserId { get; set; }

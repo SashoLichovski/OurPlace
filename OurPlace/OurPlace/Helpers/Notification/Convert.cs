@@ -19,7 +19,8 @@ namespace OurPlace.Helpers.Notification
                 User = x.User,
                 Message = x.Message,
                 DateSent = x.DateSent,
-                Type = x.Type
+                Type = x.Type,
+                Image = x.Image
             };
         }
     }
