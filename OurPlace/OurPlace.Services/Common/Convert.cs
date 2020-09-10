@@ -20,6 +20,17 @@ namespace OurPlace.Services.Common
             };
         }
 
+        internal static ImageCommentDto ToImageCommentDto(this ImageComment x)
+        {
+            return new ImageCommentDto
+            {
+                Id = x.Id,
+                Message = x.Message,
+                DateSent = x.DateSent,
+                UserId = x.UserId
+            };
+        }
+
         internal static PostCommentDto ToPostCommentDto(this PostComment x)
         {
             return new PostCommentDto

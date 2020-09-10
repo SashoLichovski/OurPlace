@@ -7,5 +7,6 @@ namespace OurPlace.Models.User
     {
         public UserLayoutPhotosModel LayoutPhotos { get; set; }
         public List<UserImageModel> UserPhotos { get; set; }
+        public string VisitorUsername { get; set; }
     }
 }

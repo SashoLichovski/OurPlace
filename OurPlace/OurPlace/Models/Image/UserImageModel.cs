@@ -13,5 +13,6 @@ namespace OurPlace.Models.Image
         public string UserId { get; set; }
         public Data.User User { get; set; }
         public List<ImageLikeModel> Likes { get; set; }
+        public List<ImageCommentModel> Comments { get; set; }
     }
 }

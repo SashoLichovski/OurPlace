@@ -188,7 +188,6 @@ function setConnections(chatId, userId){
         commentContainer.appendChild(deleteBtn);
 
         sendNotification(data);
-
     })
 }
 
@@ -285,7 +284,67 @@ function like(entityId, friendId, senderId, likeType) {
 
 function comment(event, postId, friendId, senderId) {
     event.preventDefault();
-    debugger;
+    var connectionName = getConnectionName(senderId, friendId)
+    var message = document.getElementById(`commentInput-${postId}`).value;
+
+    if (message.trim() == "") {
+        alert("You can't send empty comment");
+    }
+    else {
+        axios.post(`/Comment/PostComment/${postId}/${connectionName}/${friendId}/${message}`)
+            .then(res => {
+            })
+            .catch(err => {
+            })
+    }
+    document.getElementById(`commentInput-${postId}`).value = "";
+}
+
+function imageComment(event, imageId, friendId, senderId, sentBy) {
+    event.preventDefault();
+
+    var connectionName = getConnectionName(senderId, friendId);
+
+    var message = document.getElementById(`imageCommentInput-${imageId}`).value;
+
+    if (message.trim() == "") {
+        alert("You can't send empty comment");
+    }
+    else {
+        axios.post(`/Comment/ImageComment/${imageId}/${connectionName}/${friendId}/${message}`)
+            .then(res => {
+                var container = document.getElementById(`commentContainer-${imageId}`);
+                //debugger;
+                var comment = document.createElement("div");
+                comment.classList.add("comment");
+                container.appendChild(comment);
+
+                var commentBy = document.createElement("div");
+                commentBy.innerText = `${sentBy}`;
+                comment.appendChild(commentBy);
+
+                var commentMessage = document.createElement("div");
+                commentMessage.classList.add("commentText");
+                commentMessage.innerText = `${message}`;
+                comment.appendChild(commentMessage);
+
+                var commentDate = document.createElement("div");
+                commentDate.className = "commentDate text-muted";
+                commentDate.innerText = new Date().toDateString();
+                comment.appendChild(commentDate);
+
+                var scroll = document.getElementById(`commentScroll-${imageId}`);
+                scroll.scrollTop = scroll.scrollHeight;
+
+                document.getElementById(`imageCommentInput-${imageId}`).value = "";
+            })
+            .catch(err => {
+            })
+    }
+    
+}
+
+function getConnectionName(senderId, friendId) {
     var connections = storageService.getItems("connectionNames");
     var connectionName = "";
     for (var i = 0; i < connections.length; i++) {
@@ -294,25 +353,5 @@ function comment(event, postId, friendId, senderId) {
             break;
         }
     }
-    var message = document.getElementById(`commentInput-${postId}`).value;
-
-    //if (friendId == senderId) {
-    //    connectionName = "selfComment";
-    //     Append the message here, since it is a self commenting process and 
-    //     this will not reach signalR connection.On(method) to append the message afterwards
-    //}
-
-    if (message.trim() == "") {
-        alert("You can't send empty comment");
-    }
-    else {
-        axios.post(`/Comment/PostComment/${postId}/${connectionName}/${friendId}/${message}`)
-            .then(res => {
-
-            })
-            .catch(err => {
-                //console.log(err);
-            })
-    }
-    document.getElementById(`commentInput-${postId}`).value = "";
+    return connectionName;
 }

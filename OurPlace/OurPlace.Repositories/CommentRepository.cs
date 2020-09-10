@@ -13,6 +13,12 @@ namespace OurPlace.Repositories
             this.context = context;
         }
 
+        public void AddImageComment(ImageComment imageComment)
+        {
+            context.ImageComments.Add(imageComment);
+            context.SaveChanges();
+        }
+
         public void AddPostComment(PostComment postComment)
         {
             context.PostComments.Add(postComment);

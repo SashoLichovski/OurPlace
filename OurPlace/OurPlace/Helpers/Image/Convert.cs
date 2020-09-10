@@ -17,16 +17,27 @@ namespace OurPlace.Helpers.Image
                 UserId = x.UserId,
                 User = x.User,
                 DateUploaded = x.DateUploaded,
-                Likes = new List<ImageLikeModel>()
+                Likes = new List<ImageLikeModel>(),
+                Comments = new List<ImageCommentModel>()
             };
-            if (x.Likes != null)
-            {
-                model.Likes = x.Likes.Select(x => x.ToImageLikeModel()).ToList();
-            }
+            model.Likes = x.Likes.Select(x => x.ToImageLikeModel()).ToList();
+            model.Comments = x.Comments.Select(x => x.ToImageCommentModel()).ToList();
             return model;
         }
 
-        internal static ImageLikeModel ToImageLikeModel(this Data.ImageLike x)
+        private static ImageCommentModel ToImageCommentModel(this Data.ImageComment x)
+        {
+            return new ImageCommentModel
+            {
+                Id = x.Id,
+                Message = x.Message,
+                CommentBy = x.User.UserName,
+                UserId = x.UserId,
+                DateCreated = x.DateSent
+            };
+        }
+
+        private static ImageLikeModel ToImageLikeModel(this Data.ImageLike x)
         {
             return new ImageLikeModel
             {

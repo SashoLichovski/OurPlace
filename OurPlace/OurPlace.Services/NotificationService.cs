@@ -185,7 +185,7 @@ namespace OurPlace.Services
             return newNot.ToNotificationDto();
         }
 
-        public async Task<NotificationDto> ImageLikeNotification(string userId, string friendId, int imageId, bool didLike)
+        public async Task<NotificationDto> ImageNotification(string userId, string friendId, int imageId, bool didLike, string notType)
         {
             Thread.Sleep(50);
             var sender = userManager.FindByIdAsync(userId).Result;
@@ -193,13 +193,20 @@ namespace OurPlace.Services
             {
                 UserId = friendId,
                 SenderId = sender.Id,
-                SentBy = $"{sender.FirstName} {sender.LastName}",
+                SentBy = $"{sender.UserName}",
                 DateSent = DateTime.Now,
                 Type = NotificationType.Other,
             };
 
-            newNot.Message = didLike ? $"{newNot.SentBy} likes your photo" :
-                $"{newNot.SentBy} dislikes your photo";
+            if (notType == "comment")
+            {
+                newNot.Message = $"{newNot.SentBy} commented on your photo";
+            }
+            else if(notType == "like")
+            {
+                newNot.Message = didLike ? $"{newNot.SentBy} likes your photo" :
+                    $"{newNot.SentBy} dislikes your photo";
+            }
 
             notRepo.Add(newNot);
 
@@ -218,5 +225,7 @@ namespace OurPlace.Services
                 notRepo.Delete(not);
             }
         }
+
+        
     }
 }

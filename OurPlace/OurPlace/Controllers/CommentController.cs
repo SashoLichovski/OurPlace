@@ -54,7 +54,30 @@ namespace OurPlace.Controllers
             return Ok();
         }
 
-        [HttpPost("[action]/{commentId}")]
+        [HttpPost("[action]/{imageId}/{connectionName}/{friendId}/{message}")]
+        public async Task<IActionResult> ImageComment(int imageId, string connectionName, string friendId, string message)
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            var model = commentService.CreateImageComment(imageId, userId, message);
+
+            var notification = new NotificationDto();
+            if (userId != friendId)
+            {
+                notification = await notificationService.ImageNotification(userId, friendId, imageId, false, "comment");
+            }
+
+            await chat.Clients.Group(connectionName).SendAsync("ReceiveLike", new
+            {
+                FriendId = friendId,
+                UserId = userId,
+                Notification = notification
+            });
+
+            return Ok();
+        }
+
+            [HttpPost("[action]/{commentId}")]
         public IActionResult DeleteComment(int commentId)
         {
             commentService.Delete(commentId);

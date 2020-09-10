@@ -18,6 +18,24 @@ namespace OurPlace.Services
             this.userService = userService;
         }
 
+        public ImageCommentDto CreateImageComment(int imageId, string userId, string message)
+        {
+            var sender = userService.GetById(userId);
+            var imageComment = new ImageComment()
+            {
+                UserId = userId,
+                ImageId = imageId,
+                Message = message,
+                DateSent = DateTime.Now
+            };
+            commentRepo.AddImageComment(imageComment);
+
+            var model = imageComment.ToImageCommentDto();
+            model.SentBy = $"{sender.UserName}";
+
+            return model;
+        }
+
         public PostCommentDto CreatePostComment(int postId, string userId, string message)
         {
             var sender = userService.GetById(userId);
@@ -31,7 +49,7 @@ namespace OurPlace.Services
             commentRepo.AddPostComment(postComment);
 
             var model = postComment.ToPostCommentDto();
-            model.SentBy = $"{sender.FirstName} {sender.LastName}";
+            model.SentBy = $"{sender.UserName}";
 
             return model;
         }

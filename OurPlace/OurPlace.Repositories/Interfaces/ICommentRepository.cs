@@ -7,5 +7,6 @@ namespace OurPlace.Repositories.Interfaces
         void AddPostComment(PostComment postComment);
         PostComment GetById(int commentId);
         void Delete(PostComment comment);
+        void AddImageComment(ImageComment imageComment);
     }
 }

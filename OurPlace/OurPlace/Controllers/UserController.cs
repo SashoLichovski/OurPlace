@@ -41,7 +41,6 @@ namespace OurPlace.Controllers
         }
         public IActionResult UserPhotos(string userId)
         {
-            var secs = Stopwatch.StartNew();
             var model = new UserPhotosModel()
             {
                 LayoutPhotos = userService.GetById(userId).ToUserLayoutPhotosModel(),
@@ -50,8 +49,8 @@ namespace OurPlace.Controllers
                 VisitorId = User.FindFirst(ClaimTypes.NameIdentifier).Value,
                 ProfileOwnerId = userId
             };
-            secs.Stop();
-            System.Console.WriteLine(secs);
+            model.VisitorUsername = userService.GetById(model.VisitorId).UserName;
+
             return View(model);
         }
 
