@@ -21,6 +21,9 @@ namespace OurPlace.Data
         public DbSet<CommentLike> CommentLikes { get; set; }
         public DbSet<ImageLike> ImageLikes { get; set; }
         public DbSet<ImageComment> ImageComments { get; set; }
+        public DbSet<Group> Groups { get; set; }
+        public DbSet<GroupUser> GroupsUsers { get; set; }
+
 
     }
 }

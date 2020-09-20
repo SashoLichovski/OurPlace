@@ -22,10 +22,7 @@
 <div class="notContainer" id="not-@not.Id">
     <div class="sectionContainer">
         <header>@not.Message</header>
-        @if (not.Image != null)
-        {
-            <img src="data:image/jpeg;base64,@Convert.ToBase64String(not.Image)" style="width: 100px; height: auto;"/>
-        }
+
         @if (not.Type == OurPlace.Data.NotificationType.FriendRequest)
         {
             <a class="btn btn-success" asp-controller="Friend" asp-action="CreateFriends" asp-route-senderId="@not.SenderId" asp-route-userId="@not.UserId">Accept</a>
@@ -36,6 +33,10 @@
             <a class="btn btn-danger deleteNot" onclick="removeNot(`@not.Id`, false)">Delete</a>
         }
     </div>
+    @if (not.Image != null)
+    {
+        <img src="data:image/jpeg;base64,@Convert.ToBase64String(not.Image)" style="width: 100px; height: auto;" /><br /><br />
+    }
     <span>Notification sent on: @not.DateSent.ToString("MMMM, dd yyyy, HH:mm")</span>
 </div>
         }

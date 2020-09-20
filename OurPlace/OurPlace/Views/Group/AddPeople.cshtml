@@ -1,0 +1,43 @@
+﻿@model OurPlace.Models.Group.AddPeopleToGroupViewModel
+@{
+    ViewData["Title"] = "AddPeople";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/Groups.css" />
+}
+
+<div class="container">
+    <h2>Add people</h2>
+
+    <br />
+    <form>
+        <input class="form-control" placeholder="Search" onkeyup="searchTable(event)"/>
+    </form>
+    <br />
+
+    <table class="table table-striped text-center friendsTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Add</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var friend in Model.Friends)
+	        {
+            <tr class="friendRow">
+                <td>@friend.UserName</td>
+                <td>@friend.Email</td>
+                <td>
+                    <a href="#">Add</a>
+                </td>
+            </tr>
+	        }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script src="~/js/Group.js"></script>
+}

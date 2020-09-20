@@ -62,6 +62,9 @@ namespace OurPlace
             services.AddTransient<ICommentService, CommentService>();
             services.AddTransient<ICommentRepository, CommentRepository>();
 
+            services.AddTransient<IGroupService, GroupService>();
+            services.AddTransient<IGroupRepository, GroupRepository>();
+
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
         }

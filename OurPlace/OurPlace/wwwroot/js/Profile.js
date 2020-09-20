@@ -6,7 +6,7 @@ function dismissUploadLink() {
     document.getElementById("toggleCoverForm").classList.add("hide");
 }
 
-function toggleUploadForm(id) {
+function toggleForm(id) {
     if (id == "imageSettings") {
         var elems = document.getElementsByClassName("gallery-item full");
         for (var i = 0; i < elems.length; i++) {

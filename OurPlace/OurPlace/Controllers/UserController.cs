@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using OurPlace.Helpers.Group;
 using OurPlace.Helpers.Image;
 using OurPlace.Helpers.Post;
 using OurPlace.Helpers.User;
@@ -18,13 +19,16 @@ namespace OurPlace.Controllers
         private readonly IImageService imageService;
         private readonly IPostService postService;
         private readonly IFriendService friendService;
+        private readonly IGroupService groupService;
 
-        public UserController(IUserService userService, IImageService imageService, IPostService postService, IFriendService friendService)
+        public UserController(IUserService userService, IImageService imageService, 
+            IPostService postService, IFriendService friendService, IGroupService groupService)
         {
             this.userService = userService;
             this.imageService = imageService;
             this.postService = postService;
             this.friendService = friendService;
+            this.groupService = groupService;
         }
 
         public IActionResult Profile(string userId)
@@ -112,6 +116,12 @@ namespace OurPlace.Controllers
             return View("SearchResult", model);
         }
 
+        public IActionResult Groups(string userId)
+        {
+            var dbGroups = groupService.GetGroups(userId);
+            var model = dbGroups.Select(x => x.ToGroupViewModel()).ToList();
+            return View(model);
+        }
 
     }
 }

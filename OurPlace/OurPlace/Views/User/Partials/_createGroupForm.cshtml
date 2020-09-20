@@ -1,0 +1,13 @@
+﻿<div class="createGroupContainer full hide" id="groupForm">
+    <div class="content">
+        <form class="customForm" asp-controller="Group" asp-action="Create">
+            <div id="closeForm" onclick="toggleForm('groupForm')">
+                <i class="far fa-window-close"></i>
+            </div>
+            <h4>Create you group</h4>
+            <input class="form-control" autocomplete="off" placeholder="Group name" name="groupName" onkeyup="validateInput(`groupInput`, `groupBtn`)" id="groupInput"/>
+            <input hidden name="userId" value="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value" />
+            <input type="submit" class="btn btn-success" value="Create" id="groupBtn" disabled/>
+        </form>
+    </div>
+</div>
